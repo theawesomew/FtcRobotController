@@ -6,6 +6,8 @@ public class Vector {
 
     private double values[];
 
+    public static Vector X_2 = new Vector(1,0);
+
     public Vector (double ...inValues) {
         this.values = inValues;
     }
@@ -16,14 +18,6 @@ public class Vector {
 
     public double GetMagnitude () throws Exception {
         return Math.pow(this.Dot(this), (1.0/this.GetDimension()));
-    }
-
-    public double GetAngle () throws Exception {
-        if (this.GetDimension() != 2) {
-            throw new Exception("There is no implementation of the angle of vectors beyond 2 dimensions");
-        } else {
-            return Math.atan2(this.GetValues()[1], this.GetValues()[0]);
-        }
     }
 
     public double Dot (Vector vector) throws Exception {
@@ -42,7 +36,7 @@ public class Vector {
         if (!this.CheckSize(vector)) {
             throw new Exception("The dot product of two vectors of different dimensions is being taken");
         } else {
-            return Math.acos(this.Dot(vector)/(this.getMagnitude()*vector.getMagnitude()));
+            return Math.acos(this.Dot(vector)/(this.GetMagnitude()*vector.GetMagnitude()));
         }
     }
 
