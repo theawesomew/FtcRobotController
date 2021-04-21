@@ -63,10 +63,10 @@ public class XDrive extends DriveBase {
             backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            forwardLeft.setTargetPosition(targetPosition);
-            forwardRight.setTargetPosition(targetPosition);
-            backLeft.setTargetPosition(targetPosition);
-            backRight.setTargetPosition(targetPosition);
+            forwardLeft.setTargetPosition(forwardLeft.getCurrentPosition() + targetPosition);
+            forwardRight.setTargetPosition(forwardRight.getCurrentPosition() + targetPosition);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() + targetPosition);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + targetPosition);
 
             float power;
 
@@ -90,11 +90,6 @@ public class XDrive extends DriveBase {
     }
 
     public boolean StrafeByDistance (double distance, double angle, Telemetry telemetry) {
-        telemetry.addData("frontLeft", within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10));
-        telemetry.addData("frontRight", within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10));
-        telemetry.addData("backLeft", within(backLeft.getCurrentPosition(), backLeft.getTargetPosition(), 10));
-        telemetry.addData("backRight", within(backRight.getCurrentPosition(), backRight.getTargetPosition(), 10));
-
         if (!motorsMoving) {
             double theta = angle - pi / 4;
 
