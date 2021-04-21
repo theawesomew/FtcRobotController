@@ -15,9 +15,6 @@ import org.firstinspires.ftc.teamcode.robot.XDrive;
 
 import java.util.List;
 
-/***
- * testing push
- */
 
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
 public class TeleOpMode extends OpMode {
