@@ -5,16 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
-
-import java.util.List;
 
 
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
@@ -23,6 +15,7 @@ public class TeleOpMode extends OpMode {
     private MotorMap mechMap;
     private XDrive xDrive;
     private Servo pushServo;
+
 
     private boolean toggleIntake = false;
 
@@ -99,10 +92,18 @@ public class TeleOpMode extends OpMode {
         }
         if (gamepad1.a) {
             mechMap.GetMotorMap().get("intake").setPower(0);
+
         }
 
-        
-
+        /**
+         * pushy thing
+         */
+        if (gamepad1.y) {
+            pushServo.setPosition(0.1);
+        }
+        if (gamepad1.x) {
+            pushServo.setPosition(0);
+        }
 
 
     }
