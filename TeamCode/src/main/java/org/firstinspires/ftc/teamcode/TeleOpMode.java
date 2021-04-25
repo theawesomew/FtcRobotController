@@ -85,7 +85,7 @@ public class TeleOpMode extends OpMode {
          * shooting
          */
         if (gamepad1.right_trigger > 0.7){
-            mechMap.GetMotorMap().get("shoot").setPower(0.5);
+            mechMap.GetMotorMap().get("shoot").setPower(1);
         }
         else {
             mechMap.GetMotorMap().get("shoot").setPower(0);
@@ -95,17 +95,15 @@ public class TeleOpMode extends OpMode {
          * intake
          */
         if (gamepad1.b) {
-            if (toggleIntake == false) {
-                toggleIntake = true;
-                mechMap.GetMotorMap().get("intake").setPower(0.5);
-            }
-            else if (toggleIntake == true) {
-                toggleIntake = false;
-                mechMap.GetMotorMap().get("intake").setPower(0);
-            }
+            mechMap.GetMotorMap().get("intake").setPower(0.25);
+        }
+        if (gamepad1.a) {
+            mechMap.GetMotorMap().get("intake").setPower(0);
         }
 
-       
+        
+
+
 
     }
 
