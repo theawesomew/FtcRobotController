@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -19,7 +20,11 @@ import java.util.List;
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
 public class TeleOpMode extends OpMode {
     private MotorMap motorMap;
+    private MotorMap mechMap;
     private XDrive xDrive;
+    private Servo pushServo;
+
+    private boolean toggleIntake = false;
 
     @Override
     public void init() {
@@ -28,8 +33,18 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+
+        mechMap = new MotorMap(hardwareMap, "conveyor", "intake", "shoot");
+        for (DcMotor motor : mechMap.GetMotorMap().values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
         xDrive = new XDrive(motorMap);
+        pushServo = hardwareMap.servo.get("pushServo");
+        pushServo.setPosition(0.0);
     }
+
 
     @Override
     public void init_loop() {
@@ -48,10 +63,50 @@ public class TeleOpMode extends OpMode {
         xDrive.SetStrafe(power, angle);
 
         if (gamepad1.right_bumper) {
-            xDrive.SetRotation(1);
-        } else if (gamepad1.left_bumper) {
             xDrive.SetRotation(-1);
+        } else if (gamepad1.left_bumper) {
+            xDrive.SetRotation(1);
         }
+
+        /**
+         * Conveyor moving
+         */
+        if (gamepad1.dpad_up) {
+            mechMap.GetMotorMap().get("conveyor").setPower(0.5);
+        }
+        else if (gamepad1.dpad_down) {
+            mechMap.GetMotorMap().get("conveyor").setPower(-0.5);
+        }
+        else {
+            mechMap.GetMotorMap().get("conveyor").setPower(0);
+        }
+
+        /**
+         * shooting
+         */
+        if (gamepad1.right_trigger > 0.7){
+            mechMap.GetMotorMap().get("shoot").setPower(0.5);
+        }
+        else {
+            mechMap.GetMotorMap().get("shoot").setPower(0);
+        }
+
+        /**
+         * intake
+         */
+        if (gamepad1.b) {
+            if (toggleIntake == false) {
+                toggleIntake = true;
+                mechMap.GetMotorMap().get("intake").setPower(0.5);
+            }
+            else if (toggleIntake == true) {
+                toggleIntake = false;
+                mechMap.GetMotorMap().get("intake").setPower(0);
+            }
+        }
+
+       
+
     }
 
     @Override
