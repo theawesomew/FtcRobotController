@@ -19,8 +19,7 @@ public class AutonomousMode extends OpMode {
 
     private MotorMap driveMap;
     private XDrive xDrive;
-    private boolean hasMoved[];
-    private double driveValues[] = {1000, Math.PI/2, 1000, Math.PI, 1000, Math.PI/3};
+    private boolean hasMoved[] = {false, false, false, false, false};
 
     @Override
     public void init() {
@@ -44,7 +43,7 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void loop() {
-        /*if(!hasMoved[0]) {
+        if(!hasMoved[0]) {
             telemetry.addData("hasMoved1", hasMoved[0]);
             hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI/2, telemetry);
             telemetry.addData("Move", 1);
@@ -56,9 +55,7 @@ public class AutonomousMode extends OpMode {
             hasMoved[2] = xDrive.StrafeByDistance(1000, Math.PI/3, telemetry);
         } else if (!hasMoved[3]) {
             hasMoved[3] = xDrive.RotateByAngle(Math.PI, true, telemetry);
-        }*/
-
-
+        }
     }
 
     @Override

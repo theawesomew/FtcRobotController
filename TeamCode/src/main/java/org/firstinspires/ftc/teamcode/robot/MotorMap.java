@@ -10,7 +10,7 @@ public class MotorMap {
 
     public MotorMap (HardwareMap hardwareMap, String ...mapValues) {
         for (String value : mapValues) {
-            motorMap.put(value, hardwareMap.get(DcMotor.class, value));
+            motorMap.put(value, hardwareMap.dcMotor.get(value));
         }
     }
 
