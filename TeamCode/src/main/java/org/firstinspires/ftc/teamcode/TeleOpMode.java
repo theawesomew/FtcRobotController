@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
@@ -14,10 +15,11 @@ public class TeleOpMode extends OpMode {
     private MotorMap motorMap;
     private MotorMap mechMap;
     private XDrive xDrive;
+    private Conveyor conveyor;
     private Servo pushServo;
 
 
-    private boolean toggleIntake = false;
+
 
     @Override
     public void init() {
@@ -34,6 +36,7 @@ public class TeleOpMode extends OpMode {
         }
 
         xDrive = new XDrive(motorMap);
+        conveyor = new Conveyor(mechMap);
         pushServo = hardwareMap.servo.get("pushServo");
         pushServo.setPosition(0.0);
     }
@@ -61,9 +64,22 @@ public class TeleOpMode extends OpMode {
             xDrive.SetRotation(1);
         }
 
+
+        if (gamepad1.dpad_up) {
+            conveyor.SetPower(-0.5);
+        }
+        else if (gamepad1.dpad_down) {
+            conveyor.SetPower(0.5);
+        }
+        else {
+            conveyor.SetPower(0);
+        }
+
+
+
         /**
          * Conveyor moving
-         */
+
         if (gamepad1.dpad_up) {
             mechMap.GetMotorMap().get("conveyor").setPower(0.5);
         }
@@ -73,6 +89,7 @@ public class TeleOpMode extends OpMode {
         else {
             mechMap.GetMotorMap().get("conveyor").setPower(0);
         }
+         */
 
         /**
          * shooting
