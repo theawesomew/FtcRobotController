@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
 
@@ -14,9 +15,10 @@ import org.firstinspires.ftc.teamcode.robot.XDrive;
 public class TeleOpMode extends OpMode {
     private MotorMap motorMap;
     private MotorMap mechMap;
+    private ServoMap servoMap;
     private XDrive xDrive;
     private Conveyor conveyor;
-    private Servo pushServo;
+
 
 
 
@@ -35,10 +37,14 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+        servoMap = new ServoMap(hardwareMap, "pushServo");
+        for (Servo servo : servoMap.GetServoMap().values()) {
+            servo.setPosition(0);
+        }
+
         xDrive = new XDrive(motorMap);
         conveyor = new Conveyor(mechMap);
-        pushServo = hardwareMap.servo.get("pushServo");
-        pushServo.setPosition(0.0);
+
     }
 
 
@@ -116,10 +122,10 @@ public class TeleOpMode extends OpMode {
          * pushy thing
          */
         if (gamepad1.y) {
-            pushServo.setPosition(0.1);
+            servoMap.GetServoMap().get("setPosition").setPosition(0.1);
         }
         if (gamepad1.x) {
-            pushServo.setPosition(0);
+            servoMap.GetServoMap().get("pushServo").setPosition(0);
         }
 
 
