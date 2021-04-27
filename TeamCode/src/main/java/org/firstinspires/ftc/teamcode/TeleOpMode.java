@@ -6,8 +6,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
+import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
+import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
 
@@ -18,6 +20,8 @@ public class TeleOpMode extends OpMode {
     private ServoMap servoMap;
     private XDrive xDrive;
     private Conveyor conveyor;
+    private Shooter shoot;
+    private Intake intake;
 
 
 
@@ -44,6 +48,9 @@ public class TeleOpMode extends OpMode {
 
         xDrive = new XDrive(motorMap);
         conveyor = new Conveyor(mechMap);
+        shoot = new Shooter(mechMap);
+        intake = new Intake(mechMap);
+
 
     }
 
@@ -70,7 +77,9 @@ public class TeleOpMode extends OpMode {
             xDrive.SetRotation(1);
         }
 
-
+        /**
+         * Conveyor
+         */
         if (gamepad1.dpad_up) {
             conveyor.SetPower(-0.5);
         }
@@ -81,41 +90,28 @@ public class TeleOpMode extends OpMode {
             conveyor.SetPower(0);
         }
 
-
-
-        /**
-         * Conveyor moving
-
-        if (gamepad1.dpad_up) {
-            mechMap.GetMotorMap().get("conveyor").setPower(0.5);
-        }
-        else if (gamepad1.dpad_down) {
-            mechMap.GetMotorMap().get("conveyor").setPower(-0.5);
-        }
-        else {
-            mechMap.GetMotorMap().get("conveyor").setPower(0);
-        }
-         */
-
         /**
          * shooting
          */
         if (gamepad1.right_trigger > 0.7){
-            mechMap.GetMotorMap().get("shoot").setPower(1);
+            /*mechMap.GetMotorMap().get("shoot").setPower(1);*/
+            shoot.SetPower(1);
         }
         else {
-            mechMap.GetMotorMap().get("shoot").setPower(0);
+           /* mechMap.GetMotorMap().get("shoot").setPower(0); */
+            shoot.SetPower(0);
         }
 
         /**
          * intake
          */
         if (gamepad1.b) {
-            mechMap.GetMotorMap().get("intake").setPower(0.25);
+            /*mechMap.GetMotorMap().get("intake").setPower(0.25); */
+            intake.SetPower(0.25);
         }
         if (gamepad1.a) {
-            mechMap.GetMotorMap().get("intake").setPower(0);
-
+            /*mechMap.GetMotorMap().get("intake").setPower(0); */
+            intake.SetPower(0);
         }
 
         /**
