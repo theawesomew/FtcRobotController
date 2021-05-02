@@ -2,19 +2,21 @@ package org.firstinspires.ftc.teamcode.lib;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GamepadWrapper {
+    private Class gamepadClass = Gamepad.class;
     private HashMap<String, String> gamepadBindings = new HashMap<String, String>();
     private HashMap<String, Boolean> buttonDownState = new HashMap<String, Boolean>();
     private HashMap<String, Boolean> buttonPressedState = new HashMap<String, Boolean>();
     private String inputs[] = {"a", "b", "x", "y", "dpad_up", "dpad_down", "dpad_left",
             "dpad_right", "left_bumper", "right_bumper", "left_trigger", "right_trigger", "start"};
+    private String gamepadStrings[] = {"g1", "g2"};
 
     public GamepadWrapper (String[] keys, String[] functions) {
-        String gamepads[] = {"g1", "g2"};
-        for (String gamepad : gamepads) {
+        for (String gamepad : gamepadStrings) {
             for (String input : inputs) {
                 buttonDownState.put(gamepad+"_"+input, false);
                 buttonPressedState.put(gamepad+"_"+input, false);
@@ -26,13 +28,29 @@ public class GamepadWrapper {
         }
     }
 
-    public void updateGamepadInputs (Gamepad gamepad1, Gamepad gamepad2) {
-        // unfortunately, i can't find any intelligent and efficient method of creating this method
-        // so, i'm going to have to hardcode it... death is also an option...
-        // also, i realised that this whole idea for debouncing is predicated upon the controller states
-        // being accurate. this is why we avoid embedded systems like the plague :)
+    public void updateGamepadInputs (Gamepad ...gamepads) {
+        for (int i = 0; i < 2; ++i) {
+            for (String buttonName : inputs) {
+                try {
+                    Field button = gamepadClass.getField(buttonName);
+                    button.setAccessible(true);
 
-        if (gamepad1.a) { buttonDownState.put("g1_a", true); }
+                    boolean down = (buttonName != "left_trigger" && buttonName != "right_trigger") ? (Boolean) button.get(gamepads[i]) : (float) button.get(gamepads[i]) > 0.7;
+
+                    if (down) {
+                        buttonDownState.put(gamepadStrings[i]+"_"+buttonName, true);
+                    } else {
+                        buttonDownState.put(gamepadStrings[i]+"_"+buttonName, false);
+                        buttonPressedState.put(gamepadStrings[i]+"_"+buttonName, false);
+                    }
+                } catch (Throwable e) {
+                    // what do you want me to do? if it gets here, just cry, bro. trust.
+                }
+
+            }
+        }
+
+        /*if (gamepad1.a) { buttonDownState.put("g1_a", true); }
         if (gamepad1.b) { buttonDownState.put("g1_b", true); }
         if (gamepad1.x) { buttonDownState.put("g1_x", true); }
         if (gamepad1.y) { buttonDownState.put("g1_y", true); }
@@ -166,7 +184,7 @@ public class GamepadWrapper {
         if (!gamepad2.start) {
             buttonDownState.put("g2_start", false);
             buttonPressedState.put("g2_start", false);
-        }
+        }*/
     }
 
     public boolean isDown (String button) {
@@ -180,6 +198,7 @@ public class GamepadWrapper {
         if (gamepadBindings.containsKey(button)) {
             button = gamepadBindings.get(button);
         }
+
         if (buttonPressedState.get(button)) {
             return false;
         } else if (buttonDownState.get(button)) {
