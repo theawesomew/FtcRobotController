@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.lib;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.lang.reflect.*;
+import java.security.Policy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,15 +13,21 @@ public class GamepadWrapper {
     private HashMap<String, String> gamepadBindings = new HashMap<String, String>();
     private HashMap<String, Boolean> buttonDownState = new HashMap<String, Boolean>();
     private HashMap<String, Boolean> buttonPressedState = new HashMap<String, Boolean>();
+    private HashMap<String, Boolean> debouncedState = new HashMap<String, Boolean>();
+    private HashMap<String, Double> debounceTime = new HashMap<String, Double>();
+    private ElapsedTime debounceTimer = new ElapsedTime();
     private String inputs[] = {"a", "b", "x", "y", "dpad_up", "dpad_down", "dpad_left",
             "dpad_right", "left_bumper", "right_bumper", "left_trigger", "right_trigger", "start"};
     private String gamepadStrings[] = {"g1", "g2"};
 
     public GamepadWrapper (String[] keys, String[] functions) {
+        debounceTimer.reset();
+
         for (String gamepad : gamepadStrings) {
             for (String input : inputs) {
                 buttonDownState.put(gamepad+"_"+input, false);
                 buttonPressedState.put(gamepad+"_"+input, false);
+                debouncedState.put(gamepad+"_"+input, false);
             }
         }
 
@@ -31,20 +39,38 @@ public class GamepadWrapper {
     public void updateGamepadInputs (Gamepad ...gamepads) {
         for (int i = 0; i < 2; ++i) {
             for (String buttonName : inputs) {
+                if (!debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
+                    debounceTime.put(gamepadStrings[i]+"_"+buttonName, debounceTimer.milliseconds());
+                } else {
+                    if (debounceTimer.milliseconds() - debounceTime.get(gamepadStrings[i]+"_"+buttonName) <= 0) {
+                        debouncedState.put(gamepadStrings[i]+"_"+buttonName, true);
+                    }
+                }
+
                 try {
                     Field button = gamepadClass.getField(buttonName);
                     button.setAccessible(true);
 
                     boolean down = (buttonName != "left_trigger" && buttonName != "right_trigger") ? (Boolean) button.get(gamepads[i]) : (float) button.get(gamepads[i]) > 0.7;
 
+                    // simply check if the boolean for the button is not the same as it is currently logged
+                    // wait the given time
+                    // check again
+                    // then change its state
                     if (down) {
-                        buttonDownState.put(gamepadStrings[i]+"_"+buttonName, true);
+                        if (debouncedState.get(gamepadStrings[i]+"_"+buttonName)) {
+                            buttonDownState.put(gamepadStrings[i] + "_" + buttonName, true);
+                            debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
+                        } else {
+                            debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
+                        }
                     } else {
                         buttonDownState.put(gamepadStrings[i]+"_"+buttonName, false);
                         buttonPressedState.put(gamepadStrings[i]+"_"+buttonName, false);
                     }
                 } catch (Throwable e) {
-                    // what do you want me to do? if it gets here, just cry, bro. trust.
+                    // what do you want me to do? if it gets here, just cry bro; trust.
+                    // had to ameliorate this comment somehow
                 }
 
             }
