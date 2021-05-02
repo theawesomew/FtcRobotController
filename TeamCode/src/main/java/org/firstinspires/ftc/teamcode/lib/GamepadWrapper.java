@@ -42,7 +42,7 @@ public class GamepadWrapper {
                 if (!debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
                     debounceTime.put(gamepadStrings[i]+"_"+buttonName, debounceTimer.milliseconds());
                 } else {
-                    if (debounceTimer.milliseconds() - debounceTime.get(gamepadStrings[i]+"_"+buttonName) <= 0) {
+                    if (debounceTimer.milliseconds() - debounceTime.get(gamepadStrings[i]+"_"+buttonName) >= 50) {
                         debouncedState.put(gamepadStrings[i]+"_"+buttonName, true);
                     }
                 }
