@@ -56,14 +56,13 @@ public class GamepadWrapper {
                     if (debouncedState.get(gamepadStrings[i]+"_"+buttonName)) {
                         if (down) {
                             buttonDownState.put(gamepadStrings[i] + "_" + buttonName, true);
-                            debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
-                            debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
                         } else {
                             buttonDownState.put(gamepadStrings[i] + "_" + buttonName, false);
                             buttonPressedState.put(gamepadStrings[i] + "_" + buttonName, false);
-                            debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
-                            debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
                         }
+
+                        debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
+                        debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
                     }
                 } catch (Throwable e) {
                     // what do you want me to do? if it gets here, just cry bro; trust.
