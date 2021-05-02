@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.Pushy;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
@@ -22,6 +23,7 @@ public class TeleOpMode extends OpMode {
     private Conveyor conveyor;
     private Shooter shoot;
     private Intake intake;
+    private Pushy pushy;
 
 
 
@@ -29,7 +31,7 @@ public class TeleOpMode extends OpMode {
 
     @Override
     public void init() {
-        motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");
+        motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
         for (DcMotor motor : motorMap.GetMotorMap().values()) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -50,6 +52,7 @@ public class TeleOpMode extends OpMode {
         conveyor = new Conveyor(mechMap);
         shoot = new Shooter(mechMap);
         intake = new Intake(mechMap);
+        pushy = new Pushy(servoMap);
 
 
     }
@@ -107,7 +110,7 @@ public class TeleOpMode extends OpMode {
          */
         if (gamepad1.b) {
             /*mechMap.GetMotorMap().get("intake").setPower(0.25); */
-            intake.SetPower(0.25);
+            intake.SetPower(0.5);
         }
         if (gamepad1.a) {
             /*mechMap.GetMotorMap().get("intake").setPower(0); */
@@ -118,10 +121,12 @@ public class TeleOpMode extends OpMode {
          * pushy thing
          */
         if (gamepad1.y) {
-            servoMap.GetServoMap().get("setPosition").setPosition(0.1);
+            /*servoMap.GetServoMap().get("setPosition").setPosition(0.1); */
+            pushy.SetPosition(0.2);
         }
         if (gamepad1.x) {
-            servoMap.GetServoMap().get("pushServo").setPosition(0);
+            /*servoMap.GetServoMap().get("pushServo").setPosition(0); */
+            pushy.SetPosition(0);
         }
 
 
