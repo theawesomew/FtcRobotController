@@ -39,9 +39,7 @@ public class GamepadWrapper {
     public void updateGamepadInputs (Gamepad ...gamepads) {
         for (int i = 0; i < 2; ++i) {
             for (String buttonName : inputs) {
-                if (!debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
-                    debounceTime.put(gamepadStrings[i]+"_"+buttonName, debounceTimer.milliseconds());
-                } else {
+                if (debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
                     if (debounceTimer.milliseconds() - debounceTime.get(gamepadStrings[i]+"_"+buttonName) >= 50) {
                         debouncedState.put(gamepadStrings[i]+"_"+buttonName, true);
                     }
@@ -52,6 +50,11 @@ public class GamepadWrapper {
                     button.setAccessible(true);
 
                     boolean down = (buttonName != "left_trigger" && buttonName != "right_trigger") ? (Boolean) button.get(gamepads[i]) : (float) button.get(gamepads[i]) > 0.7;
+
+                    if (down && !debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
+                        buttonDownState.put(gamepadStrings[i] + "_" + buttonName, true);
+                        debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
+                    }
 
                     if (debouncedState.get(gamepadStrings[i]+"_"+buttonName)) {
                         if (down) {
