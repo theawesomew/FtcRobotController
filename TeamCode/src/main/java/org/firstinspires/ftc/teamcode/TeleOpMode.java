@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.lib.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
@@ -24,9 +25,8 @@ public class TeleOpMode extends OpMode {
     private Shooter shoot;
     private Intake intake;
     private Pushy pushy;
-
-
-
+    private GamepadWrapper gamepadWrapper;
+    private int counter = 0;
 
 
     @Override
@@ -54,7 +54,7 @@ public class TeleOpMode extends OpMode {
         intake = new Intake(mechMap);
         pushy = new Pushy(servoMap);
 
-
+        gamepadWrapper = new GamepadWrapper();
     }
 
 
@@ -70,19 +70,22 @@ public class TeleOpMode extends OpMode {
 
     @Override
     public void loop () {
+        gamepadWrapper.updateGamepadInputs(telemetry, gamepad1, gamepad2);
         double angle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
         xDrive.SetStrafe(power, angle);
 
-        if (gamepad1.right_bumper) {
+        if (gamepadWrapper.isPressed("g1_a")) {
+            counter++;
+            shoot.SetPower(counter % 2);
+        }
+
+        /*if (gamepad1.right_bumper) {
             xDrive.SetRotation(-1);
         } else if (gamepad1.left_bumper) {
             xDrive.SetRotation(1);
         }
 
-        /**
-         * Conveyor
-         */
         if (gamepad1.dpad_up) {
             conveyor.SetPower(-0.5);
         }
@@ -93,41 +96,36 @@ public class TeleOpMode extends OpMode {
             conveyor.SetPower(0);
         }
 
-        /**
-         * shooting
-         */
         if (gamepad1.right_trigger > 0.7){
-            /*mechMap.GetMotorMap().get("shoot").setPower(1);*/
+            /*mechMap.GetMotorMap().get("shoot").setPower(1);
             shoot.SetPower(1);
         }
         else {
-           /* mechMap.GetMotorMap().get("shoot").setPower(0); */
+           /* mechMap.GetMotorMap().get("shoot").setPower(0);
             shoot.SetPower(0);
         }
 
         /**
          * intake
-         */
         if (gamepad1.b) {
-            /*mechMap.GetMotorMap().get("intake").setPower(0.25); */
+            /*mechMap.GetMotorMap().get("intake").setPower(0.25);
             intake.SetPower(0.5);
         }
         if (gamepad1.a) {
-            /*mechMap.GetMotorMap().get("intake").setPower(0); */
+            /*mechMap.GetMotorMap().get("intake").setPower(0);
             intake.SetPower(0);
         }
 
         /**
          * pushy thing
-         */
         if (gamepad1.y) {
-            /*servoMap.GetServoMap().get("setPosition").setPosition(0.1); */
+            /*servoMap.GetServoMap().get("setPosition").setPosition(0.1);
             pushy.SetPosition(0.2);
         }
         if (gamepad1.x) {
-            /*servoMap.GetServoMap().get("pushServo").setPosition(0); */
+            /*servoMap.GetServoMap().get("pushServo").setPosition(0);
             pushy.SetPosition(0);
-        }
+        } */
 
 
     }

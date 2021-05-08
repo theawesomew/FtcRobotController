@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.lib;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.lang.reflect.*;
 import java.security.Policy;
 import java.util.ArrayList;
@@ -36,7 +38,19 @@ public class GamepadWrapper {
         }
     }
 
-    public void updateGamepadInputs (Gamepad ...gamepads) {
+    public GamepadWrapper () {
+        debounceTimer.reset();
+
+        for (String gamepad : gamepadStrings) {
+            for (String input : inputs) {
+                buttonDownState.put(gamepad+"_"+input, false);
+                buttonPressedState.put(gamepad+"_"+input, false);
+                debouncedState.put(gamepad+"_"+input, false);
+            }
+        }
+    }
+
+    public void updateGamepadInputs (Telemetry telemetry, Gamepad ...gamepads) {
         for (int i = 0; i < Math.min(gamepads.length, gamepadStrings.length); ++i) {
             for (String buttonName : inputs) {
                 if (debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
@@ -59,13 +73,12 @@ public class GamepadWrapper {
                     if (debouncedState.get(gamepadStrings[i]+"_"+buttonName)) {
                         if (down) {
                             buttonDownState.put(gamepadStrings[i] + "_" + buttonName, true);
+                            debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
+                            debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
                         } else {
                             buttonDownState.put(gamepadStrings[i] + "_" + buttonName, false);
                             buttonPressedState.put(gamepadStrings[i] + "_" + buttonName, false);
                         }
-
-                        debouncedState.put(gamepadStrings[i] + "_" + buttonName, false);
-                        debounceTime.put(gamepadStrings[i] + "_" + buttonName, debounceTimer.milliseconds());
                     }
                 } catch (Throwable e) {
                     // what do you want me to do? if it gets here, just cry bro; trust.
