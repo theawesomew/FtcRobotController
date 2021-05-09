@@ -12,27 +12,21 @@ import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.Pushy;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
 @Autonomous(name="UltimateGoalAutonomousModeRedLeft", group="Autonomous")
-public class AutonomousModeRedLeft extends OpMode {
+public class AutonomousModeBlueLeft extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
     private VuforiaLocalizer vuforiaLocalizer;
     private TFObjectDetector tfod;
 
     private MotorMap driveMap;
-    private XDrive xDrive;
+    private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false};
-
-    private MotorMap mechMap;
-    private ServoMap servoMap;
-    private Conveyor conveyor;
-    private Shooter shoot;
-    private Intake intake;
-    private Pushy pushy;
 
 
     @Override
@@ -42,23 +36,8 @@ public class AutonomousModeRedLeft extends OpMode {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-        xDrive = new XDrive(driveMap);
 
-        mechMap = new MotorMap(hardwareMap, "conveyor", "intake", "shoot");
-        for (DcMotor motor : mechMap.GetMotorMap().values()) {
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-
-        servoMap = new ServoMap(hardwareMap, "pushServo");
-        for (Servo servo : servoMap.GetServoMap().values()) {
-            servo.setPosition(0);
-        }
-
-        conveyor = new Conveyor(mechMap);
-        shoot = new Shooter(mechMap);
-        intake = new Intake(mechMap);
-        pushy = new Pushy(servoMap);
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter");
     }
 
     @Override
@@ -73,6 +52,19 @@ public class AutonomousModeRedLeft extends OpMode {
 
     @Override
     public void loop() {
+
+        if (!hasMoved[0]) {
+            hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2);
+        } else if (!hasMoved[1]) {
+            hasMoved[1] = robot.StrafeByDistance(1000, 0);
+        } else if (!hasMoved[2]) {
+            hasMoved[2] = robot.StrafeByDistance(1000, 3*Math.PI/2);
+        } else {
+            robot.SetStrafe(0, 0);
+        }
+
+
+        /*
         if(!hasMoved[0]) {
             hasMoved[0] = xDrive.StrafeByDistance(10, Math.PI/2, telemetry);
         }
@@ -114,7 +106,7 @@ public class AutonomousModeRedLeft extends OpMode {
                 motor.setPower(0);
             }
             shoot.SetPower(0);
-        }
+        } */
 
 
         /***

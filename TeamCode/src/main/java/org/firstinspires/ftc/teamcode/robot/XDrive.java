@@ -53,7 +53,7 @@ public class XDrive extends DriveBase {
         backRight.setPower(power);
     }
 
-    public boolean RotateByAngle (double angle, boolean direction, Telemetry telemetry) {
+    public boolean RotateByAngle (double angle, boolean direction) {
         if (!motorsMoving) {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
@@ -89,7 +89,7 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public boolean StrafeByDistance (double distance, double angle, Telemetry telemetry) {
+    public boolean StrafeByDistance (double distance, double angle) {
         if (!motorsMoving) {
             double theta = angle - pi / 4;
 

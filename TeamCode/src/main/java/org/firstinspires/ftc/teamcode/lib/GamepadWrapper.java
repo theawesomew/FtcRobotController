@@ -50,7 +50,7 @@ public class GamepadWrapper {
         }
     }
 
-    public void updateGamepadInputs (Telemetry telemetry, Gamepad ...gamepads) {
+    public void updateGamepadInputs (Gamepad ...gamepads) {
         for (int i = 0; i < Math.min(gamepads.length, gamepadStrings.length); ++i) {
             for (String buttonName : inputs) {
                 if (debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
