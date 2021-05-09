@@ -36,8 +36,8 @@ public class XDrive extends DriveBase {
         double theta = angle - pi/4;
         power = power/Math.abs(power) * Math.min(1, Math.abs(power));
         forwardLeft.setPower(-power * Math.cos(theta));
-        backRight.setPower(power * Math.cos(theta));
         forwardRight.setPower(power * Math.sin(theta));
+        backRight.setPower(power * Math.cos(theta));
         backLeft.setPower(-power * Math.sin(theta));
     }
 
