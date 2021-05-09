@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
-@Autonomous(name="UltimateGoalAutonomousMode", group="Autonomous")
-public class AutonomousMode extends OpMode {
+@Autonomous(name="UltimateGoalAutonomousModeRedLeft", group="Autonomous")
+public class AutonomousModeRedLeft extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
     private VuforiaLocalizer vuforiaLocalizer;
@@ -73,42 +73,26 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void loop() {
-        if (!hasMoved[0]) {
-            telemetry.addData("hasMoved1", hasMoved[0]);
-            hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI / 2, telemetry);
-            telemetry.addData("Move", 1);
-        } else if (!hasMoved[1]) {
-            telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = shoot.SetDistance(10000);
-            telemetry.addData("Move", 2);
-        } else if (!hasMoved[2]) {
-            telemetry.addData("hasMoved1", hasMoved[2]);
-            pushy.Push();
-            hasMoved[2] = true;
-            telemetry.addData("Move", 3);
-        } else {
-            for (DcMotor motor : driveMap.GetMotorMap().values()) {
-                motor.setPower(0);
-            }
-            shoot.SetPower(0);
+        if(!hasMoved[0]) {
+
         }
 
 
 
         /***
-        if(!hasMoved[0]) {
-            telemetry.addData("hasMoved1", hasMoved[0]);
-            hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI/2, telemetry);
-            telemetry.addData("Move", 1);
-        } else if (!hasMoved[1]) {
-            telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = xDrive.StrafeByDistance(1000, Math.PI, telemetry);
-            telemetry.addData("Move", 2);
-        } else if (!hasMoved[2]) {
-            hasMoved[2] = xDrive.StrafeByDistance(1000, Math.PI/3, telemetry);
-        } else if (!hasMoved[3]) {
-            hasMoved[3] = xDrive.RotateByAngle(Math.PI, true, telemetry);
-        }
+         if(!hasMoved[0]) {
+         telemetry.addData("hasMoved1", hasMoved[0]);
+         hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI/2, telemetry);
+         telemetry.addData("Move", 1);
+         } else if (!hasMoved[1]) {
+         telemetry.addData("hasMoved1", hasMoved[1]);
+         hasMoved[1] = xDrive.StrafeByDistance(1000, Math.PI, telemetry);
+         telemetry.addData("Move", 2);
+         } else if (!hasMoved[2]) {
+         hasMoved[2] = xDrive.StrafeByDistance(1000, Math.PI/3, telemetry);
+         } else if (!hasMoved[3]) {
+         hasMoved[3] = xDrive.RotateByAngle(Math.PI, true, telemetry);
+         }
          **/
     }
 
