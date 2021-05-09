@@ -72,6 +72,7 @@ public class TeleOpMode extends OpMode {
     public void loop () {
         gamepadWrapper.updateGamepadInputs(telemetry, gamepad1, gamepad2);
         double angle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
+        telemetry.addData("Angle:", angle);
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
         xDrive.SetStrafe(power, angle);
 

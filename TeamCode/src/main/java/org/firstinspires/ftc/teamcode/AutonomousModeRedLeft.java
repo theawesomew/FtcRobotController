@@ -25,7 +25,7 @@ public class AutonomousModeRedLeft extends OpMode {
 
     private MotorMap driveMap;
     private XDrive xDrive;
-    private boolean hasMoved[] = {false, false, false, false, false};
+    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false};
 
     private MotorMap mechMap;
     private ServoMap servoMap;
@@ -74,9 +74,47 @@ public class AutonomousModeRedLeft extends OpMode {
     @Override
     public void loop() {
         if(!hasMoved[0]) {
-
+            hasMoved[0] = xDrive.StrafeByDistance(10, Math.PI/2, telemetry);
         }
-
+        else if(!hasMoved[1]) {
+            hasMoved[1] = xDrive.StrafeByDistance(10, 0, telemetry);
+        }
+        else if(!hasMoved[2]) {
+            hasMoved[2] = shoot.Shoot();
+        }
+        else if(!hasMoved[3]) {
+            pushy.Push();
+            hasMoved[3] = true;
+        }
+        else if(!hasMoved[4]) {
+            hasMoved[4] = xDrive.StrafeByDistance(10, 0, telemetry);
+        }
+        else if(!hasMoved[5]) {
+            hasMoved[5] = shoot.Shoot();
+        }
+        else if(!hasMoved[6]) {
+            pushy.Push();
+            hasMoved[6] = true;
+        }
+        else if(!hasMoved[7]) {
+            hasMoved[7] = xDrive.StrafeByDistance(10, 0, telemetry);
+        }
+        else if(!hasMoved[8]) {
+            hasMoved[8] = shoot.Shoot();
+        }
+        else if(!hasMoved[9]) {
+            pushy.Push();
+            hasMoved[9] = true;
+        }
+        else if(!hasMoved[10]) {
+            hasMoved[10] = xDrive.StrafeByDistance(10, Math.PI/2, telemetry);
+        }
+        else {;
+            for (DcMotor motor : driveMap.GetMotorMap().values()) {
+                motor.setPower(0);
+            }
+            shoot.SetPower(0);
+        }
 
 
         /***

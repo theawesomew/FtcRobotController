@@ -79,7 +79,7 @@ public class AutonomousModeRedRight extends OpMode {
             telemetry.addData("Move", 1);
         } else if (!hasMoved[1]) {
             telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = shoot.SetDistance(10000);
+            hasMoved[1] = shoot.Shoot();
             telemetry.addData("Move", 2);
         } else if (!hasMoved[2]) {
             telemetry.addData("hasMoved1", hasMoved[2]);

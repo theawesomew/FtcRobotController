@@ -22,7 +22,7 @@ public class Shooter extends Mechanisms {
         shooter.setPower(power);
     }
 
-    public boolean SetDistance(double distance) {
+    /*public boolean SetDistance(double distance) {
         if (!motorsMoving) {
             motorDistance = (int) (distance);
 
@@ -38,6 +38,16 @@ public class Shooter extends Mechanisms {
 
         return  false;
 
+    }*/
+
+    public boolean Shoot () {
+        if (!shooter.isBusy()) {
+            shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            shooter.setTargetPosition(10 * 1440);
+            shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            shooter.setPower(1);
+        }
+        return true;
     }
 
 
