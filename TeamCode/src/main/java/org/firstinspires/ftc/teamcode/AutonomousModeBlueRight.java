@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
-@Autonomous(name="UltimateGoalAutonomousMode", group="Autonomous")
-public class AutonomousMode extends OpMode {
+@Autonomous(name="UltimateGoalAutonomousModeRedRight", group="Autonomous")
+public class AutonomousModeBlueRight extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
     private VuforiaLocalizer vuforiaLocalizer;
@@ -37,7 +37,7 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void init() {
-        driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
+        /*driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
         for (DcMotor motor : driveMap.GetMotorMap().values()) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -58,7 +58,7 @@ public class AutonomousMode extends OpMode {
         conveyor = new Conveyor(mechMap);
         shoot = new Shooter(mechMap);
         intake = new Intake(mechMap);
-        pushy = new Pushy(servoMap);
+        pushy = new Pushy(servoMap);*/
     }
 
     @Override
@@ -73,13 +73,14 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void loop() {
+        /*
         if (!hasMoved[0]) {
             telemetry.addData("hasMoved1", hasMoved[0]);
             hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI / 2, telemetry);
             telemetry.addData("Move", 1);
         } else if (!hasMoved[1]) {
             telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = shoot.SetDistance(10000);
+            hasMoved[1] = shoot.Shoot();
             telemetry.addData("Move", 2);
         } else if (!hasMoved[2]) {
             telemetry.addData("hasMoved1", hasMoved[2]);
@@ -91,7 +92,7 @@ public class AutonomousMode extends OpMode {
                 motor.setPower(0);
             }
             shoot.SetPower(0);
-        }
+        }*/
 
 
 
