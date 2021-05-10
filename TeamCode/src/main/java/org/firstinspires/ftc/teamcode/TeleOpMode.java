@@ -24,6 +24,7 @@ public class TeleOpMode extends OpMode {
     private int counter = 0;
 
 
+
     @Override
     public void init() {
         motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
@@ -34,6 +35,8 @@ public class TeleOpMode extends OpMode {
 
         robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter");
         gamepadWrapper = new GamepadWrapper();
+
+
     }
 
 
@@ -69,14 +72,30 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isPressed("g1_b")) {
             robot.SetIntakePower(++counter % 2);
+<<<<<<< Updated upstream
             robot.SetConveyorPower(++counter % 2);
+=======
+            robot.SetConveyorPower(counter % 2);
         }
+
+       /* if (gamepadWrapper.isDown("g1_dpad_up")) {
+            robot.SetConveyorPower(-1);
+        } else if (gamepadWrapper.isDown("g1_dpad_down")) {
+            robot.SetConveyorPower(1);
+        } else {
+            robot.SetConveyorPower(0);
+>>>>>>> Stashed changes
+        }
+
+        */
 
         if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
         } else {
             robot.Retract();
         }
+
+
     }
 
     @Override

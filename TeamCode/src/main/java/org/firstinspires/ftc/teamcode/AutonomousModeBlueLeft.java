@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
-@Autonomous(name="UltimateGoalAutonomousModeRedLeft", group="Autonomous")
+@Autonomous(name="UltimateGoalAutonomousModeBlueLeft", group="Autonomous")
 public class AutonomousModeBlueLeft extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";

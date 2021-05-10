@@ -39,7 +39,7 @@ public class Robot {
     }
 
     public void SetConveyorPower (double power) {
-        this.conveyor.SetPower(power);
+        this.conveyor.SetPower(-power);
     }
 
     public boolean RunConveyor () {
@@ -62,5 +62,7 @@ public class Robot {
         this.pushy.Push();
     }
 
-    public void Retract () { this.pushy.Retract(); }
+    public void Retract () {
+        this.pushy.Retract();
+    }
 }
