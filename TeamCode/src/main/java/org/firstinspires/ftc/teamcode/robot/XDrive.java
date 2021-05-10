@@ -31,10 +31,10 @@ public class XDrive extends DriveBase {
     }
 
     public XDrive(MotorMap motorMap) {
-        driveMotors = motorMap.GetMotorMap();
         for (String motorName : motorMap.GetMotorMap().keySet()) {
             strafeVectors.put(motorName, new Vector(0,0));
             rotationVectors.put(motorName, new Vector(0,0));
+            driveMotors.put(motorName, motorMap.GetMotorMap().get(motorName));
         }
     }
 
@@ -45,7 +45,7 @@ public class XDrive extends DriveBase {
         }
 
         for (String motorName : strafeVectors.keySet()) {
-            Vector driveVector = strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).Scale(Math.max(1, scale));
+            Vector driveVector = (strafeVectors.get(motorName).Add(rotationVectors.get(motorName))).Scale(Math.max(1, scale));
             driveMotors.get(motorName).setPower(driveVector.GetMagnitude());
         }
     }
