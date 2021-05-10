@@ -54,11 +54,23 @@ public class AutonomousModeBlueLeft extends OpMode {
     public void loop() {
 
         if (!hasMoved[0]) {
-            hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2);
+            try {
+                hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (!hasMoved[1]) {
-            hasMoved[1] = robot.StrafeByDistance(1000, 0);
+            try {
+                hasMoved[1] = robot.StrafeByDistance(1000, 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (!hasMoved[2]) {
-            hasMoved[2] = robot.StrafeByDistance(1000, 3*Math.PI/2);
+            try {
+                hasMoved[2] = robot.StrafeByDistance(1000, 3*Math.PI/2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             robot.SetStrafe(0, 0);
         }

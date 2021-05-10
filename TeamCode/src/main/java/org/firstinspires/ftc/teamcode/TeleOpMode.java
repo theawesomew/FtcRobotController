@@ -72,9 +72,6 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isPressed("g1_b")) {
             robot.SetIntakePower(++counter % 2);
-<<<<<<< Updated upstream
-            robot.SetConveyorPower(++counter % 2);
-=======
             robot.SetConveyorPower(counter % 2);
         }
 
