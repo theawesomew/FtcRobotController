@@ -105,4 +105,17 @@ public class Vector {
             return new Vector(newValues);
         }
     }
+
+    public Vector Scale (double scale) throws Exception {
+        if (scale != 0) {
+            double[] newValues = new double[this.GetDimension()-1];
+            for (int i = 0; i < this.GetDimension(); ++i) {
+                newValues[i] = this.GetValues()[i] / scale;
+            }
+
+            return new Vector(newValues);
+        } else {
+            throw new Exception("Scale factor is zero and will produce");
+        }
+    }
 }

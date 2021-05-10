@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.Vector;
 
+import java.util.HashMap;
+
 public class XDrive extends DriveBase {
     private DcMotor forwardLeft, forwardRight, backLeft, backRight;
     private double pi = Math.PI;
@@ -17,6 +19,9 @@ public class XDrive extends DriveBase {
     private final double ticksPerMM = ticksPerWheelRotation/(pi*wheelDiameter);
     private int forwardLeftDistance = 0, forwardRightDistance = 0, backLeftDistance = 0, backRightDistance = 0;
     private boolean motorsMoving = false;
+    private HashMap<String, Vector> strafeVectors = new HashMap<String, Vector>();
+    private HashMap<String, Vector> rotationVectors = new HashMap<String, Vector>();
+    private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
 
     public boolean within (int value, int setValue, int error) {
         if (Math.abs(value-setValue) < error) {
@@ -26,19 +31,31 @@ public class XDrive extends DriveBase {
     }
 
     public XDrive(MotorMap motorMap) {
-        forwardLeft = motorMap.GetMotorMap().get("forwardLeft");
-        forwardRight = motorMap.GetMotorMap().get("forwardRight");
-        backLeft = motorMap.GetMotorMap().get("backLeft");
-        backRight = motorMap.GetMotorMap().get("backRight");
+        driveMotors = motorMap.GetMotorMap();
+        for (String motorName : motorMap.GetMotorMap().keySet()) {
+            strafeVectors.put(motorName, new Vector(0,0));
+            rotationVectors.put(motorName, new Vector(0,0));
+        }
+    }
+
+    public void Drive () throws Exception {
+        double scale = 0;
+        for (String motorName : strafeVectors.keySet()) {
+            scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).GetMagnitude());
+        }
+
+        for (String motorName : strafeVectors.keySet()) {
+            Vector driveVector = strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).Scale(Math.max(1, scale));
+            driveMotors.get(motorName).setPower(driveVector.GetMagnitude());
+        }
     }
 
     public void SetStrafe (double power, double angle) {
-        double theta = angle - pi/4;
         power = power/Math.abs(power) * Math.min(1, Math.abs(power));
-        forwardLeft.setPower(-power * Math.cos(theta));
-        forwardRight.setPower(power * Math.sin(theta));
-        backRight.setPower(power * Math.cos(theta));
-        backLeft.setPower(-power * Math.sin(theta));
+        strafeVectors.put("forwardLeft", new Vector(-power * Math.cos(angle - Math.PI/4), Math.PI/4));
+        strafeVectors.put("fowardRight", new Vector(power * Math.sin(angle - Math.PI/4), 3*Math.PI/4));
+        strafeVectors.put("backRight", new Vector(power * Math.cos(angle-Math.PI/4), Math.PI/4));
+        strafeVectors.put("backLeft", new Vector(-power*Math.sin(angle-Math.PI/4), 3*Math.PI/4));
     }
 
     public void SetStrafe (Vector movementVector) throws Exception {
@@ -47,13 +64,14 @@ public class XDrive extends DriveBase {
 
     public void SetRotation (double power) {
         power = power/Math.abs(power) * Math.min(1, Math.abs(power));
-        forwardLeft.setPower(power);
-        forwardRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
+        strafeVectors.put("forwardLeft", new Vector(-power, Math.PI/4));
+        strafeVectors.put("fowardRight", new Vector(-power, 3*Math.PI/4));
+        strafeVectors.put("backRight", new Vector(-power, Math.PI/4));
+        strafeVectors.put("backLeft", new Vector(-power, 3*Math.PI/4));
+
     }
 
-    public boolean RotateByAngle (double angle, boolean direction) {
+    public boolean RotateByAngle (double angle, boolean direction) throws Exception {
         if (!motorsMoving) {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
@@ -77,6 +95,7 @@ public class XDrive extends DriveBase {
             }
 
             SetRotation(power);
+            Drive();
             motorsMoving = true;
         } else if (within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
                 within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&
@@ -89,7 +108,7 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public boolean StrafeByDistance (double distance, double angle) {
+    public boolean StrafeByDistance (double distance, double angle) throws Exception {
         if (!motorsMoving) {
             double theta = angle - pi / 4;
 
@@ -109,6 +128,7 @@ public class XDrive extends DriveBase {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             SetStrafe(1, angle);
+            Drive();
             motorsMoving = true;
         } else if ( within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
                     within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&

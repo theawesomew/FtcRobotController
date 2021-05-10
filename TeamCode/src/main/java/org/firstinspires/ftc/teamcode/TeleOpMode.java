@@ -51,9 +51,15 @@ public class TeleOpMode extends OpMode {
     public void loop () {
         gamepadWrapper.updateGamepadInputs(gamepad1, gamepad2);
         double angle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
-        telemetry.addData("Angle:", angle);
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
         robot.SetStrafe(power, angle);
+        robot.SetRotation(-gamepad1.right_stick_x);
+        try {
+            robot.Drive();
+        } catch (Exception e) {
+            //idk why this would incur an error... there's literally no reason.
+            //I just wanted to be fastidious, rigorous, and assiduous for a change.
+        }
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.SetShooterPower(1);
@@ -63,14 +69,7 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isPressed("g1_b")) {
             robot.SetIntakePower(++counter % 2);
-        }
-
-        if (gamepadWrapper.isDown("g1_dpad_up")) {
-            robot.SetConveyorPower(-1);
-        } else if (gamepadWrapper.isDown("g1_dpad_down")) {
-            robot.SetConveyorPower(1);
-        } else {
-            robot.SetConveyorPower(0);
+            robot.SetConveyorPower(++counter % 2);
         }
 
         if (gamepadWrapper.isDown("g1_a")) {

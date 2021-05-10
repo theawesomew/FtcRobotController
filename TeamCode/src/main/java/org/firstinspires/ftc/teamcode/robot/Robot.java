@@ -18,11 +18,15 @@ public class Robot {
         this.shooter = new Shooter(hardwareMap, shooterName);
     }
 
+    public void Drive () throws Exception {
+        this.xDrive.Drive();
+    }
+
     public void SetStrafe (double power, double angle) {
         this.xDrive.SetStrafe(power, angle);
     }
 
-    public boolean StrafeByDistance (double distance, double angle) {
+    public boolean StrafeByDistance (double distance, double angle) throws Exception {
         return this.xDrive.StrafeByDistance(distance, angle);
     }
 
@@ -30,7 +34,7 @@ public class Robot {
         this.xDrive.SetRotation(power);
     }
 
-    public void RotateByAngle (double angle, boolean direction) {
+    public void RotateByAngle (double angle, boolean direction) throws Exception {
         this.xDrive.RotateByAngle(angle, direction);
     }
 
