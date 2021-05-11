@@ -55,8 +55,11 @@ public class TeleOpMode extends OpMode {
         gamepadWrapper.updateGamepadInputs(gamepad1, gamepad2);
         double angle = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
+        telemetry.addData("Power: ", power);
+        telemetry.addData("Angle: ", angle);
         robot.SetStrafe(power, angle);
         robot.SetRotation(-gamepad1.right_stick_x);
+        telemetry.addData("Rotation: ", -gamepad1.right_stick_x);
         robot.Drive(telemetry);
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
