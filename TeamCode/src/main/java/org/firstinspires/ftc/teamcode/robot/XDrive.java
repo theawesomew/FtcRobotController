@@ -45,9 +45,13 @@ public class XDrive extends DriveBase {
         }
 
         for (String motorName : strafeVectors.keySet()) {
+            telemetry.addData("Strafe Vector X", strafeVectors.get(motorName).GetValues()[0]);
+            telemetry.addData("Strafe Vector Y", strafeVectors.get(motorName).GetValues()[1]);
+            telemetry.addData("Rotate Vector X", rotationVectors.get(motorName).GetValues()[0]);
+            telemetry.addData("Rotate Vector Y", rotationVectors.get(motorName).GetValues()[1]);
             Vector driveVector = (strafeVectors.get(motorName).Add(rotationVectors.get(motorName))).Scale(Math.max(1, scale));
-            telemetry.addData("driveVector magnitude", driveVector.GetMagnitude());
-            telemetry.addData("driveVector angle", driveVector.GetAngleBetweenVectors(new Vector(1,0)));
+            /*telemetry.addData("driveVector magnitude", driveVector.GetMagnitude());
+            telemetry.addData("driveVector angle", driveVector.GetAngleBetweenVectors(new Vector(1,0)));*/
             driveMotors.get(motorName).setPower(driveVector.GetMagnitude());
         }
     }
