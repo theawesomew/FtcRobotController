@@ -41,11 +41,14 @@ public class XDrive extends DriveBase {
     public void Drive (Telemetry telemetry) {
         double scale = 0;
         for (String motorName : strafeVectors.keySet()) {
-            scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).GetMagnitude());
+            scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName), telemetry).GetMagnitude());
+            telemetry.addData("Strafe x" + motorName + ": ", strafeVectors.get(motorName).GetValues()[0]);
+            telemetry.addData("Strafe y" + motorName + ": ", strafeVectors.get(motorName).GetValues()[1]);
+            telemetry.addData("Rotate x" + motorName + ": ", rotationVectors.get(motorName).GetValues()[0]);
         }
 
         for (String motorName : strafeVectors.keySet()) {
-            Vector driveVector = strafeVectors.get(motorName).Add(rotationVectors.get(motorName));
+            Vector driveVector = strafeVectors.get(motorName).Add(rotationVectors.get(motorName), telemetry);
             telemetry.addData("Drive Vector X", driveVector.GetValues()[0]);
             telemetry.addData("Drive Vector Y", driveVector.GetValues()[1]);
             driveVector = driveVector.Scale(Math.max(1, scale));

@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.lib;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.TeleOpMode;
+
 import java.lang.Math;
 
 public class Vector {
@@ -80,12 +83,15 @@ public class Vector {
         return this;
     }
 
-    public Vector Add (Vector vector) {
+    public Vector Add (Vector vector, Telemetry telemetry) {
         if (!this.CheckSize(vector)) {
             return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         } else {
             double[] newValues = new double[this.GetDimension()];
-            for (int i = 0; i < this.GetDimension(); ++i) {
+            for (int i = 0; i < this.GetDimension(); i++) {
+                telemetry.addData("Add 1: ", this.GetValues()[i]);
+                telemetry.addData("Add 2: ", vector.GetValues()[i]);
+
                 newValues[i] = this.GetValues()[i] + vector.GetValues()[i];
             }
 
