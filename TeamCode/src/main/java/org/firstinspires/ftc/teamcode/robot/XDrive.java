@@ -38,7 +38,7 @@ public class XDrive extends DriveBase {
         }
     }
 
-    public void Drive () {
+    public void Drive (Telemetry telemetry) throws Exception {
         double scale = 0;
         for (String motorName : strafeVectors.keySet()) {
             scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).GetMagnitude());
@@ -46,6 +46,8 @@ public class XDrive extends DriveBase {
 
         for (String motorName : strafeVectors.keySet()) {
             Vector driveVector = (strafeVectors.get(motorName).Add(rotationVectors.get(motorName))).Scale(Math.max(1, scale));
+            telemetry.addData("driveVector magnitude", driveVector.GetMagnitude());
+            telemetry.addData("driveVector angle", driveVector.GetAngleBetweenVectors(new Vector(1,0)));
             driveMotors.get(motorName).setPower(driveVector.GetMagnitude());
         }
     }
@@ -71,7 +73,7 @@ public class XDrive extends DriveBase {
 
     }
 
-    public boolean RotateByAngle (double angle, boolean direction) {
+    public boolean RotateByAngle (double angle, boolean direction, Telemetry telemetry) throws Exception {
         if (!motorsMoving) {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
@@ -95,7 +97,7 @@ public class XDrive extends DriveBase {
             }
 
             SetRotation(power);
-            Drive();
+            Drive(telemetry);
             motorsMoving = true;
         } else if (within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
                 within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&
@@ -108,7 +110,8 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public boolean StrafeByDistance (double distance, double angle) {
+
+    public boolean StrafeByDistance (double distance, double angle, Telemetry telemetry) throws Exception {
         if (!motorsMoving) {
             double theta = angle - pi / 4;
 
@@ -128,7 +131,7 @@ public class XDrive extends DriveBase {
             backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             SetStrafe(1, angle);
-            Drive();
+            Drive(telemetry);
             motorsMoving = true;
         } else if ( within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
                     within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&

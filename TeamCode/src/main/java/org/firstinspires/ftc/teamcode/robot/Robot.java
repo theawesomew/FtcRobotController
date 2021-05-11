@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Robot {
     private XDrive xDrive;
     private Conveyor conveyor;
@@ -18,24 +20,24 @@ public class Robot {
         this.shooter = new Shooter(hardwareMap, shooterName);
     }
 
-    public void Drive () {
-        this.xDrive.Drive();
+    public void Drive(Telemetry telemetry) throws Exception {
+        this.xDrive.Drive(telemetry);
     }
 
     public void SetStrafe (double power, double angle) {
         this.xDrive.SetStrafe(power, angle);
     }
 
-    public boolean StrafeByDistance (double distance, double angle) {
-        return this.xDrive.StrafeByDistance(distance, angle);
+    public boolean StrafeByDistance (double distance, double angle, Telemetry telemetry) throws Exception {
+        return this.xDrive.StrafeByDistance(distance, angle, telemetry);
     }
 
     public void SetRotation (double power) {
         this.xDrive.SetRotation(power);
     }
 
-    public void RotateByAngle (double angle, boolean direction) {
-        this.xDrive.RotateByAngle(angle, direction);
+    public void RotateByAngle (double angle, boolean direction, Telemetry telemetry) throws Exception {
+        this.xDrive.RotateByAngle(angle, direction, telemetry);
     }
 
     public void SetConveyorPower (double power) {
