@@ -16,13 +16,13 @@ public class Vector {
         this.values = new double[]{magnitude * Math.cos(angle), magnitude * Math.sin(angle)};
     }
 
-    public double GetMagnitude () throws Exception {
+    public double GetMagnitude () {
         return Math.pow(this.Dot(this), (1.0/this.GetDimension()));
     }
 
-    public double Dot (Vector vector) throws Exception {
+    public double Dot (Vector vector) {
         if (!this.CheckSize(vector)) {
-            throw new Exception("The dot product of two vectors of different dimensions is being taken");
+            return 1; // Why would you ever get this error? You've been careful right?
         } else {
             double product = 0;
             for (int i = 0; i < this.GetDimension(); ++i) {
@@ -32,9 +32,9 @@ public class Vector {
         }
     }
 
-    public double GetAngleBetweenVectors (Vector vector) throws Exception {
+    public double GetAngleBetweenVectors (Vector vector) {
         if (!this.CheckSize(vector)) {
-            throw new Exception("The dot product of two vectors of different dimensions is being taken");
+            return 0; // Why would you ever get this error? You've been careful right?
         } else {
             return Math.acos(this.Dot(vector)/(this.GetMagnitude()*vector.GetMagnitude()));
         }
@@ -52,9 +52,9 @@ public class Vector {
         return (vector.GetDimension() == this.GetDimension());
     }
 
-    public Vector Cross (Vector vector) throws Exception {
+    public Vector Cross (Vector vector) {
         if (vector.GetDimension() != 3) {
-            throw new Exception("Taking cross-product of non-three-dimensional vector");
+            return new Vector(1, 1, 1); // Why would you ever get this error? You've been careful right?
         } else {
             double x, y, z;
             double[] a = this.GetValues();
@@ -68,7 +68,7 @@ public class Vector {
         }
     }
 
-    public Vector GetUnit () throws Exception {
+    public Vector GetUnit () {
         double magnitude = this.GetMagnitude();
         if (magnitude > 0) {
             double[] unitValues = {};
@@ -80,9 +80,9 @@ public class Vector {
         return this;
     }
 
-    public Vector Add (Vector vector) throws Exception {
+    public Vector Add (Vector vector) {
         if (!this.CheckSize(vector)) {
-            throw new Exception("Adding vectors of different dimensions");
+            return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         } else {
             double[] newValues = new double[this.GetDimension()-1];
             for (int i = 0; i < this.GetDimension(); ++i) {
@@ -93,9 +93,9 @@ public class Vector {
         }
     }
 
-    public Vector Subtract (Vector vector) throws Exception {
+    public Vector Subtract (Vector vector) {
         if (!this.CheckSize(vector)) {
-            throw new Exception("Subtracting vectors of different dimensions");
+            return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         } else {
             double[] newValues = new double[this.GetDimension()-1];
             for (int i = 0; i < this.GetDimension(); ++i) {
@@ -106,7 +106,7 @@ public class Vector {
         }
     }
 
-    public Vector Scale (double scale) throws Exception {
+    public Vector Scale (double scale) {
         if (scale != 0) {
             double[] newValues = new double[this.GetDimension()-1];
             for (int i = 0; i < this.GetDimension(); ++i) {
@@ -115,7 +115,7 @@ public class Vector {
 
             return new Vector(newValues);
         } else {
-            throw new Exception("Scale factor is zero and will produce");
+            return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         }
     }
 }

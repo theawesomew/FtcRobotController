@@ -38,7 +38,7 @@ public class XDrive extends DriveBase {
         }
     }
 
-    public void Drive () throws Exception {
+    public void Drive () {
         double scale = 0;
         for (String motorName : strafeVectors.keySet()) {
             scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName)).GetMagnitude());
@@ -71,7 +71,7 @@ public class XDrive extends DriveBase {
 
     }
 
-    public boolean RotateByAngle (double angle, boolean direction) throws Exception {
+    public boolean RotateByAngle (double angle, boolean direction) {
         if (!motorsMoving) {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
@@ -108,7 +108,7 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public boolean StrafeByDistance (double distance, double angle) throws Exception {
+    public boolean StrafeByDistance (double distance, double angle) {
         if (!motorsMoving) {
             double theta = angle - pi / 4;
 

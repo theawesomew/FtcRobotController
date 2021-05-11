@@ -57,12 +57,7 @@ public class TeleOpMode extends OpMode {
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
         robot.SetStrafe(power, angle);
         robot.SetRotation(-gamepad1.right_stick_x);
-        try {
-            robot.Drive();
-        } catch (Exception e) {
-            //idk why this would incur an error... there's literally no reason.
-            //I just wanted to be fastidious, rigorous, and assiduous for a change.
-        }
+        robot.Drive();
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.SetShooterPower(1);
