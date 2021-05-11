@@ -59,7 +59,7 @@ public class XDrive extends DriveBase {
     }
 
     public void SetStrafe (double power, double angle) {
-        power = power/Math.abs(power) * Math.min(1, Math.abs(power));
+        power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
         strafeVectors.put("forwardLeft", new Vector(-power * Math.cos(angle - Math.PI/4), Math.PI/4));
         strafeVectors.put("forwardRight", new Vector(power * Math.sin(angle - Math.PI/4), 3*Math.PI/4));
         strafeVectors.put("backRight", new Vector(power * Math.cos(angle-Math.PI/4), Math.PI/4));
@@ -71,7 +71,7 @@ public class XDrive extends DriveBase {
     }
 
     public void SetRotation (double power) {
-        power = power/Math.abs(power) * Math.min(1, Math.abs(power));
+        power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
         rotationVectors.put("forwardLeft", new Vector(-power, Math.PI/4));
         rotationVectors.put("forwardRight", new Vector(-power, 3*Math.PI/4));
         rotationVectors.put("backRight", new Vector(-power, Math.PI/4));
