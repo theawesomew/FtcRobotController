@@ -53,7 +53,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     @Override
     public void loop() {
 
-        /*if (!hasMoved[0]) {
+        if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2);
         } else if (!hasMoved[1]) {
             hasMoved[1] = robot.StrafeByDistance(1000, 0);
@@ -61,7 +61,7 @@ public class AutonomousModeBlueLeft extends OpMode {
             hasMoved[2] = robot.StrafeByDistance(1000, 3 * Math.PI/2);
         } else {
             robot.SetStrafe(0, 0);
-        }*/
+        }
 
 
         /*
