@@ -19,8 +19,8 @@ public class XDrive extends DriveBase {
     private final double ticksPerMM = ticksPerWheelRotation/(pi*wheelDiameter);
     private int forwardLeftDistance = 0, forwardRightDistance = 0, backLeftDistance = 0, backRightDistance = 0;
     private boolean motorsMoving = false;
-    private HashMap<String, Vector> strafeVectors = new HashMap<String, Vector>();
-    private HashMap<String, Vector> rotationVectors = new HashMap<String, Vector>();
+    private HashMap<String, Double> strafePower = new HashMap<String, Double>();
+    private HashMap<String, Double> rotationPower = new HashMap<String, Double>();
     private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
 
     public boolean within (int value, int setValue, int error) {
@@ -32,38 +32,29 @@ public class XDrive extends DriveBase {
 
     public XDrive(MotorMap motorMap) {
         for (String motorName : motorMap.GetMotorMap().keySet()) {
-            strafeVectors.put(motorName, new Vector(0,0));
-            rotationVectors.put(motorName, new Vector(0,0));
+            strafePower.put(motorName, 0.0);
+            rotationPower.put(motorName, 0.0);
             driveMotors.put(motorName, motorMap.GetMotorMap().get(motorName));
         }
     }
 
     public void Drive (Telemetry telemetry) {
         double scale = 0;
-        for (String motorName : strafeVectors.keySet()) {
-            scale = Math.max(scale, strafeVectors.get(motorName).Add(rotationVectors.get(motorName), telemetry).GetMagnitude());
-            telemetry.addData("Strafe x" + motorName + ": ", strafeVectors.get(motorName).GetValues()[0]);
-            telemetry.addData("Strafe y" + motorName + ": ", strafeVectors.get(motorName).GetValues()[1]);
-            telemetry.addData("Rotate x" + motorName + ": ", rotationVectors.get(motorName).GetValues()[0]);
+        for (String motorName : strafePower.keySet()) {
+            scale = Math.max(scale, strafePower.get(motorName)+rotationPower.get(motorName));
         }
 
-        for (String motorName : strafeVectors.keySet()) {
-            Vector driveVector = strafeVectors.get(motorName).Add(rotationVectors.get(motorName), telemetry);
-            telemetry.addData("Drive Vector X", driveVector.GetValues()[0]);
-            telemetry.addData("Drive Vector Y", driveVector.GetValues()[1]);
-            driveVector = driveVector.Scale(Math.max(1, scale));
-            telemetry.addData("Drive Vector X2", driveVector.GetValues()[0]);
-            telemetry.addData("Drive Vector Y2", driveVector.GetValues()[1]);
-            driveMotors.get(motorName).setPower(driveVector.GetMagnitude());
+        for (String motorName : strafePower.keySet()) {
+            driveMotors.get(motorName).setPower((strafePower.get(motorName)+rotationPower.get(motorName))/(Math.max(1, scale)));
         }
     }
 
     public void SetStrafe (double power, double angle) {
-        power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
-        strafeVectors.put("forwardLeft", new Vector(-power * Math.cos(angle - Math.PI/4), Math.PI/4));
-        strafeVectors.put("forwardRight", new Vector(power * Math.sin(angle - Math.PI/4), 3*Math.PI/4));
-        strafeVectors.put("backRight", new Vector(power * Math.cos(angle-Math.PI/4), Math.PI/4));
-        strafeVectors.put("backLeft", new Vector(-power*Math.sin(angle-Math.PI/4), 3*Math.PI/4));
+        power = Math.min(1, power);
+        strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
+        strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
+        strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
+        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4));
     }
 
     public void SetStrafe (Vector movementVector) {
@@ -72,10 +63,10 @@ public class XDrive extends DriveBase {
 
     public void SetRotation (double power) {
         power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
-        rotationVectors.put("forwardLeft", new Vector(-power, Math.PI/4));
-        rotationVectors.put("forwardRight", new Vector(-power, 3*Math.PI/4));
-        rotationVectors.put("backRight", new Vector(-power, Math.PI/4));
-        rotationVectors.put("backLeft", new Vector(-power, 3*Math.PI/4));
+        rotationPower.put("forwardLeft", -power);
+        rotationPower.put("forwardRight", -power);
+        rotationPower.put("backRight", -power);
+        rotationPower.put("backLeft", -power);
 
     }
 
