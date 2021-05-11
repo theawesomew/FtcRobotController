@@ -57,7 +57,7 @@ public class TeleOpMode extends OpMode {
         double power = Math.sqrt(gamepad1.left_stick_y*gamepad1.left_stick_y+gamepad1.left_stick_x*gamepad1.left_stick_x);
         robot.SetStrafe(power, angle);
         robot.SetRotation(-gamepad1.right_stick_x);
-        robot.Drive();
+        robot.Drive(telemetry);
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.SetShooterPower(1);
