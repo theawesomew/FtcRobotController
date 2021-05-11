@@ -84,7 +84,7 @@ public class Vector {
         if (!this.CheckSize(vector)) {
             return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         } else {
-            double[] newValues = new double[this.GetDimension()-1];
+            double[] newValues = new double[this.GetDimension()];
             for (int i = 0; i < this.GetDimension(); ++i) {
                 newValues[i] = this.GetValues()[i] + vector.GetValues()[i];
             }
@@ -97,7 +97,7 @@ public class Vector {
         if (!this.CheckSize(vector)) {
             return new Vector(1, 0); // Why would you ever get this error? You've been careful right?
         } else {
-            double[] newValues = new double[this.GetDimension()-1];
+            double[] newValues = new double[this.GetDimension()];
             for (int i = 0; i < this.GetDimension(); ++i) {
                 newValues[i] = this.GetValues()[i] - vector.GetValues()[i];
             }
@@ -108,7 +108,7 @@ public class Vector {
 
     public Vector Scale (double scale) {
         if (scale != 0) {
-            double[] newValues = new double[this.GetDimension()-1];
+            double[] newValues = new double[this.GetDimension()];
             for (int i = 0; i < this.GetDimension(); ++i) {
                 newValues[i] = this.GetValues()[i] / scale;
             }
