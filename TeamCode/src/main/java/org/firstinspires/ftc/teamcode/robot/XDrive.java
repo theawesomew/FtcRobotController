@@ -129,9 +129,13 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public boolean RotateByAngleUsingIMU (double angle, boolean direction, Telemetry telemetry) {
+    public boolean RotateByAngleUsingIMU (double angle, boolean rotateClockwise, Telemetry telemetry) {
         if (!motorsMoving) {
-            targetAngle = this.imu.getAngularOrientation().firstAngle + angle * (!direction ? 1 : -1);
+            if (rotateClockwise) {
+                targetAngle = this.imu.getAngularOrientation().firstAngle - angle;
+            } else {
+                targetAngle = this.imu.getAngularOrientation().firstAngle + angle;
+            }
 
             driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             driveMotors.get("forwardRight").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -139,7 +143,7 @@ public class XDrive extends DriveBase {
             driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             double power;
-            if (direction) {
+            if (rotateClockwise) {
                 power = 0.5;
             } else {
                 power = -0.5;
@@ -149,6 +153,8 @@ public class XDrive extends DriveBase {
             Drive(telemetry);
             motorsMoving = true;
         } else if (within(this.imu.getAngularOrientation().firstAngle, targetAngle, Math.PI/90)) {
+            SetRotation(0);
+            Drive(telemetry);
             motorsMoving = false;
             return true;
         }
@@ -164,6 +170,13 @@ public class XDrive extends DriveBase {
             forwardRightDistance = (int) (Math.round(distance * Math.sin(theta) * ticksPerMM));
             backLeftDistance = (int) (-Math.round(distance * Math.sin(theta) * ticksPerMM));
             backRightDistance = (int) (Math.round(distance * Math.cos(theta) * ticksPerMM));
+
+            if (driveMotors.get("forwardLeft").getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
+                driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                driveMotors.get("forwardRight").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                driveMotors.get("backLeft").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                driveMotors.get("backRight").setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            }
 
             driveMotors.get("forwardLeft").setTargetPosition(driveMotors.get("forwardLeft").getCurrentPosition() + forwardLeftDistance);
             driveMotors.get("forwardRight").setTargetPosition(driveMotors.get("forwardRight").getCurrentPosition() + forwardRightDistance);
