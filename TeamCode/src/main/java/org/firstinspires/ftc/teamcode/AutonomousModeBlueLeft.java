@@ -93,12 +93,10 @@ public class AutonomousModeBlueLeft extends OpMode {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            currentYaw = robot.GetYaw();
         } else if (!hasMoved[9]) {
             hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(5), false, telemetry);
         } else if (!hasMoved[10]) {
-           hasMoved[10] = robot.StrafeByDistance(800, Math.PI/2, telemetry);
+           hasMoved[10] = robot.StrafeByDistance(800, Math.PI/2+robot.GetYaw(), telemetry);
         } else {
             robot.SetStrafe(0,0);
             robot.SetRotation(0);
