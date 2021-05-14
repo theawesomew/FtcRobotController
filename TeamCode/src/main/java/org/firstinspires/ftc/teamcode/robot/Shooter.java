@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 public class Shooter extends Mechanisms {
     private DcMotor shooter;
     private VoltageSensor voltageSensor;
-    private double minSpeed = 0.97, maxSpeed = 1;
+    private double minSpeed = 0.96, maxSpeed = 1;
 
     private double c = 84 * (maxSpeed-minSpeed);
     private double a = 7 * minSpeed - 6 * maxSpeed;
@@ -18,8 +18,16 @@ public class Shooter extends Mechanisms {
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
     }
 
+    public double GetPower () {
+        return shooter.getPower();
+    }
+
     public void SetPower(double power) {
         shooter.setPower(power);
+    }
+
+    public void AdjustedShootPower () {
+        shooter.setPower(c/voltageSensor.getVoltage()+a);
     }
 
     public boolean Shoot (double rotations) {

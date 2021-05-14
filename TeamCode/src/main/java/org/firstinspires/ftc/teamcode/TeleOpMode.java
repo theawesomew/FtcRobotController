@@ -35,8 +35,6 @@ public class TeleOpMode extends OpMode {
 
         robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble");
         gamepadWrapper = new GamepadWrapper();
-
-
     }
 
 
@@ -60,7 +58,8 @@ public class TeleOpMode extends OpMode {
         robot.Drive(telemetry);
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
-            robot.SetShooterPower(1);
+            robot.AdjustedShootPower();
+            telemetry.addData("Imagine being that much of a bitch boi lmao", robot.GetShooterPower());
         } else {
             robot.SetShooterPower(0);
         }

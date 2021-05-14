@@ -21,6 +21,8 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false};
 
+    private double currentYaw;
+
     @Override
     public void init() {
         driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
@@ -46,6 +48,7 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
     @Override
     public void loop() {
         telemetry.addData("Voltage:", voltageSensor.getVoltage());
+        telemetry.addData("Yaw", robot.GetYaw());
 
         if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1300, Math.PI/2, telemetry);

@@ -69,6 +69,14 @@ public class Robot {
         this.shooter.SetPower(power);
     }
 
+    public double GetShooterPower () {
+        return this.shooter.GetPower();
+    }
+
+    public void AdjustedShootPower() {
+        this.shooter.AdjustedShootPower();
+    }
+
     public boolean Shoot (double rotations) {
         return this.shooter.Shoot(rotations);
     }
