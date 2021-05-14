@@ -21,8 +21,8 @@ public class TeleOpMode extends OpMode {
     private MotorMap motorMap;
     private GamepadWrapper gamepadWrapper;
     private Robot robot;
-    private int counter = 0;
-
+    private int IntakeConveyorCounter = 0;
+    private int WobbleArmCounter = 0;
 
 
     @Override
@@ -33,7 +33,7 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble");
         gamepadWrapper = new GamepadWrapper();
 
 
@@ -66,25 +66,23 @@ public class TeleOpMode extends OpMode {
         }
 
         if (gamepadWrapper.isPressed("g1_b")) {
-            robot.SetIntakePower(++counter % 2);
-            robot.SetConveyorPower(counter % 2);
+            robot.SetIntakePower(++IntakeConveyorCounter % 2);
+            robot.SetConveyorPower(IntakeConveyorCounter % 2);
         }
-
-       /* if (gamepadWrapper.isDown("g1_dpad_up")) {
-            robot.SetConveyorPower(-1);
-        } else if (gamepadWrapper.isDown("g1_dpad_down")) {
-            robot.SetConveyorPower(1);
-        } else {
-            robot.SetConveyorPower(0);
->>>>>>> Stashed changes
-        }
-
-        */
 
         if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
         } else {
             robot.Retract();
+        }
+
+        if (gamepadWrapper.isPressed("g1_x")) {
+            ++WobbleArmCounter;
+            if (WobbleArmCounter % 2 == 0) {
+                robot.Lower();
+            } else {
+                robot.Raise();
+            }
         }
 
 

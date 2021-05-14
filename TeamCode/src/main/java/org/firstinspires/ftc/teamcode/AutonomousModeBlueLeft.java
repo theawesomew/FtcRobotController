@@ -37,7 +37,7 @@ public class AutonomousModeBlueLeft extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble");
     }
 
     @Override
@@ -63,6 +63,8 @@ public class AutonomousModeBlueLeft extends OpMode {
             hasMoved[3] = robot.RotateByAngle(Math.PI/4,true , telemetry);
         } else if (!hasMoved[4]) {
             hasMoved[4] = robot.Shoot();
+        } else if (!hasMoved[5]) {
+            hasMoved[5] = robot.PushThenRetract();
         } else if (!hasMoved[5]) {
             hasMoved[6] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
         } else if (!hasMoved[6]) {

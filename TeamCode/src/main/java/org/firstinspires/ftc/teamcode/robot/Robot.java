@@ -10,14 +10,16 @@ public class Robot {
     private Intake intake;
     private Pushy pushy;
     private Shooter shooter;
+    private WobbleArm wobbleArm;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName) {
+                  String intakeName, String shooterName, String wobbleArmName) {
         this.xDrive = new XDrive(driveMap);
         this.conveyor = new Conveyor(hardwareMap, conveyorName);
         this.intake = new Intake(hardwareMap, intakeName);
         this.pushy = new Pushy(hardwareMap, pushyName);
         this.shooter = new Shooter(hardwareMap, shooterName);
+        this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmName);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -67,4 +69,13 @@ public class Robot {
     public void Retract () {
         this.pushy.Retract();
     }
+
+    public boolean PushThenRetract() {
+        return this.pushy.PushThenRetract();
+    }
+
+    public void Raise () {this.wobbleArm.Raise();}
+
+    public void Lower () {this.wobbleArm.Lower();}
 }
+

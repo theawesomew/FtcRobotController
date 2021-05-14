@@ -22,4 +22,13 @@ public class Pushy extends Mechanisms {
     public void Retract () {
         pushy.setPosition(1);
     }
+
+    public boolean PushThenRetract () {
+        if (this.pushy.getPosition() > 0) {
+            this.Push();
+            return false;
+        }
+        this.Retract();
+        return true;
+    }
 }

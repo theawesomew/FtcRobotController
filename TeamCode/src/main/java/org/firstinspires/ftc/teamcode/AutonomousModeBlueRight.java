@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.Pushy;
+import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
@@ -26,39 +27,22 @@ public class AutonomousModeBlueRight extends OpMode {
     private MotorMap driveMap;
     private XDrive xDrive;
     private boolean hasMoved[] = {false, false, false, false, false};
+    private double moves[] = {1000, Math.PI/2, 300, Math.PI};
+    private int hasMovedIndex = 0;
 
-    private MotorMap mechMap;
-    private ServoMap servoMap;
-    private Conveyor conveyor;
-    private Shooter shoot;
-    private Intake intake;
-    private Pushy pushy;
+    private Robot robot;
 
 
     @Override
     public void init() {
-        /*driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
+
+        driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
         for (DcMotor motor : driveMap.GetMotorMap().values()) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
-        xDrive = new XDrive(driveMap);
 
-        mechMap = new MotorMap(hardwareMap, "conveyor", "intake", "shoot");
-        for (DcMotor motor : mechMap.GetMotorMap().values()) {
-            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-
-        servoMap = new ServoMap(hardwareMap, "pushServo");
-        for (Servo servo : servoMap.GetServoMap().values()) {
-            servo.setPosition(0);
-        }
-
-        conveyor = new Conveyor(mechMap);
-        shoot = new Shooter(mechMap);
-        intake = new Intake(mechMap);
-        pushy = new Pushy(servoMap);*/
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble");
     }
 
     @Override
@@ -73,6 +57,23 @@ public class AutonomousModeBlueRight extends OpMode {
 
     @Override
     public void loop() {
+
+       /*if (!hasMoved[0]) {
+           hasMoved[0] = xDrive.StrafeByDistance(100, 0, telemetry);
+       } else if (!hasMoved[1]) {
+           hasMoved[1] = xDrive.StrafeByDistance(1000, Math.PI / 2, telemetry);
+       } else if (!hasMoved[2]) {
+           hasMoved[2] = xDrive.RotateByAngle(Math.toRadians(45), true, telemetry);
+       } else if (!hasMoved[3]) {
+           hasMoved[3] = robot.Shoot();
+       }*/
+
+        hasMoved[hasMovedIndex] = robot.StrafeByDistance(moves[2*hasMovedIndex], moves[2*hasMovedIndex+1], telemetry);
+        if (hasMoved[hasMovedIndex]) {
+            hasMovedIndex++;
+        }
+
+
         /*
         if (!hasMoved[0]) {
             telemetry.addData("hasMoved1", hasMoved[0]);
