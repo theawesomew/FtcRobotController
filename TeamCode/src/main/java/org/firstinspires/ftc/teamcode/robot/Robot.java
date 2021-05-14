@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -11,10 +12,20 @@ public class Robot {
     private Pushy pushy;
     private Shooter shooter;
     private WobbleArm wobbleArm;
+    private BNO055IMU imu;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
                   String intakeName, String shooterName, String wobbleArmName) {
-        this.xDrive = new XDrive(driveMap);
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+
+        this.xDrive = new XDrive(driveMap, imu);
         this.conveyor = new Conveyor(hardwareMap, conveyorName);
         this.intake = new Intake(hardwareMap, intakeName);
         this.pushy = new Pushy(hardwareMap, pushyName);
@@ -77,5 +88,17 @@ public class Robot {
     public void Raise () {this.wobbleArm.Raise();}
 
     public void Lower () {this.wobbleArm.Lower();}
+
+    public float GetYaw () {
+        return imu.getAngularOrientation().firstAngle;
+    }
+
+    public float GetRoll () {
+        return imu.getAngularOrientation().secondAngle;
+    }
+
+    public float GetPitch () {
+        return imu.getAngularOrientation().thirdAngle;
+    }
 }
 

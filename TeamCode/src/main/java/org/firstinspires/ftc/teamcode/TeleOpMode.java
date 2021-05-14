@@ -85,7 +85,9 @@ public class TeleOpMode extends OpMode {
             }
         }
 
-
+        telemetry.addData("Yaw", robot.GetYaw());
+        telemetry.addData("Roll", robot.GetRoll());
+        telemetry.addData("Pitch", robot.GetPitch());
     }
 
     @Override

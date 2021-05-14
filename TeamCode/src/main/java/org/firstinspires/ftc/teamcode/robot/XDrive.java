@@ -1,7 +1,10 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Gyroscope;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.Vector;
@@ -9,7 +12,6 @@ import org.firstinspires.ftc.teamcode.lib.Vector;
 import java.util.HashMap;
 
 public class XDrive extends DriveBase {
-    private DcMotor forwardLeft, forwardRight, backLeft, backRight;
     private double pi = Math.PI;
     private final double ticksPerWheelRotation = 1440;
     private final double wheelDiameter = 4*25.4;
@@ -22,6 +24,8 @@ public class XDrive extends DriveBase {
     private HashMap<String, Double> strafePower = new HashMap<String, Double>();
     private HashMap<String, Double> rotationPower = new HashMap<String, Double>();
     private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
+    private BNO055IMU imu;
+    private double targetAngle;
 
     public boolean within (int value, int setValue, int error) {
         if (Math.abs(value-setValue) < error) {
@@ -30,7 +34,16 @@ public class XDrive extends DriveBase {
         return false;
     }
 
-    public XDrive(MotorMap motorMap) {
+    public boolean within (double value, double setValue, double error) {
+        if (Math.abs(value-setValue) < error) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public XDrive(MotorMap motorMap, BNO055IMU imu) {
+        this.imu = imu;
         for (String motorName : motorMap.GetMotorMap().keySet()) {
             strafePower.put(motorName, 0.0);
             rotationPower.put(motorName, 0.0);
@@ -75,15 +88,15 @@ public class XDrive extends DriveBase {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
 
-            forwardLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            forwardRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("forwardRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("backRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            forwardLeft.setTargetPosition(forwardLeft.getCurrentPosition() + targetPosition);
-            forwardRight.setTargetPosition(forwardRight.getCurrentPosition() + targetPosition);
-            backLeft.setTargetPosition(backLeft.getCurrentPosition() + targetPosition);
-            backRight.setTargetPosition(backRight.getCurrentPosition() + targetPosition);
+            driveMotors.get("forwardLeft").setTargetPosition(driveMotors.get("forwardLeft").getCurrentPosition() + targetPosition);
+            driveMotors.get("forwardRight").setTargetPosition(driveMotors.get("forwardRight").getCurrentPosition() + targetPosition);
+            driveMotors.get("backLeft").setTargetPosition(driveMotors.get("backLeft").getCurrentPosition() + targetPosition);
+            driveMotors.get("backRight").setTargetPosition(driveMotors.get("backRight").getCurrentPosition() + targetPosition);
 
             float power;
 
@@ -96,14 +109,35 @@ public class XDrive extends DriveBase {
             SetRotation(power);
             Drive(telemetry);
             motorsMoving = true;
-        } else if (within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
-                within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&
-                within(backLeft.getCurrentPosition(), backLeft.getTargetPosition(), 10)             &&
-                within(backRight.getCurrentPosition(), backRight.getTargetPosition(), 10)) {
+        } else if (within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) &&
+                within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) &&
+                within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10)             &&
+                within(driveMotors.get("backRight").getCurrentPosition(), driveMotors.get("backRight").getTargetPosition(), 10)) {
             motorsMoving = false;
             return true;
         }
 
+        return false;
+    }
+
+    public boolean RotateByAngleUsingIMU (double angle, boolean direction, Telemetry telemetry) {
+        if (!motorsMoving) {
+            targetAngle = this.imu.getAngularOrientation().firstAngle + angle * (!direction ? -1 : 1);
+
+            double power;
+            if (direction) {
+                power = 1;
+            } else {
+                power = -1;
+            }
+
+            SetRotation(power);
+            Drive(telemetry);
+            motorsMoving = true;
+        } else if (within(this.imu.getAngularOrientation().firstAngle, targetAngle, Math.PI/180)) {
+            motorsMoving = false;
+            return true;
+        }
         return false;
     }
 
@@ -116,23 +150,23 @@ public class XDrive extends DriveBase {
             backLeftDistance = (int) (-Math.round(distance * Math.sin(theta) * ticksPerMM));
             backRightDistance = (int) (Math.round(distance * Math.cos(theta) * ticksPerMM));
 
-            forwardLeft.setTargetPosition(forwardLeft.getCurrentPosition() + forwardLeftDistance);
-            forwardRight.setTargetPosition(forwardRight.getCurrentPosition() + forwardRightDistance);
-            backLeft.setTargetPosition(backLeft.getCurrentPosition() + backLeftDistance);
-            backRight.setTargetPosition(backRight.getCurrentPosition() + backRightDistance);
+            driveMotors.get("forwardLeft").setTargetPosition(driveMotors.get("forwardLeft").getCurrentPosition() + forwardLeftDistance);
+            driveMotors.get("forwardRight").setTargetPosition(driveMotors.get("forwardRight").getCurrentPosition() + forwardRightDistance);
+            driveMotors.get("backLeft").setTargetPosition(driveMotors.get("backLeft").getCurrentPosition() + backLeftDistance);
+            driveMotors.get("backRight").setTargetPosition(driveMotors.get("backRight").getCurrentPosition() + backRightDistance);
 
-            forwardLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            forwardRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("forwardRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveMotors.get("backRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             SetStrafe(1, angle);
             Drive(telemetry);
             motorsMoving = true;
-        } else if ( within(forwardLeft.getCurrentPosition(), forwardLeft.getTargetPosition(), 10) &&
-                    within(forwardRight.getCurrentPosition(), forwardRight.getTargetPosition(), 10) &&
-                    within(backLeft.getCurrentPosition(), backLeft.getTargetPosition(), 10)             &&
-                    within(backRight.getCurrentPosition(), backRight.getTargetPosition(), 10)
+        } else if ( within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) &&
+                    within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) &&
+                    within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10)             &&
+                    within(driveMotors.get("backRight").getCurrentPosition(), driveMotors.get("backRight").getTargetPosition(), 10)
            ) {
             motorsMoving = false;
             return true;

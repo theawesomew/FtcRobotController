@@ -65,18 +65,22 @@ public class AutonomousModeBlueLeft extends OpMode {
             hasMoved[4] = robot.Shoot();
         } else if (!hasMoved[5]) {
             hasMoved[5] = robot.PushThenRetract();
-        } else if (!hasMoved[5]) {
-            hasMoved[6] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
         } else if (!hasMoved[6]) {
+            hasMoved[6] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
+        } else if (!hasMoved[7]) {
             hasMoved[7] = robot.Shoot();
         } else if (hasMoved[8]) {
-            hasMoved[8] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
+            hasMoved[8] = robot.PushThenRetract();
         } else if (hasMoved[9]) {
-            hasMoved[9] = robot.Shoot();
+            hasMoved[9] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
         } else if (hasMoved[10]) {
-            hasMoved[10] = robot.RotateByAngle(Math.toRadians(65), false, telemetry);
+            hasMoved[10] = robot.Shoot();
         } else if (hasMoved[11]) {
-            hasMoved[11] = robot.StrafeByDistance(500, Math.PI/2, telemetry);
+            hasMoved[11] = robot.PushThenRetract();
+        } else if (hasMoved[12]) {
+            hasMoved[12] = robot.RotateByAngle(Math.toRadians(65), false, telemetry);
+        } else if (hasMoved[13]) {
+            hasMoved[13] = robot.StrafeByDistance(500, Math.PI/2, telemetry);
         } else {
             robot.SetStrafe(0, 0);
             robot.SetRotation(0);
