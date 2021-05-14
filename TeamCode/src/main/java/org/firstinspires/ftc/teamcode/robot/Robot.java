@@ -53,6 +53,10 @@ public class Robot {
         return this.xDrive.RotateByAngle(angle, direction, telemetry);
     }
 
+    public boolean RotateByAngleUsingIMU (double angle, boolean direction, Telemetry telemetry) {
+        return this.xDrive.RotateByAngleUsingIMU(angle, direction, telemetry);
+    }
+
     public void SetConveyorPower (double power) {
         this.conveyor.SetPower(-power);
     }
@@ -65,8 +69,8 @@ public class Robot {
         this.shooter.SetPower(power);
     }
 
-    public boolean Shoot () {
-        return this.shooter.Shoot();
+    public boolean Shoot (double rotations) {
+        return this.shooter.Shoot(rotations);
     }
 
     public void SetIntakePower (double power) {
@@ -81,8 +85,8 @@ public class Robot {
         this.pushy.Retract();
     }
 
-    public boolean PushThenRetract() {
-        return this.pushy.PushThenRetract();
+    public boolean PushThenRetract(Telemetry telemetry) throws InterruptedException {
+        return this.pushy.PushThenRetract(telemetry);
     }
 
     public void Raise () {this.wobbleArm.Raise();}

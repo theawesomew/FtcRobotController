@@ -14,10 +14,14 @@ public class Shooter extends Mechanisms {
         shooter.setPower(power);
     }
 
-    public boolean Shoot () {
+    public boolean Shoot (double rotations) {
+        if (rotations * 1440 != Math.round(rotations * 1440)) {
+            rotations = Math.round(rotations * 1440) / 1440;
+        }
+
         if (!shooter.isBusy()) {
             shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            shooter.setTargetPosition(10 * 1440);
+            shooter.setTargetPosition((int) rotations * 1440);
             shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             this.SetPower(1);
         }

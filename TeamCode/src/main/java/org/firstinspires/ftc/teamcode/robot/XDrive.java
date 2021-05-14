@@ -98,12 +98,12 @@ public class XDrive extends DriveBase {
             driveMotors.get("backLeft").setTargetPosition(driveMotors.get("backLeft").getCurrentPosition() + targetPosition);
             driveMotors.get("backRight").setTargetPosition(driveMotors.get("backRight").getCurrentPosition() + targetPosition);
 
-            float power;
+            double power;
 
             if (direction) {
-                power = -1;
+                power = -1.0;
             } else {
-                power = 1;
+                power = 1.0;
             }
 
             SetRotation(power);
@@ -122,7 +122,12 @@ public class XDrive extends DriveBase {
 
     public boolean RotateByAngleUsingIMU (double angle, boolean direction, Telemetry telemetry) {
         if (!motorsMoving) {
-            targetAngle = this.imu.getAngularOrientation().firstAngle + angle * (!direction ? -1 : 1);
+            targetAngle = this.imu.getAngularOrientation().firstAngle + angle * (!direction ? 1 : -1);
+
+            driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            driveMotors.get("forwardRight").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            driveMotors.get("backRight").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             double power;
             if (direction) {
@@ -134,10 +139,11 @@ public class XDrive extends DriveBase {
             SetRotation(power);
             Drive(telemetry);
             motorsMoving = true;
-        } else if (within(this.imu.getAngularOrientation().firstAngle, targetAngle, Math.PI/180)) {
+        } else if (within(this.imu.getAngularOrientation().firstAngle, targetAngle, Math.PI/90)) {
             motorsMoving = false;
             return true;
         }
+        telemetry.addData("targetAngle", targetAngle);
         return false;
     }
 

@@ -23,11 +23,9 @@ public class Pushy extends Mechanisms {
         pushy.setPosition(1);
     }
 
-    public boolean PushThenRetract () {
-        if (this.pushy.getPosition() > 0) {
-            this.Push();
-            return false;
-        }
+    public boolean PushThenRetract (Telemetry telemetry) throws InterruptedException {
+        this.Push();
+        Thread.sleep(500);
         this.Retract();
         return true;
     }

@@ -85,6 +85,14 @@ public class TeleOpMode extends OpMode {
             }
         }
 
+        if (gamepadWrapper.isDown("g1_y")) {
+            try {
+                robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());
         telemetry.addData("Pitch", robot.GetPitch());

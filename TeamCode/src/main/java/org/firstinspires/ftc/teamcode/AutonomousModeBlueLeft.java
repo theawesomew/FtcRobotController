@@ -53,34 +53,46 @@ public class AutonomousModeBlueLeft extends OpMode {
     @Override
     public void loop() {
 
+        telemetry.addData("Yaw", robot.GetYaw());
+        telemetry.addData("Roll", robot.GetRoll());
+        telemetry.addData("Pitch", robot.GetPitch());
+
         if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
         } else if (!hasMoved[1]) {
-            hasMoved[1] = robot.StrafeByDistance(1000, 0, telemetry);
+            hasMoved[1] = robot.StrafeByDistance(930, 0, telemetry);
         } else if (!hasMoved[2]) {
-            hasMoved[2] = robot.StrafeByDistance(300, 3 * Math.PI/2, telemetry);
+            hasMoved[2] = robot.StrafeByDistance(1, 0, telemetry);
         } else if (!hasMoved[3]) {
-            hasMoved[3] = robot.RotateByAngle(Math.PI/4,true , telemetry);
+            hasMoved[3] = robot.Shoot(10);
         } else if (!hasMoved[4]) {
-            hasMoved[4] = robot.Shoot();
+            hasMoved[4] = robot.RotateByAngleUsingIMU(Math.toRadians(5),true , telemetry);
         } else if (!hasMoved[5]) {
-            hasMoved[5] = robot.PushThenRetract();
+            try {
+                hasMoved[5] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else if (!hasMoved[6]) {
-            hasMoved[6] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
-        } else if (!hasMoved[7]) {
-            hasMoved[7] = robot.Shoot();
+            hasMoved[6] = robot.RotateByAngle(Math.toRadians(5), true, telemetry);
+        } else if (hasMoved[7]) {
+            try {
+                hasMoved[7] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else if (hasMoved[8]) {
-            hasMoved[8] = robot.PushThenRetract();
+            hasMoved[8] = robot.RotateByAngle(Math.toRadians(5), true, telemetry);
         } else if (hasMoved[9]) {
-            hasMoved[9] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
+            try {
+                hasMoved[9] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else if (hasMoved[10]) {
-            hasMoved[10] = robot.Shoot();
+            hasMoved[10] = robot.RotateByAngle(Math.toRadians(15), false, telemetry);
         } else if (hasMoved[11]) {
-            hasMoved[11] = robot.PushThenRetract();
-        } else if (hasMoved[12]) {
-            hasMoved[12] = robot.RotateByAngle(Math.toRadians(65), false, telemetry);
-        } else if (hasMoved[13]) {
-            hasMoved[13] = robot.StrafeByDistance(500, Math.PI/2, telemetry);
+            hasMoved[11] = robot.StrafeByDistance(500, Math.PI/2, telemetry);
         } else {
             robot.SetStrafe(0, 0);
             robot.SetRotation(0);
