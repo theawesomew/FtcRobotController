@@ -36,8 +36,8 @@ public class Robot {
         this.xDrive.SetRotation(power);
     }
 
-    public void RotateByAngle (double angle, boolean direction, Telemetry telemetry) {
-        this.xDrive.RotateByAngle(angle, direction, telemetry);
+    public boolean RotateByAngle (double angle, boolean direction, Telemetry telemetry) {
+        return this.xDrive.RotateByAngle(angle, direction, telemetry);
     }
 
     public void SetConveyorPower (double power) {

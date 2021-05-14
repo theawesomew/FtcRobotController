@@ -26,7 +26,7 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     private MotorMap driveMap;
     private Robot robot;
-    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false};
+    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false};
 
 
     @Override
@@ -58,9 +58,26 @@ public class AutonomousModeBlueLeft extends OpMode {
         } else if (!hasMoved[1]) {
             hasMoved[1] = robot.StrafeByDistance(1000, 0, telemetry);
         } else if (!hasMoved[2]) {
-            hasMoved[2] = robot.StrafeByDistance(1000, 3 * Math.PI/2, telemetry);
+            hasMoved[2] = robot.StrafeByDistance(300, 3 * Math.PI/2, telemetry);
+        } else if (!hasMoved[3]) {
+            hasMoved[3] = robot.RotateByAngle(Math.PI/4,true , telemetry);
+        } else if (!hasMoved[4]) {
+            hasMoved[4] = robot.Shoot();
+        } else if (!hasMoved[5]) {
+            hasMoved[6] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
+        } else if (!hasMoved[6]) {
+            hasMoved[7] = robot.Shoot();
+        } else if (hasMoved[8]) {
+            hasMoved[8] = robot.RotateByAngle(Math.toRadians(10), true, telemetry);
+        } else if (hasMoved[9]) {
+            hasMoved[9] = robot.Shoot();
+        } else if (hasMoved[10]) {
+            hasMoved[10] = robot.RotateByAngle(Math.toRadians(65), false, telemetry);
+        } else if (hasMoved[11]) {
+            hasMoved[11] = robot.StrafeByDistance(500, Math.PI/2, telemetry);
         } else {
             robot.SetStrafe(0, 0);
+            robot.SetRotation(0);
         }
 
 
