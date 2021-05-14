@@ -86,6 +86,9 @@ public class AutonomousModeBlueRight extends OpMode {
             }
         } else if (!hasMoved[8]) {
             hasMoved[8] = robot.StrafeByDistance(800, Math.PI/2+robot.GetYaw(), telemetry);
+        } else {
+            robot.SetStrafe(0,0);
+            robot.SetRotation(0);
         }
 
     }
