@@ -63,10 +63,34 @@ public class AutonomousModeBlueLeft extends OpMode {
         telemetry.addData("Pitch", robot.GetPitch());
         telemetry.addData("Voltage:", voltageSensor.getVoltage());
 
+        // forward 1000 mm
+        // right 850 mm
+        // begin shooting
+        // rotate 5 degrees
+        // push then retract
+        // move right from the new frame of reference
+        // push then retract
+        // move right from the new frame of reference
+        // push then retract
+        // reorient
+        // move forward 800
+
+        /*if (!hasMoved[0]) {
+            hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+        } else if (!hasMoved[1]) {
+            hasMoved[1] = robot.StrafeByDistance(850, Math.PI, telemetry);
+        } else if (!hasMoved[2]) {
+            hasMoved[2] = robot.Shoot(10);
+        } else if (!hasMoved[3]) {
+            hasMoved[3] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
+        } else if (!hasMoved[4]) {
+            hasMoved[4] = robot.
+        }*/
+
         if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
         } else if (!hasMoved[1]) {
-            hasMoved[1] = robot.StrafeByDistance(930, 0, telemetry);
+            hasMoved[1] = robot.StrafeByDistance(900, 0, telemetry);
         } else if (!hasMoved[2]) {
             hasMoved[2] = robot.Shoot(10);
         } else if (!hasMoved[3]) {
