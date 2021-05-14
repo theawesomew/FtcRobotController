@@ -51,11 +51,11 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
         telemetry.addData("Yaw", robot.GetYaw());
 
         if (!hasMoved[0]) {
-            hasMoved[0] = robot.StrafeByDistance(1300, Math.PI/2, telemetry);
+            hasMoved[0] = robot.StrafeByDistance(1010, Math.PI / 2, telemetry);
         } else if (!hasMoved[1]) {
             hasMoved[1] = robot.Shoot(7.5);
         } else if (!hasMoved[2]) {
-            hasMoved[2] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
+            hasMoved[2] = robot.RotateByAngleUsingIMU(Math.toRadians(20), true, telemetry);
         } else if (!hasMoved[3]) {
             try {
                 hasMoved[3] = robot.PushThenRetract(telemetry);
@@ -63,11 +63,7 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[4]) {
-            try {
-                hasMoved[4] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            hasMoved[4] = robot.StrafeByDistance(5, Math.PI / 2 - robot.GetYaw(), telemetry);
         } else if (!hasMoved[5]) {
             try {
                 hasMoved[5] = robot.PushThenRetract(telemetry);
@@ -75,7 +71,16 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[6]) {
-            hasMoved[6] = robot.StrafeByDistance(200, Math.PI/2 - Math.toRadians(5), telemetry);
+            hasMoved[6] = robot.StrafeByDistance(5, Math.PI/2 - robot.GetYaw(), telemetry);
+
+        }else if (!hasMoved[7]) {
+            try {
+                hasMoved[7] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (!hasMoved[8]) {
+            hasMoved[8] = robot.StrafeByDistance(700, Math.PI/2-robot.GetYaw(), telemetry);
         } else {
             robot.SetStrafe(0,0);
             robot.SetRotation(0);
