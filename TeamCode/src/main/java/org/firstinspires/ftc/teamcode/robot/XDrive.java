@@ -89,6 +89,14 @@ public class XDrive extends DriveBase {
 
             int targetPosition = (int) Math.round(ticksPerRadian * angle);
 
+            if (driveMotors.get("forwardLeft").getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
+                driveMotors.get("forwardLeft").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+                driveMotors.get("forwardRight").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+                driveMotors.get("backLeft").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+                driveMotors.get("backRight").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+
+            }
+
             driveMotors.get("forwardLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
             driveMotors.get("forwardRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
             driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
