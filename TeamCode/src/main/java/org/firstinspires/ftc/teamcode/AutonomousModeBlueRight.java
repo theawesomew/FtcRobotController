@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
-@Autonomous(name="UltimateGoalAutonomousModeRedRight", group="Autonomous")
+@Autonomous(name="UltimateGoalAutonomousModeBlueRight", group="Autonomous")
 public class AutonomousModeBlueRight extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
@@ -27,9 +27,8 @@ public class AutonomousModeBlueRight extends OpMode {
     private MotorMap driveMap;
     private XDrive xDrive;
     private boolean hasMoved[] = {false, false, false, false, false};
-    private double moves[] = {1000, Math.PI/2, 300, Math.PI};
-    private int hasMovedIndex = 0;
 
+    private double currentYaw;
     private Robot robot;
 
 
@@ -57,61 +56,38 @@ public class AutonomousModeBlueRight extends OpMode {
 
     @Override
     public void loop() {
-
-       /*if (!hasMoved[0]) {
-           hasMoved[0] = xDrive.StrafeByDistance(100, 0, telemetry);
-       } else if (!hasMoved[1]) {
-           hasMoved[1] = xDrive.StrafeByDistance(1000, Math.PI / 2, telemetry);
-       } else if (!hasMoved[2]) {
-           hasMoved[2] = xDrive.RotateByAngle(Math.toRadians(45), true, telemetry);
-       } else if (!hasMoved[3]) {
-           hasMoved[3] = robot.Shoot();
-       }*/
-
-        hasMoved[hasMovedIndex] = robot.StrafeByDistance(moves[2*hasMovedIndex], moves[2*hasMovedIndex+1], telemetry);
-        if (hasMoved[hasMovedIndex]) {
-            hasMovedIndex++;
-        }
-
-
-        /*
         if (!hasMoved[0]) {
-            telemetry.addData("hasMoved1", hasMoved[0]);
-            hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI / 2, telemetry);
-            telemetry.addData("Move", 1);
+            hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
         } else if (!hasMoved[1]) {
-            telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = shoot.Shoot();
-            telemetry.addData("Move", 2);
+            hasMoved[1] = robot.Shoot(10);
         } else if (!hasMoved[2]) {
-            telemetry.addData("hasMoved1", hasMoved[2]);
-            pushy.Push();
-            hasMoved[2] = true;
-            telemetry.addData("Move", 3);
-        } else {
-            for (DcMotor motor : driveMap.GetMotorMap().values()) {
-                motor.setPower(0);
-            }
-            shoot.SetPower(0);
-        }*/
-
-
-
-        /***
-        if(!hasMoved[0]) {
-            telemetry.addData("hasMoved1", hasMoved[0]);
-            hasMoved[0] = xDrive.StrafeByDistance(1000, Math.PI/2, telemetry);
-            telemetry.addData("Move", 1);
-        } else if (!hasMoved[1]) {
-            telemetry.addData("hasMoved1", hasMoved[1]);
-            hasMoved[1] = xDrive.StrafeByDistance(1000, Math.PI, telemetry);
-            telemetry.addData("Move", 2);
-        } else if (!hasMoved[2]) {
-            hasMoved[2] = xDrive.StrafeByDistance(1000, Math.PI/3, telemetry);
+            hasMoved[2] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
         } else if (!hasMoved[3]) {
-            hasMoved[3] = xDrive.RotateByAngle(Math.PI, true, telemetry);
+            try {
+                hasMoved[3] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (!hasMoved[4]) {
+            hasMoved[4] = robot.StrafeByDistance(68, 2*Math.PI-robot.GetYaw(), telemetry);
+        } else if (!hasMoved[5]) {
+            try {
+                hasMoved[5] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (!hasMoved[6]) {
+            hasMoved[6] = robot.StrafeByDistance(68, 2*Math.PI-robot.GetYaw(), telemetry);
+        } else if (!hasMoved[7]) {
+            try {
+                hasMoved[7] = robot.PushThenRetract(telemetry);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else if (!hasMoved[8]) {
+            hasMoved[8] = robot.StrafeByDistance(800, Math.PI/2+robot.GetYaw(), telemetry);
         }
-         **/
+
     }
 
     @Override
