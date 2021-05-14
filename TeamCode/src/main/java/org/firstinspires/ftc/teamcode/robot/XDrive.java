@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.lib.Vector;
@@ -131,9 +132,9 @@ public class XDrive extends DriveBase {
 
             double power;
             if (direction) {
-                power = 1;
+                power = 0.5;
             } else {
-                power = -1;
+                power = -0.5;
             }
 
             SetRotation(power);
