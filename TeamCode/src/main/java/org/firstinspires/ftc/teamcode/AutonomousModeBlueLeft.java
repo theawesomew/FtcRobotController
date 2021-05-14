@@ -78,7 +78,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[5]) {
-            hasMoved[5] = robot.StrafeByDistance(68, 2*Math.PI-robot.GetYaw(), telemetry);
+            hasMoved[5] = robot.StrafeByDistance(68, robot.GetYaw(), telemetry);
         } else if (!hasMoved[6]) {
             try {
                 hasMoved[6] = robot.PushThenRetract(telemetry);
@@ -86,7 +86,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[7]) {
-            hasMoved[7] = robot.StrafeByDistance(68, 2*Math.PI-robot.GetYaw(), telemetry);
+            hasMoved[7] = robot.StrafeByDistance(68, robot.GetYaw(), telemetry);
         } else if (!hasMoved[8]) {
             try {
                 hasMoved[8] = robot.PushThenRetract(telemetry);
