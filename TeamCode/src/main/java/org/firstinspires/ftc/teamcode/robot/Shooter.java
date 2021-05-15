@@ -10,8 +10,8 @@ public class Shooter extends Mechanisms {
     private VoltageSensor voltageSensor;
     private double minSpeed = 0.96, maxSpeed = 1;
 
-    private double c = 84 * (maxSpeed-minSpeed);
-    private double a = 7 * minSpeed - 6 * maxSpeed;
+    private double c = 60 * (maxSpeed-minSpeed);
+    private double a = 5 * minSpeed - 4 * maxSpeed;
 
     public Shooter(HardwareMap hardwareMap, String shooterName) {
         shooter = hardwareMap.dcMotor.get(shooterName);
