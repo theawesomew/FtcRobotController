@@ -42,7 +42,6 @@ public class AutonomousModeBlueRight extends OpMode {
 
     @Override
     public void loop() {
-
         if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
         } else if (!hasMoved[1]) {

@@ -10,6 +10,10 @@ import java.security.Policy;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is designated to process gamepad inputs from both gamepads
+ **/
+
 public class GamepadWrapper {
     private Class gamepadClass = Gamepad.class;
     private HashMap<String, String> gamepadBindings = new HashMap<String, String>();
@@ -18,15 +22,15 @@ public class GamepadWrapper {
     private HashMap<String, Boolean> debouncedState = new HashMap<String, Boolean>();
     private HashMap<String, Double> debounceTime = new HashMap<String, Double>();
     private ElapsedTime debounceTimer = new ElapsedTime();
-    private String inputs[] = {"a", "b", "x", "y", "dpad_up", "dpad_down", "dpad_left",
+    private final String[] gamepadButtons = {"a", "b", "x", "y", "dpad_up", "dpad_down", "dpad_left",
             "dpad_right", "left_bumper", "right_bumper", "left_trigger", "right_trigger", "start"};
-    private String gamepadStrings[] = {"g1", "g2"};
+    private final String[] gamepadStrings = {"g1", "g2"};
 
     public GamepadWrapper (String[] keys, String[] functions) {
         debounceTimer.reset();
 
         for (String gamepad : gamepadStrings) {
-            for (String input : inputs) {
+            for (String input : gamepadButtons) {
                 buttonDownState.put(gamepad+"_"+input, false);
                 buttonPressedState.put(gamepad+"_"+input, false);
                 debouncedState.put(gamepad+"_"+input, false);
@@ -42,17 +46,17 @@ public class GamepadWrapper {
         debounceTimer.reset();
 
         for (String gamepad : gamepadStrings) {
-            for (String input : inputs) {
-                buttonDownState.put(gamepad+"_"+input, false);
-                buttonPressedState.put(gamepad+"_"+input, false);
-                debouncedState.put(gamepad+"_"+input, false);
+            for (String gamepadButton : gamepadButtons) {
+                buttonDownState.put(gamepad+"_"+gamepadButton, false);
+                buttonPressedState.put(gamepad+"_"+gamepadButton, false);
+                debouncedState.put(gamepad+"_"+gamepadButton, false);
             }
         }
     }
 
     public void updateGamepadInputs (Gamepad ...gamepads) {
         for (int i = 0; i < Math.min(gamepads.length, gamepadStrings.length); ++i) {
-            for (String buttonName : inputs) {
+            for (String buttonName : gamepadButtons) {
                 if (debounceTime.containsKey(gamepadStrings[i]+"_"+buttonName)) {
                     if (debounceTimer.milliseconds() - debounceTime.get(gamepadStrings[i]+"_"+buttonName) >= 50) {
                         debouncedState.put(gamepadStrings[i]+"_"+buttonName, true);
