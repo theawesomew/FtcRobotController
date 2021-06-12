@@ -57,58 +57,13 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     @Override
     public void loop() {
-
-        /*
-        forward
-
-
-
-         */
-
-        telemetry.addData("Yaw", robot.GetYaw());
-        telemetry.addData("Roll", robot.GetRoll());
-        telemetry.addData("Pitch", robot.GetPitch());
-        telemetry.addData("Voltage:", voltageSensor.getVoltage());
-
-        if (!hasMoved[0]) {
-            hasMoved[0] = robot.StrafeByDistance(950, Math.PI/2, telemetry);
-        } else if (!hasMoved[1]) {
-            hasMoved[1] = robot.StrafeByDistance(700, 0, telemetry);
-        } else if (!hasMoved[2]) {
-            hasMoved[2] = robot.Shoot(10);
-        } else if (!hasMoved[3]) {
-            hasMoved[3] = robot.RotateByAngleUsingIMU(Math.toRadians(15), true, telemetry);
-        } else if (!hasMoved[4]) {
-            try {
-                hasMoved[4] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (!hasMoved[5]) {
-            hasMoved[5] = robot.StrafeByDistance(70, robot.GetYaw(), telemetry);
-        } else if (!hasMoved[6]) {
-            try {
-                hasMoved[6] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (!hasMoved[7]) {
-            hasMoved[7] = robot.StrafeByDistance(80, robot.GetYaw(), telemetry);
-        } else if (!hasMoved[11]) {
-            hasMoved[11] = robot.RotateByAngleUsingIMU(Math.toRadians(1), true, telemetry);
-        } else if (!hasMoved[8]) {
-            try {
-                hasMoved[8] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else if (!hasMoved[9]) {
-            hasMoved[9] = robot.StrafeByDistance(1100, Math.PI/2-robot.GetYaw(), telemetry);
-        } else if (!hasMoved[10]) {
-           hasMoved[10] = true;
-        } else {
-            robot.SetStrafe(0,0);
-            robot.SetRotation(0);
+        switch (findFirstInstanceOfFalse(hasMoved)) {
+            case 0:
+                hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+                break;
+            case 1:
+                hasMoved[1] = robot.RotateByAngleUsingIMU(Math.PI/4, true, telemetry);
+                break;
         }
     }
 
@@ -132,5 +87,25 @@ public class AutonomousModeBlueLeft extends OpMode {
         tfodParameters.minResultConfidence = 0.8f;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforiaLocalizer);
         tfod.loadModelFromAsset(tfodModelAsset, "Single", "Quad");
+    }
+
+    private int findFirstInstanceOfFalse (boolean[] array) {
+        if (!array[0]) return 0;
+
+        int lb = 0, rb = array.length;
+        while (lb < rb) {
+            int mid = (lb+rb)/2;
+            if (mid+1 >= array.length) break;
+            if (array[mid] == array[mid+1]) {
+                if (array[mid]) {
+                    lb = mid+1;
+                } else {
+                    rb = mid;
+                }
+            } else {
+                return mid+1;
+            }
+        }
+        return -1;
     }
 }
