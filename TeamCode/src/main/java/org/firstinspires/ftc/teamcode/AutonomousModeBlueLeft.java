@@ -57,6 +57,14 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     @Override
     public void loop() {
+
+        /*
+        * To write code in this instance, simply write
+        * case n:
+        *   hasMoved[n] = *some instruction*
+        *   break;
+        *  */
+
         switch (findFirstInstanceOfFalse(hasMoved)) {
             case 0:
                 hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
