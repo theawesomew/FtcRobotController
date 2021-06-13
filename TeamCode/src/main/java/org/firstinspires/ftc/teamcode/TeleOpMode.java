@@ -71,7 +71,8 @@ public class TeleOpMode extends OpMode {
         }
 
         if (gamepadWrapper.isDown("g1_a")) {
-            robot.Push();
+            //robot.Push();
+            robot.Extend();
         } else {
             robot.Retract();
         }

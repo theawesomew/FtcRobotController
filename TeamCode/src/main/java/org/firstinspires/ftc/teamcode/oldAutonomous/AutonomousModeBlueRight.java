@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.oldAutonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -7,7 +8,8 @@ import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
 
-public class AutonomousModeRedRight extends OpMode {
+@Autonomous(name="UltimateGoalAutonomousModeBlueRight", group="Autonomous")
+public class AutonomousModeBlueRight extends OpMode {
     private MotorMap driveMap;
     private XDrive xDrive;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false};
@@ -40,7 +42,6 @@ public class AutonomousModeRedRight extends OpMode {
 
     @Override
     public void loop() {
-
         if (!hasMoved[0]) {
             hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
         } else if (!hasMoved[1]) {
@@ -54,7 +55,7 @@ public class AutonomousModeRedRight extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[4]) {
-            hasMoved[4] = robot.StrafeByDistance(70, Math.PI-robot.GetYaw(), telemetry);
+            hasMoved[4] = robot.StrafeByDistance(70, robot.GetYaw(), telemetry);
         } else if (!hasMoved[5]) {
             try {
                 hasMoved[5] = robot.PushThenRetract(telemetry);
@@ -62,7 +63,7 @@ public class AutonomousModeRedRight extends OpMode {
                 e.printStackTrace();
             }
         } else if (!hasMoved[6]) {
-            hasMoved[6] = robot.StrafeByDistance(70, Math.PI-robot.GetYaw(), telemetry);
+            hasMoved[6] = robot.StrafeByDistance(70, robot.GetYaw(), telemetry);
         } else if (!hasMoved[7]) {
             try {
                 hasMoved[7] = robot.PushThenRetract(telemetry);

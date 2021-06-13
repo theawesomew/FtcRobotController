@@ -101,10 +101,6 @@ public class Robot {
         return this.pushy.PushThenRetract(telemetry);
     }
 
-    public void Raise () {this.wobbleArm.Raise();}
-
-    public void Lower () {this.wobbleArm.Lower();}
-
     public float GetYaw () {
         return imu.getAngularOrientation().firstAngle;
     }

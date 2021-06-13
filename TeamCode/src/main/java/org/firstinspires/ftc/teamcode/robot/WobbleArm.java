@@ -1,23 +1,19 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class WobbleArm extends Mechanisms {
 
-    private Servo wobbleServo;
+    private DcMotor wobbleMotor;
 
 
-    public WobbleArm (HardwareMap hardwareMap, String mechanismName) {
-        wobbleServo = hardwareMap.servo.get(mechanismName);
-        wobbleServo.setPosition(0);
+    public WobbleArm (HardwareMap hardwareMap, String wobbleArmName) {
+        wobbleMotor = hardwareMap.dcMotor.get(wobbleArmName);
     }
 
-    public void Raise() {
-        wobbleServo.setPosition(1);
-    }
 
-    public void Lower() {
-        wobbleServo.setPosition(0);
-    }
+    
+
 }

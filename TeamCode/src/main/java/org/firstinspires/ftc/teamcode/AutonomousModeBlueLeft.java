@@ -3,20 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-import org.firstinspires.ftc.teamcode.robot.Conveyor;
-import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
-import org.firstinspires.ftc.teamcode.robot.Pushy;
 import org.firstinspires.ftc.teamcode.robot.Robot;
-import org.firstinspires.ftc.teamcode.robot.ServoMap;
-import org.firstinspires.ftc.teamcode.robot.Shooter;
-import org.firstinspires.ftc.teamcode.robot.XDrive;
 
 @Autonomous(name="UltimateGoalAutonomousModeBlueLeft", group="Autonomous")
 public class AutonomousModeBlueLeft extends OpMode {
@@ -70,9 +63,45 @@ public class AutonomousModeBlueLeft extends OpMode {
                 hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
                 break;
             case 1:
-                hasMoved[1] = robot.RotateByAngleUsingIMU(Math.PI/4, true, telemetry);
+                hasMoved[1] = robot.RotateByAngleUsingIMU(Math.PI/2, true, telemetry);
                 break;
         }
+
+
+
+        // no rings, square a
+
+        switch (findFirstInstanceOfFalse(hasMoved)) {
+            case 0:
+                hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+                break;
+            case 1:
+                //lower the arm
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override
