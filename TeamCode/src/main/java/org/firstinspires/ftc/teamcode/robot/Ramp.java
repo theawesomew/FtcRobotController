@@ -9,11 +9,11 @@ public class Ramp extends Mechanisms {
 
     public Ramp (HardwareMap hardwareMap, String servoName) {
         ramp = hardwareMap.servo.get(servoName);
-        ramp.setPosition(0);
+        ramp.setPosition(0.5);
     }
 
     public void Extend() {
-        ramp.setPosition(1);
+        ramp.setPosition(0);
     }
 
 }
