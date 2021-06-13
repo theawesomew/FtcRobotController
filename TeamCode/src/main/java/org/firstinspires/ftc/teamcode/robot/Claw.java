@@ -8,9 +8,9 @@ public class Claw extends Mechanisms{
     private Servo clawLeft;
     private Servo clawRight;
 
-    public Claw (HardwareMap hardwareMap, String servoName) {
-        clawLeft = hardwareMap.servo.get(servoName);
-        clawRight = hardwareMap.servo.get(servoName);
+    public Claw (HardwareMap hardwareMap, String servoLeft, String ServoRight) {
+        clawLeft = hardwareMap.servo.get(servoLeft);
+        clawRight = hardwareMap.servo.get(ServoRight);
 
         clawLeft.setPosition(0);
         clawRight.setPosition(1);

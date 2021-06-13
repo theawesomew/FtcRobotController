@@ -13,8 +13,7 @@ public class Robot {
     private Shooter shooter;
     private WobbleArm wobbleArm;
     private BNO055IMU imu;
-    private Claw clawLeft;
-    private Claw clawRight;
+    private Claw claw;
     private Ramp ramp;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
@@ -34,9 +33,8 @@ public class Robot {
         this.pushy = new Pushy(hardwareMap, pushyName);
         this.shooter = new Shooter(hardwareMap, shooterName);
         this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmName);
-        this.clawLeft = new Claw(hardwareMap, clawLeftName);
-        this.clawRight = new Claw(hardwareMap, clawRightName);
         this.ramp = new Ramp(hardwareMap, rampName);
+        this.claw = new Claw(hardwareMap, clawLeftName, clawRightName);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -120,11 +118,11 @@ public class Robot {
     }
 
     public void ClawOpen() {
-        this.ClawOpen();
+        this.claw.ClawOpen();
     }
 
     public void ClawClose() {
-        this.ClawClose();
+        this.claw.ClawClose();
     }
 
     public void Extend() {this.ramp.Extend();}
