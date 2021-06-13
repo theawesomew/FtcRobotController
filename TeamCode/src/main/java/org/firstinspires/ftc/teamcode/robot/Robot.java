@@ -15,9 +15,10 @@ public class Robot {
     private BNO055IMU imu;
     private Claw clawLeft;
     private Claw clawRight;
+    private Ramp ramp;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName, String wobbleArmName, String clawLeftName, String clawRightName) {
+                  String intakeName, String shooterName, String wobbleArmName, String clawLeftName, String clawRightName, String rampName) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -35,6 +36,7 @@ public class Robot {
         this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmName);
         this.clawLeft = new Claw(hardwareMap, clawLeftName);
         this.clawRight = new Claw(hardwareMap, clawRightName);
+        this.ramp = new Ramp(hardwareMap, rampName);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -124,5 +126,7 @@ public class Robot {
     public void ClawClose() {
         this.ClawClose();
     }
+
+    public void Extend() {this.ramp.Extend();}
 }
 
