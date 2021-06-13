@@ -23,6 +23,7 @@ public class TeleOpMode extends OpMode {
     private Robot robot;
     private int IntakeConveyorCounter = 0;
     private int WobbleArmCounter = 0;
+    private int ClawCounter = 0;
 
 
     @Override
@@ -33,7 +34,7 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight");
         gamepadWrapper = new GamepadWrapper();
     }
 
@@ -59,7 +60,7 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.AdjustedShootPower();
-            telemetry.addData("Imagine being that much of a bitch boi lmao", robot.GetShooterPower());
+            telemetry.addData("Shooting Power:", robot.GetShooterPower());
         } else {
             robot.SetShooterPower(0);
         }
@@ -91,6 +92,12 @@ public class TeleOpMode extends OpMode {
                 e.printStackTrace();
             }
         }
+
+        if (gamepadWrapper.isPressed("g2_a")) {
+            robot.ClawOpen();
+        }
+
+
 
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());

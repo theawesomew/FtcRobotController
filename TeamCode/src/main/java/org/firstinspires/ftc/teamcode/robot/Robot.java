@@ -13,9 +13,11 @@ public class Robot {
     private Shooter shooter;
     private WobbleArm wobbleArm;
     private BNO055IMU imu;
+    private Claw clawLeft;
+    private Claw clawRight;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName, String wobbleArmName) {
+                  String intakeName, String shooterName, String wobbleArmName, String clawLeftName, String clawRightName) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -31,6 +33,8 @@ public class Robot {
         this.pushy = new Pushy(hardwareMap, pushyName);
         this.shooter = new Shooter(hardwareMap, shooterName);
         this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmName);
+        this.clawLeft = new Claw(hardwareMap, clawLeftName);
+        this.clawRight = new Claw(hardwareMap, clawRightName);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -111,6 +115,14 @@ public class Robot {
 
     public float GetPitch () {
         return imu.getAngularOrientation().thirdAngle;
+    }
+
+    public void ClawOpen() {
+        this.ClawOpen();
+    }
+
+    public void ClawClose() {
+        this.ClawClose();
     }
 }
 

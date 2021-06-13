@@ -7,6 +7,7 @@ public class WobbleArm extends Mechanisms {
 
     private Servo wobbleServo;
 
+
     public WobbleArm (HardwareMap hardwareMap, String mechanismName) {
         wobbleServo = hardwareMap.servo.get(mechanismName);
         wobbleServo.setPosition(0);
