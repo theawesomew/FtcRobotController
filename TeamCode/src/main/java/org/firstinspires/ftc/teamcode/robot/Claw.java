@@ -12,19 +12,19 @@ public class Claw extends Mechanisms{
         clawLeft = hardwareMap.servo.get(servoLeft);
         clawRight = hardwareMap.servo.get(ServoRight);
 
-        clawLeft.setPosition(0);
-        clawRight.setPosition(1);
+        clawLeft.setPosition(1);
+        clawRight.setPosition(0);
     }
 
 
     public void ClawOpen() {
-        clawRight.setPosition(1);
-        clawLeft.setPosition(0);
+        clawRight.setPosition(0);
+        clawLeft.setPosition(1);
     }
 
     public void ClawClose() {
-        clawRight.setPosition(0);
-        clawLeft.setPosition(1);
+        clawRight.setPosition(0.6);
+        clawLeft.setPosition(0.4);
     }
 
 

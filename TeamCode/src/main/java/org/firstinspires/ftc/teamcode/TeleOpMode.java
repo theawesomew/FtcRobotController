@@ -26,6 +26,7 @@ public class TeleOpMode extends OpMode {
     private int ClawCounter = 0;
 
 
+
     @Override
     public void init() {
         motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
@@ -76,7 +77,7 @@ public class TeleOpMode extends OpMode {
             robot.Retract();
         }
 
-        if (gamepadWrapper.isPressed("g1_x")) {
+        if (gamepadWrapper.isPressed("g2_x")) {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
                 robot.Lower();
@@ -94,16 +95,20 @@ public class TeleOpMode extends OpMode {
         }
 
         if (gamepadWrapper.isPressed("g2_a")) {
-            robot.ClawOpen();
+            ++ClawCounter;
+            if (ClawCounter % 2 == 0) {
+                robot.ClawClose();
+            } else {
+                robot.ClawOpen();
+            }
+
         }
 
         if (gamepadWrapper.isPressed("g2_b")) {
             robot.Extend();
         }
 
-        if (gamepadWrapper.isPressed("g2_x")) {
-            robot.Extend();
-        }
+
 
 
 

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class WobbleArm extends Mechanisms {
 
     private DcMotor wobbleMotor;
+    private boolean lowered = false;
 
 
     public WobbleArm (HardwareMap hardwareMap, String wobbleArmName) {
@@ -14,15 +15,23 @@ public class WobbleArm extends Mechanisms {
     }
 
     public void Lower() {
+
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            wobbleMotor.setTargetPosition(100);
+            wobbleMotor.setTargetPosition(-600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(0.1);
+            wobbleMotor.setPower(-0.1);
         }
+
     }
 
     public void Raise() {
+        if (!wobbleMotor.isBusy()) {
+            wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            wobbleMotor.setTargetPosition(600);
+            wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            wobbleMotor.setPower(0.1);
+        }
 
     }
 
