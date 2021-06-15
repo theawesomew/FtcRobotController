@@ -24,6 +24,7 @@ public class TeleOpMode extends OpMode {
     private int IntakeConveyorCounter = 0;
     private int WobbleArmCounter = 0;
     private int ClawCounter = 0;
+    private int RampCounter = 0;
 
 
 
@@ -66,10 +67,12 @@ public class TeleOpMode extends OpMode {
             robot.SetShooterPower(0);
         }
 
-        if (gamepadWrapper.isPressed("g1_b")) {
+        if (gamepadWrapper.isPressed("g2_dpad_down")) {
             robot.SetIntakePower(++IntakeConveyorCounter % 2);
             robot.SetConveyorPower(IntakeConveyorCounter % 2);
         }
+
+
 
         if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
@@ -77,12 +80,12 @@ public class TeleOpMode extends OpMode {
             robot.Retract();
         }
 
-        if (gamepadWrapper.isPressed("g2_x")) {
+        if (gamepadWrapper.isPressed("g2_a")) {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
-                robot.Lower();
-            } else {
                 robot.Raise();
+                } else {
+                robot.Lower();
             }
         }
 
@@ -94,18 +97,23 @@ public class TeleOpMode extends OpMode {
             }
         }
 
-        if (gamepadWrapper.isPressed("g2_a")) {
+        if (gamepadWrapper.isPressed("g2_b")) {
             ++ClawCounter;
             if (ClawCounter % 2 == 0) {
-                robot.ClawClose();
-            } else {
                 robot.ClawOpen();
+            } else {
+                robot.ClawClose();
             }
 
         }
 
-        if (gamepadWrapper.isPressed("g2_b")) {
-            robot.Extend();
+        if (gamepadWrapper.isPressed("g1_b")) {
+            ++RampCounter;
+            if (RampCounter % 2 == 0) {
+                robot.Return();
+            } else {
+                robot.Extend();
+            }
         }
 
 

@@ -73,11 +73,57 @@ public class AutonomousModeBlueLeft extends OpMode {
 
         switch (findFirstInstanceOfFalse(hasMoved)) {
             case 0:
-                hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+                hasMoved[0] = robot.StrafeByDistance(700, Math.PI/2, telemetry);
                 break;
             case 1:
-                //lower the arm
-
+                hasMoved[1] = robot.LoweredPosition();
+                break;
+            case 2:
+                robot.ClawOpen();
+                hasMoved[2] = true;
+                break;
+            case 3:
+                hasMoved[3] = robot.RaisedPosition();
+                break;
+            case 4:
+                hasMoved[4] = robot.StrafeByDistance(350, 3*Math.PI/2, telemetry);
+                break;
+            case 5:
+                hasMoved[5] = robot.Shoot(10000);
+                break;
+            case 6:
+                hasMoved[6] = robot.StrafeByDistance(350, 0, telemetry);
+                break;
+            case 7:
+                hasMoved[7] = robot.RotateByAngleUsingIMU(Math.toRadians(15), true, telemetry);
+                break;
+            case 8:
+                try {
+                    hasMoved[8] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 9:
+                hasMoved[9] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                break;
+            case 10:
+                try {
+                    hasMoved[10] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 11:
+                hasMoved[11] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                break;
+            case 12:
+                try {
+                    hasMoved[12] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
 
 

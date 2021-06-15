@@ -16,4 +16,6 @@ public class Ramp extends Mechanisms {
         ramp.setPosition(0);
     }
 
+    public void Retract() {ramp.setPosition(0.5);}
+
 }

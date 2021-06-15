@@ -123,10 +123,16 @@ public class Robot {
 
     public void Extend() {this.ramp.Extend();}
 
+    public void Return() {this.ramp.Retract();}
+
     public void Raise() {
         this.wobbleArm.Raise();
     }
 
     public void Lower() {this.wobbleArm.Lower();}
+
+    public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
+
+    public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
 }
 
