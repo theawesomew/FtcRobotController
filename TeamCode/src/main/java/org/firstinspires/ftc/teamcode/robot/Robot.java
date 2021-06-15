@@ -134,5 +134,9 @@ public class Robot {
     public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
 
     public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
+
+    public boolean Up() {return this.ramp.Up();}
+
+    public boolean Down() {return this.ramp.Down();}
 }
 

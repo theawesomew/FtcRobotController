@@ -18,4 +18,8 @@ public class Ramp extends Mechanisms {
 
     public void Retract() {ramp.setPosition(0.5);}
 
+    public boolean Up() {ramp.setPosition(0); return true;}
+
+    public boolean Down() {ramp.setPosition(0.5); return true;}
+
 }
