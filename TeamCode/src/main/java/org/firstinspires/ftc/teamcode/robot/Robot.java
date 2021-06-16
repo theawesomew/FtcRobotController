@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -16,6 +17,8 @@ public class Robot {
     private Claw claw;
     private Ramp ramp;
     private ColourSensors colorSensor;
+    private ElapsedTime robotTime;
+    private double prevTime = -1.0;
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
                   String intakeName, String shooterName, String wobbleArmName, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour) {
@@ -27,6 +30,9 @@ public class Robot {
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+
+        robotTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        robotTime.reset();
 
         this.xDrive = new XDrive(driveMap, imu);
         this.conveyor = new Conveyor(hardwareMap, conveyorName);
@@ -137,10 +143,24 @@ public class Robot {
 
     public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
 
-    public boolean Up() {return this.ramp.Up();}
+    public boolean Up () {return this.ramp.Up();}
 
-    public boolean Down() {return this.ramp.Down();}
+    public boolean Down () {return this.ramp.Down();}
 
     public int GetRed() {return this.colorSensor.GetRed();}
+
+    public boolean Sleep (double milliseconds) {
+        if (prevTime == -1.0) {
+            prevTime = robotTime.milliseconds();
+            return false;
+        } else if (robotTime.milliseconds() - prevTime < milliseconds) {
+            this.SetStrafe(0,0);
+            this.SetRotation(0);
+            return false;
+        } else {
+            prevTime = -1.0;
+            return true;
+        }
+    }
 }
 
