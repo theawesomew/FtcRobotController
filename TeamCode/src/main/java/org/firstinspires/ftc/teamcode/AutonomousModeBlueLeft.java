@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
@@ -23,7 +24,17 @@ public class AutonomousModeBlueLeft extends OpMode {
     private MotorMap driveMap;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
+    private boolean startMove[] = {false, false, false};
     private double currentYaw;
+    private boolean oneRing = true;
+
+    private ColorSensor colorSensorRight1;
+    private ColorSensor colorSensorRight4;
+    private double scaleFactor = 255;
+
+    private double red1 = colorSensorRight1.red()*scaleFactor;
+    private double red4 = colorSensorRight4.red()*scaleFactor;
+
 
 
     @Override
@@ -36,6 +47,13 @@ public class AutonomousModeBlueLeft extends OpMode {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
         robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp");
+
+        robot.ClawClose();
+
+        colorSensorRight1 = hardwareMap.get(ColorSensor.class, "colourSensorRight1");
+        colorSensorRight4 = hardwareMap.get(ColorSensor.class, "colourSensorRight4");
+
+
     }
 
     @Override
@@ -50,7 +68,6 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     @Override
     public void loop() {
-
         /*
         * To write code in this instance, simply write
         * case n:
@@ -58,97 +75,148 @@ public class AutonomousModeBlueLeft extends OpMode {
         *   break;
         *  */
 
-        switch (findFirstInstanceOfFalse(hasMoved)) {
-            case 0:
-                hasMoved[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
-                break;
-            case 1:
-                hasMoved[1] = robot.RotateByAngleUsingIMU(Math.PI/2, true, telemetry);
-                break;
-        }
+        telemetry.addData("colorSensor1: ", red1);
+        telemetry.addData("colorSensor4: ", red4);
 
+        switch (findFirstInstanceOfFalse(startMove)) {
+            case 0:
+                startMove[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+                break;
+
+            case  1:
+
+            case  2:
+
+
+            case 3:
+
+                if (oneRing == true) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            hasMoved[0] = robot.Up();
+                            break;
+                        case 1:
+                            hasMoved[1] = robot.StrafeByDistance(700, Math.PI / 2, telemetry);
+                            break;
+                        case 2:
+                            hasMoved[2] = robot.LoweredPosition();
+                            break;
+                        case 3:
+                            robot.ClawOpen();
+                            hasMoved[3] = true;
+                            break;
+                        case 4:
+                            hasMoved[4] = robot.RaisedPosition();
+                            break;
+                        case 5:
+                            hasMoved[5] = robot.StrafeByDistance(350, 3 * Math.PI / 2, telemetry);
+                            break;
+                        case 6:
+                            hasMoved[6] = robot.Shoot(10000);
+                            break;
+                        case 7:
+                            hasMoved[7] = robot.StrafeByDistance(350, 0, telemetry);
+                            break;
+                        case 8:
+                            hasMoved[8] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
+                            break;
+                        case 9:
+                            try {
+                                hasMoved[9] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 10:
+                            hasMoved[10] = robot.StrafeByDistance(100, 0 - Math.toRadians(5), telemetry);
+                            break;
+                        case 11:
+                            try {
+                                hasMoved[11] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 12:
+                            hasMoved[12] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                            break;
+                        case 13:
+                            try {
+                                hasMoved[13] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+
+                } else {
+                    startMove[1] = true;
+                    break;
+                }
+        }
 
 
         // no rings, square a
+            /**
 
         switch (findFirstInstanceOfFalse(hasMoved)) {
             case 0:
-                hasMoved[0] = robot.StrafeByDistance(700, Math.PI/2, telemetry);
+                hasMoved[0] = robot.Up();
                 break;
+
             case 1:
-                hasMoved[1] = robot.LoweredPosition();
+                hasMoved[1] = robot.StrafeByDistance(700, Math.PI/2, telemetry);
                 break;
             case 2:
-                robot.ClawOpen();
-                hasMoved[2] = true;
+                hasMoved[2] = robot.LoweredPosition();
                 break;
             case 3:
-                hasMoved[3] = robot.RaisedPosition();
+                robot.ClawOpen();
+                hasMoved[3] = true;
                 break;
             case 4:
-                hasMoved[4] = robot.StrafeByDistance(350, 3*Math.PI/2, telemetry);
+                hasMoved[4] = robot.RaisedPosition();
                 break;
             case 5:
-                hasMoved[5] = robot.Shoot(10000);
+                hasMoved[5] = robot.StrafeByDistance(350, 3*Math.PI/2, telemetry);
                 break;
             case 6:
-                hasMoved[6] = robot.StrafeByDistance(350, 0, telemetry);
+                hasMoved[6] = robot.Shoot(10000);
                 break;
             case 7:
-                hasMoved[7] = robot.RotateByAngleUsingIMU(Math.toRadians(15), true, telemetry);
+                hasMoved[7] = robot.StrafeByDistance(350, 0, telemetry);
                 break;
             case 8:
-                try {
-                    hasMoved[8] = robot.PushThenRetract(telemetry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                hasMoved[8] = robot.RotateByAngleUsingIMU(Math.toRadians(15), true, telemetry);
                 break;
             case 9:
-                hasMoved[9] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                try {
+                    hasMoved[9] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 10:
-                try {
-                    hasMoved[10] = robot.PushThenRetract(telemetry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                hasMoved[10] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
                 break;
             case 11:
-                hasMoved[11] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
-                break;
-            case 12:
                 try {
-                    hasMoved[12] = robot.PushThenRetract(telemetry);
+                    hasMoved[11] = robot.PushThenRetract(telemetry);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
+            case 12:
+                hasMoved[12] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                break;
+            case 13:
+                try {
+                    hasMoved[13] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break; */
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
 
     @Override
     public void stop() {

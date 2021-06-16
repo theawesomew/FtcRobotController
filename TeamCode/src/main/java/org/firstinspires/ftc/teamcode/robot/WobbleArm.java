@@ -39,7 +39,7 @@ public class WobbleArm extends Mechanisms {
 
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            wobbleMotor.setTargetPosition(100);
+            wobbleMotor.setTargetPosition(-600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wobbleMotor.setPower(0.1);
         }

@@ -12,14 +12,16 @@ public class Ramp extends Mechanisms {
         ramp.setPosition(0.5);
     }
 
-    public void Extend() {
-        ramp.setPosition(0);
+    public void Retract() {
+        ramp.setPosition(0.9);
     }
 
-    public void Retract() {ramp.setPosition(0.5);}
+    public void Extend() {ramp.setPosition(0.2);}
 
-    public boolean Up() {ramp.setPosition(0); return true;}
+    public boolean Up() {ramp.setPosition(0.9); return true;}
 
-    public boolean Down() {ramp.setPosition(0.5); return true;}
+    public boolean Down() {ramp.setPosition(0.3); return true;}
+
+    public void Latch() {ramp.setPosition(0.6);}
 
 }
