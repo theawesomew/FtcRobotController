@@ -39,7 +39,7 @@ public class Shooter extends Mechanisms {
             shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             shooter.setTargetPosition((int) rotations * 1440);
             shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            this.SetPower((c/voltageSensor.getVoltage()) + a);
+            this.AdjustedShootPower();
         }
         return true;
     }
