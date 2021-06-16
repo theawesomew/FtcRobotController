@@ -36,7 +36,7 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
         gamepadWrapper = new GamepadWrapper();
     }
 

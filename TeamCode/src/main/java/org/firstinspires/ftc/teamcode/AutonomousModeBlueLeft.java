@@ -26,7 +26,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
     private boolean startMove[] = {false, false, false};
     private double currentYaw;
-    private boolean oneRing = true;
+
 
     private ColorSensor colorSensorRight1;
     private ColorSensor colorSensorRight4;
@@ -34,6 +34,8 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     private double red1 = colorSensorRight1.red()*scaleFactor;
     private double red4 = colorSensorRight4.red()*scaleFactor;
+
+    private int ringsDetected = 0;
 
 
 
@@ -46,13 +48,9 @@ public class AutonomousModeBlueLeft extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight");
 
         robot.ClawClose();
-
-        colorSensorRight1 = hardwareMap.get(ColorSensor.class, "colourSensorRight1");
-        colorSensorRight4 = hardwareMap.get(ColorSensor.class, "colourSensorRight4");
-
 
     }
 
@@ -82,15 +80,13 @@ public class AutonomousModeBlueLeft extends OpMode {
             case 0:
                 startMove[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
                 break;
-
             case  1:
-
-            case  2:
-
-
-            case 3:
-
-                if (oneRing == true) {
+                //put in robot.sleep function here
+                ringsDetected = robot.GetRed();
+                startMove[1] = true;
+                break;
+            case 2:
+                if (ringsDetected == 1) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
                             hasMoved[0] = robot.Up();
@@ -150,7 +146,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                     }
 
                 } else {
-                    startMove[1] = true;
+                    startMove[2] = true;
                     break;
                 }
         }
