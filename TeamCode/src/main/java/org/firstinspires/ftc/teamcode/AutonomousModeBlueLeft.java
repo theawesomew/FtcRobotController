@@ -23,7 +23,7 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     private MotorMap driveMap;
     private Robot robot;
-    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
+    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     private boolean startMove[] = {false, false, false, false, false, false};
     private double currentYaw;
 
@@ -99,12 +99,14 @@ public class AutonomousModeBlueLeft extends OpMode {
                 break;
             case 4:
                 if (ringsDetected == 1) {
+                    telemetry.addData("working", ":)");
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
                             hasMoved[0] = robot.Up();
                             break;
                         case 1:
-                            hasMoved[1] = robot.StrafeByDistance(700, Math.PI / 2, telemetry);
+                            telemetry.addData("Moving now for has moved 1", "pog");
+                            hasMoved[1] = robot.StrafeByDistance(700, Math.PI/2, telemetry);
                             break;
                         case 2:
                             hasMoved[2] = robot.LoweredPosition();
@@ -117,10 +119,10 @@ public class AutonomousModeBlueLeft extends OpMode {
                             hasMoved[4] = robot.RaisedPosition();
                             break;
                         case 5:
-                            hasMoved[5] = robot.StrafeByDistance(350, 3 * Math.PI / 2, telemetry);
+                            hasMoved[5] = robot.StrafeByDistance(350, 3 * Math.PI/2, telemetry);
                             break;
                         case 6:
-                            hasMoved[6] = robot.Shoot(10000);
+                            hasMoved[6] = robot.Shoot(7.5);
                             break;
                         case 7:
                             hasMoved[7] = robot.StrafeByDistance(350, 0, telemetry);

@@ -18,9 +18,9 @@ public class Ramp extends Mechanisms {
 
     public void Extend() {ramp.setPosition(0.2);}
 
-    public boolean Up() {ramp.setPosition(0.9); return true;}
+    public boolean Up() {ramp.setPosition(0.3); return true;}
 
-    public boolean Down() {ramp.setPosition(0.3); return true;}
+    public boolean Down() {ramp.setPosition(0.9); return true;}
 
     public void Latch() {ramp.setPosition(0.6);}
 

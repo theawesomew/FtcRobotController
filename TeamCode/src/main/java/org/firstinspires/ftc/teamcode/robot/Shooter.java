@@ -44,7 +44,7 @@ public class Shooter extends Mechanisms {
         return true;
     }
 
-    
+
 
 
 }
