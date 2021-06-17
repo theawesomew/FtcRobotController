@@ -24,7 +24,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     private MotorMap driveMap;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false};
+    private boolean startMove[] = {false, false, false, false, false, false, false};
     private double currentYaw;
 
 
@@ -80,12 +80,16 @@ public class AutonomousModeBlueLeft extends OpMode {
             case 0:
                 startMove[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
                 break;
-            case  1:
-                //put in robot.sleep function here
-                ringsDetected = robot.GetRed();
-                startMove[1] = true;
-                break;
+            case 1:
+                startMove[1] = robot.Sleep(500);
             case 2:
+                ringsDetected = robot.GetRed();
+                startMove[2] = true;
+                break;
+            case 3:
+                startMove[3] = robot.Sleep(500);
+                break;
+            case 4:
                 if (ringsDetected == 1) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
@@ -146,7 +150,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                     }
 
                 } else {
-                    startMove[2] = true;
+                    startMove[4] = true;
                     break;
                 }
         }
