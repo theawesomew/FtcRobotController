@@ -86,7 +86,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                 startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
                 break;
             case 1:
-                startMove[1] = robot.Sleep(500);
+                startMove[1] = robot.Sleep(500, telemetry);
                 break;
             case 2:
                 ringsDetected = robot.GetRed();
@@ -94,7 +94,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                 startMove[2] = true;
                 break;
             case 3:
-                startMove[3] = robot.Sleep(500);
+                startMove[3] = robot.Sleep(500, telemetry);
                 telemetry.addData("Currently", "Stopped");
                 break;
             case 4:

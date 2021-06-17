@@ -31,7 +31,7 @@ public class Robot {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        robotTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        robotTime = new ElapsedTime();
         robotTime.reset();
 
         this.xDrive = new XDrive(driveMap, imu);
@@ -149,11 +149,13 @@ public class Robot {
 
     public int GetRed() {return this.colorSensor.GetRed();}
 
-    public boolean Sleep (double milliseconds) {
+    public boolean Sleep (double milliseconds, Telemetry telemetry) {
         if (prevTime == -1.0) {
             prevTime = robotTime.milliseconds();
             return false;
         } else if (robotTime.milliseconds() - prevTime < milliseconds) {
+            telemetry.addData("Timer", robotTime.milliseconds());
+            telemetry.addData("Previous Time", prevTime);
             this.SetStrafe(0,0);
             this.SetRotation(0);
             return false;
