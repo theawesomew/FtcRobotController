@@ -79,6 +79,7 @@ public class AutonomousModeBlueLeft extends OpMode {
         telemetry.addData("Red Value1: ", red1);
         telemetry.addData("Red Value2: ", red2);
         telemetry.addData("Rings Detected", ringsDetected);
+        telemetry.addData("Shooter Power", robot.GetShooterPower());
 
 
 
@@ -164,6 +165,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                     startMove[4] = true;
                     break;
                 }
+                break;
             case 5:
                 if (ringsDetected == 0) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
