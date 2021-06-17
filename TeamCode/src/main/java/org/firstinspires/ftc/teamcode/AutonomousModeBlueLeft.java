@@ -24,7 +24,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     private MotorMap driveMap;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false, false, false};
+    private boolean startMove[] = {false, false, false, false, false, false};
     private double currentYaw;
 
     private int ringsDetected = 0;
@@ -78,6 +78,7 @@ public class AutonomousModeBlueLeft extends OpMode {
 
         telemetry.addData("Red Value1: ", red1);
         telemetry.addData("Red Value2: ", red2);
+        telemetry.addData("Rings Detected", ringsDetected);
 
 
 
@@ -86,15 +87,14 @@ public class AutonomousModeBlueLeft extends OpMode {
                 startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
                 break;
             case 1:
-                startMove[1] = robot.Sleep(500, telemetry);
+                startMove[1] = robot.Sleep(1000, telemetry);
                 break;
             case 2:
                 ringsDetected = robot.GetRed();
-                telemetry.addData("Rings Detected", ringsDetected);
                 startMove[2] = true;
                 break;
             case 3:
-                startMove[3] = robot.Sleep(500, telemetry);
+                startMove[3] = robot.Sleep(1000, telemetry);
                 telemetry.addData("Currently", "Stopped");
                 break;
             case 4:
@@ -170,10 +170,11 @@ public class AutonomousModeBlueLeft extends OpMode {
                             startMove[5] = true;
                             break;
                     }
+                } else {
+                    startMove[5] = true;
+                    break;
                 }
-            case 6:
-                telemetry.addData("not one ring", ringsDetected);
-                break;
+
         }
 
 
@@ -264,7 +265,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     private int findFirstInstanceOfFalse (boolean[] array) {
         if (!array[0]) return 0;
 
-        int lb = 0, rb = array.length;
+        int lb = 0, rb = array.length - 1;
         while (lb < rb) {
             int mid = (lb+rb)/2;
             if (mid+1 >= array.length) break;
