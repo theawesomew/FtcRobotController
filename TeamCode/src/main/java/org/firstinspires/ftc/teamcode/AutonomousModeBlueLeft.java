@@ -24,18 +24,16 @@ public class AutonomousModeBlueLeft extends OpMode {
     private MotorMap driveMap;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false, false, false, false, false};
+    private boolean startMove[] = {false, false, false, false, false};
     private double currentYaw;
 
-
-    private ColorSensor colorSensorRight1;
-    private ColorSensor colorSensorRight4;
-    private double scaleFactor = 255;
-
-    private double red1 = colorSensorRight1.red()*scaleFactor;
-    private double red4 = colorSensorRight4.red()*scaleFactor;
-
     private int ringsDetected = 0;
+
+    private ColorSensor right1;
+    private ColorSensor right2;
+
+    private int red1;
+    private int red2;
 
 
 
@@ -48,9 +46,11 @@ public class AutonomousModeBlueLeft extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
 
         robot.ClawClose();
+        right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
+        right2 = hardwareMap.get(ColorSensor.class, "colorSensorRight4");
 
     }
 
@@ -73,21 +73,29 @@ public class AutonomousModeBlueLeft extends OpMode {
         *   break;
         *  */
 
-        telemetry.addData("colorSensor1: ", red1);
-        telemetry.addData("colorSensor4: ", red4);
+        red1 = right1.red();
+        red2 = right2.red();
+
+        telemetry.addData("Red Value1: ", red1);
+        telemetry.addData("Red Value2: ", red2);
+
+
 
         switch (findFirstInstanceOfFalse(startMove)) {
             case 0:
-                startMove[0] = robot.StrafeByDistance(1000, Math.PI/2, telemetry);
+                startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
                 break;
             case 1:
                 startMove[1] = robot.Sleep(500);
+                break;
             case 2:
                 ringsDetected = robot.GetRed();
+                telemetry.addData("Rings Detected", ringsDetected);
                 startMove[2] = true;
                 break;
             case 3:
                 startMove[3] = robot.Sleep(500);
+                telemetry.addData("Currently", "Stopped");
                 break;
             case 4:
                 if (ringsDetected == 1) {
@@ -146,6 +154,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            startMove[4] = true;
                             break;
                     }
 
@@ -153,6 +162,18 @@ public class AutonomousModeBlueLeft extends OpMode {
                     startMove[4] = true;
                     break;
                 }
+            case 5:
+                if (ringsDetected == 0) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            telemetry.addData("Four Rings found", "No code for here atm");
+                            startMove[5] = true;
+                            break;
+                    }
+                }
+            case 6:
+                telemetry.addData("not one ring", ringsDetected);
+                break;
         }
 
 
