@@ -14,13 +14,20 @@ public class WobbleArm extends Mechanisms {
         wobbleMotor = hardwareMap.dcMotor.get(wobbleArmName);
     }
 
+    public boolean within (int value, int setValue, int error) {
+        if (Math.abs(value-setValue) < error) {
+            return true;
+        }
+        return false;
+    }
+
     public void Lower() {
 
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(-600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(-0.1);
+            wobbleMotor.setPower(-0.2);
         }
 
     }
@@ -30,12 +37,12 @@ public class WobbleArm extends Mechanisms {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(0.1);
+            wobbleMotor.setPower(0.2);
         }
 
     }
 
-    public boolean LowerPosition() {
+    /*public boolean LowerPosition() {
 
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -44,7 +51,8 @@ public class WobbleArm extends Mechanisms {
             wobbleMotor.setPower(0.1);
         }
 
-        return true;
+
+
 
     }
 
@@ -54,10 +62,15 @@ public class WobbleArm extends Mechanisms {
             wobbleMotor.setTargetPosition(600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wobbleMotor.setPower(0.1);
+        } else if (within(wobbleMotor.getCurrentPosition(), wobbleMotor.getTargetPosition(), 10)) {
+            return true;
         }
 
-        return true;
+        return false;
+
     }
+    */
+
 
 
 }

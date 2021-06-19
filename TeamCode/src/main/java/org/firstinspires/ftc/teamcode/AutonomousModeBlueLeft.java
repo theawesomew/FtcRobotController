@@ -24,7 +24,7 @@ public class AutonomousModeBlueLeft extends OpMode {
     private MotorMap driveMap;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false, false, false, false};
+    private boolean startMove[] = {false, false, false, false, false, false, false};
     private double currentYaw;
 
     private int ringsDetected = 0;
@@ -99,6 +99,8 @@ public class AutonomousModeBlueLeft extends OpMode {
                 telemetry.addData("Currently", "Stopped");
                 break;
             case 4:
+                startMove[4] = robot.RotateByAngleUsingIMU(Math.toRadians(2), false, telemetry);
+            case 5:
                 if (ringsDetected == 1) {
                     telemetry.addData("working", ":)");
                     switch (findFirstInstanceOfFalse(hasMoved)) {
@@ -107,75 +109,90 @@ public class AutonomousModeBlueLeft extends OpMode {
                             break;
                         case 1:
                             telemetry.addData("Moving now for has moved 1", "pog");
-                            hasMoved[1] = robot.StrafeByDistance(700, Math.PI/2, telemetry);
+                            hasMoved[1] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
                             break;
                         case 2:
-                            hasMoved[2] = robot.LoweredPosition();
+                            hasMoved[2] = robot.RotateByAngleUsingIMU(Math.toRadians(70), true, telemetry);
                             break;
                         case 3:
-                            robot.ClawOpen();
-                            hasMoved[3] = true;
+                            hasMoved[3] = robot.StrafeByDistance(5, Math.PI/2, telemetry);
                             break;
                         case 4:
-                            hasMoved[4] = robot.RaisedPosition();
+                            robot.Lower();
+                            hasMoved[4] = robot.Sleep(2000, telemetry);
                             break;
                         case 5:
-                            hasMoved[5] = robot.StrafeByDistance(350, 3 * Math.PI/2, telemetry);
+                            robot.ClawOpen();
+                            hasMoved[5] = true;
                             break;
                         case 6:
-                            hasMoved[6] = robot.Shoot(7.5);
+                            robot.Raise();
+                            hasMoved[6] = robot.Sleep(2000, telemetry);
                             break;
                         case 7:
                             hasMoved[7] = robot.StrafeByDistance(350, 0, telemetry);
                             break;
                         case 8:
-                            hasMoved[8] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
+                            hasMoved[8] = robot.Shoot(10);
                             break;
                         case 9:
-                            try {
-                                hasMoved[9] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(65), false, telemetry);
                             break;
                         case 10:
-                            hasMoved[10] = robot.StrafeByDistance(100, 0 - Math.toRadians(5), telemetry);
+                            try {
+                                hasMoved[10] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 11:
-                            try {
-                                hasMoved[11] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[11] = robot.StrafeByDistance(100, 0 - Math.toRadians(5), telemetry);
                             break;
                         case 12:
-                            hasMoved[12] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
-                            break;
-                        case 13:
                             try {
-                                hasMoved[13] = robot.PushThenRetract(telemetry);
+                                hasMoved[12] = robot.PushThenRetract(telemetry);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            startMove[4] = true;
+                            break;
+                        case 13:
+                            hasMoved[13] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                            break;
+                        case 14:
+                            try {
+                                hasMoved[14] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            startMove[5] = true;
                             break;
                     }
 
                 } else {
-                    startMove[4] = true;
+                    startMove[5] = true;
                     break;
                 }
                 break;
-            case 5:
+            case 6:
                 if (ringsDetected == 0) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
-                            telemetry.addData("Four Rings found", "No code for here atm");
-                            startMove[5] = true;
+                            telemetry.addData("zero Rings found", "No code for here atm");
                             break;
                     }
                 } else {
-                    startMove[5] = true;
+                    startMove[6] = true;
+                    break;
+                }
+            case 7:
+                if (ringsDetected == 4) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            telemetry.addData("Four rings found", ":)");
+                            break;
+                    }
+                } else {
+                    startMove[7] = true;
                     break;
                 }
 

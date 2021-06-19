@@ -139,9 +139,9 @@ public class Robot {
 
     public void Lower() {this.wobbleArm.Lower();}
 
-    public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
+    //public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
 
-    public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
+   // public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
 
     public boolean Up () {return this.ramp.Up();}
 

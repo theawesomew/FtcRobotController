@@ -73,7 +73,63 @@ public class AutonomousColorSensorTest extends OpMode {
          *   break;
          *  */
 
-        robot.Shoot(9000);
+        switch (findFirstInstanceOfFalse(hasMoved)) {
+            case 0:
+                hasMoved[0] = robot.Up();
+                break;
+            case 1:
+                telemetry.addData("Moving now for has moved 1", "pog");
+                hasMoved[1] = robot.StrafeByDistance(700, Math.PI / 2, telemetry);
+                break;
+            case 2:
+                //hasMoved[2] = robot.LoweredPosition();
+                break;
+            case 3:
+                robot.ClawOpen();
+                hasMoved[3] = true;
+                break;
+            case 4:
+               // hasMoved[4] = robot.RaisedPosition();
+                break;
+            case 5:
+                hasMoved[5] = robot.StrafeByDistance(350, 3 * Math.PI / 2, telemetry);
+                break;
+            case 6:
+                hasMoved[6] = robot.Shoot(7.5);
+                break;
+            case 7:
+                hasMoved[7] = robot.StrafeByDistance(350, 0, telemetry);
+                break;
+            case 8:
+                hasMoved[8] = robot.RotateByAngleUsingIMU(Math.toRadians(5), true, telemetry);
+                break;
+            case 9:
+                try {
+                    hasMoved[9] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 10:
+                hasMoved[10] = robot.StrafeByDistance(100, 0 - Math.toRadians(5), telemetry);
+                break;
+            case 11:
+                try {
+                    hasMoved[11] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 12:
+                hasMoved[12] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
+                break;
+            case 13:
+                try {
+                    hasMoved[13] = robot.PushThenRetract(telemetry);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        }
 
 
 
