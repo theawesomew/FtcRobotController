@@ -7,19 +7,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class WobbleArm extends Mechanisms {
 
     private DcMotor wobbleMotor;
-    private boolean lowered = false;
+
 
 
     public WobbleArm (HardwareMap hardwareMap, String wobbleArmName) {
         wobbleMotor = hardwareMap.dcMotor.get(wobbleArmName);
     }
 
-    public boolean within (int value, int setValue, int error) {
-        if (Math.abs(value-setValue) < error) {
-            return true;
-        }
-        return false;
-    }
+    
 
     public void Lower() {
 
