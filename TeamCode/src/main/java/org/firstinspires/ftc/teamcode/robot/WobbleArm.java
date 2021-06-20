@@ -14,7 +14,7 @@ public class WobbleArm extends Mechanisms {
         wobbleMotor = hardwareMap.dcMotor.get(wobbleArmName);
     }
 
-    
+
 
     public void Lower() {
 

@@ -23,8 +23,8 @@ public class AutonomousModeBlueLeft extends OpMode {
 
     private MotorMap driveMap;
     private Robot robot;
-    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false, false, false, false, false};
+    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+    private boolean startMove[] = {false, false, false, false, false, false, false, false, false, false};
     private double currentYaw;
 
     private int ringsDetected = 0;
@@ -88,14 +88,14 @@ public class AutonomousModeBlueLeft extends OpMode {
                 startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
                 break;
             case 1:
-                startMove[1] = robot.Sleep(1000, telemetry);
+                startMove[1] = robot.Sleep(500, telemetry);
                 break;
             case 2:
                 ringsDetected = robot.GetRed();
                 startMove[2] = true;
                 break;
             case 3:
-                startMove[3] = robot.Sleep(1000, telemetry);
+                startMove[3] = robot.Sleep(500, telemetry);
                 telemetry.addData("Currently", "Stopped");
                 break;
             case 4:
@@ -177,8 +177,44 @@ public class AutonomousModeBlueLeft extends OpMode {
                 if (ringsDetected == 0) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
-                            telemetry.addData("zero Rings found", "No code for here atm");
+                            hasMoved[0] = robot.Up();
+                        case 1:
+                            hasMoved[1] = robot.StrafeByDistance(900, Math.PI/2, telemetry);
                             break;
+                        case 2:
+                            robot.Lower();
+                            hasMoved[2] = robot.Sleep(2000, telemetry);
+                            break;
+                        case 3:
+                            robot.ClawOpen();
+                            hasMoved[3] = true;
+                            break;
+                        case 4:
+                            robot.Raise();
+                            hasMoved[4] = robot.Sleep(2000, telemetry);
+                            break;
+                        case 5:
+                            hasMoved[5] = robot.StrafeByDistance(800, 3 * Math.PI/2, telemetry);
+                            break;
+                        case 6:
+                            hasMoved[6] = robot.StrafeByDistance(200, 0, telemetry);
+                            break;
+                        case 7:
+                            hasMoved[7] = robot.Shoot(10);
+                            break;
+                        case 8:
+                            hasMoved[8] = robot.RotateByAngleUsingIMU(5, true, telemetry);
+                            break;
+                        case 9:
+                            try {
+                                hasMoved[9] = robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 10:
+                            break;
+
                     }
                 } else {
                     startMove[6] = true;
