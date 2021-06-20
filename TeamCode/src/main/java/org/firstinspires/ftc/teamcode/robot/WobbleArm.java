@@ -22,7 +22,7 @@ public class WobbleArm extends Mechanisms {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(-600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(-0.2);
+            wobbleMotor.setPower(-0.1);
         }
 
     }
@@ -32,7 +32,7 @@ public class WobbleArm extends Mechanisms {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(0.2);
+            wobbleMotor.setPower(0.15);
         }
 
     }

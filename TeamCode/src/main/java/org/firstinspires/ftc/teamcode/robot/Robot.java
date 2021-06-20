@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -19,6 +20,9 @@ public class Robot {
     private ColourSensors colorSensor;
     private ElapsedTime robotTime;
     private double prevTime = -1.0;
+    private ElapsedTime intakeTime;
+    private double prevTimeIntake = -1.0;
+
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
                   String intakeName, String shooterName, String wobbleArmName, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour) {
@@ -158,6 +162,20 @@ public class Robot {
             telemetry.addData("Previous Time", prevTime);
             this.SetStrafe(0,0);
             this.SetRotation(0);
+            return false;
+        } else {
+            prevTime = -1.0;
+            return true;
+        }
+    }
+
+    public boolean IntakeSleep (double milliseconds, Telemetry telemetry) {
+        if (prevTimeIntake == -1.0) {
+            prevTimeIntake = robotTime .milliseconds();
+            return false;
+        } else if (robotTime.milliseconds() - prevTimeIntake < milliseconds) {
+            telemetry.addData("Timer", robotTime.milliseconds());
+            telemetry.addData("Previous Time", prevTimeIntake);
             return false;
         } else {
             prevTime = -1.0;

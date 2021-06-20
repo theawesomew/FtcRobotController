@@ -1,10 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.speech.tts.TextToSpeech;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.android.AndroidTextToSpeech;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
@@ -14,6 +20,8 @@ import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
 import org.firstinspires.ftc.teamcode.robot.Shooter;
 import org.firstinspires.ftc.teamcode.robot.XDrive;
+
+import java.util.Locale;
 
 
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
@@ -25,6 +33,12 @@ public class TeleOpMode extends OpMode {
     private int WobbleArmCounter = 0;
     private int ClawCounter = 0;
     private int RampCounter = 0;
+    private DistanceSensor ringSensor;
+    private double distance;
+    private double minDistance = 70;
+    private boolean ringBool = true;
+    private boolean ringTimer = false;
+    private TextToSpeech tts;
 
 
 
@@ -36,8 +50,13 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+        ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
+
         robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
         gamepadWrapper = new GamepadWrapper();
+
+        tts = new TextToSpeech(hardwareMap.appContext, null);
+        tts.setLanguage(Locale.US);
     }
 
 
@@ -60,6 +79,8 @@ public class TeleOpMode extends OpMode {
         robot.SetRotation(gamepad1.right_stick_x);
         robot.Drive(telemetry);
 
+        distance = ringSensor.getDistance(DistanceUnit.MM);
+
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.AdjustedShootPower();
@@ -68,9 +89,23 @@ public class TeleOpMode extends OpMode {
             robot.SetShooterPower(0);
         }
 
-        if (gamepadWrapper.isPressed("g2_dpad_down")) {
-            robot.SetIntakePower(++IntakeConveyorCounter % 2);
-            robot.SetConveyorPower(IntakeConveyorCounter % 2);
+        if (ringBool) {
+            if (gamepadWrapper.isPressed("g2_dpad_down")) {
+                robot.SetIntakePower(++IntakeConveyorCounter % 2);
+                robot.SetConveyorPower(IntakeConveyorCounter % 2);
+            }
+        }
+
+        if (distance < minDistance) {
+            ringTimer = robot.IntakeSleep(2000, telemetry);
+            if (ringTimer) {
+                tts.speak("Three rings detected", TextToSpeech.QUEUE_FLUSH, null);
+                ringBool = false;
+            } else {
+                ringBool = true;
+            }
+
+
         }
 
 
@@ -121,9 +156,13 @@ public class TeleOpMode extends OpMode {
 
 
 
+
+
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());
         telemetry.addData("Pitch", robot.GetPitch());
+
+        telemetry.addData("range", String.format("%.01f mm", ringSensor.getDistance(DistanceUnit.MM)));
 
     }
 
