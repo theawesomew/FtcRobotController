@@ -57,6 +57,8 @@ public class TeleOpMode extends OpMode {
 
         tts = new TextToSpeech(hardwareMap.appContext, null);
         tts.setLanguage(Locale.US);
+
+
     }
 
 
@@ -89,7 +91,7 @@ public class TeleOpMode extends OpMode {
             robot.SetShooterPower(0);
         }
 
-        if (ringBool) {
+        if (ringBool == true) {
             if (gamepadWrapper.isPressed("g2_dpad_down")) {
                 robot.SetIntakePower(++IntakeConveyorCounter % 2);
                 robot.SetConveyorPower(IntakeConveyorCounter % 2);
@@ -98,7 +100,7 @@ public class TeleOpMode extends OpMode {
 
         if (distance < minDistance) {
             ringTimer = robot.IntakeSleep(2000, telemetry);
-            if (ringTimer) {
+            if (ringTimer == true ) {
                 tts.speak("Three rings detected", TextToSpeech.QUEUE_FLUSH, null);
                 ringBool = false;
             } else {
@@ -119,9 +121,17 @@ public class TeleOpMode extends OpMode {
         if (gamepadWrapper.isPressed("g2_a")) {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
-                robot.Raise();
-                } else {
-                robot.Lower();
+                try {
+                    robot.Raise();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    robot.Lower();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

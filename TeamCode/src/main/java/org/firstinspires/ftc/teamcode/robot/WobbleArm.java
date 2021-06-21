@@ -6,33 +6,53 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class WobbleArm extends Mechanisms {
 
-    private DcMotor wobbleMotor;
+    private Servo wobbleServoleft;
+    private Servo wobbleServoRight;
+
+    private boolean moving = false;
 
 
 
     public WobbleArm (HardwareMap hardwareMap, String wobbleArmName) {
-        wobbleMotor = hardwareMap.dcMotor.get(wobbleArmName);
+        wobbleServoleft = hardwareMap.servo.get(wobbleArmName);
+
+        wobbleServoleft.setPosition(0.5);
     }
 
 
 
-    public void Lower() {
+    public void Lower() throws InterruptedException {
 
-        if (!wobbleMotor.isBusy()) {
+        /*if (!wobbleS.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(-600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wobbleMotor.setPower(-0.1);
+        } */
+
+        if (moving == false) {
+            wobbleServoleft.setPosition(0);
+            moving = true;
+            Thread.sleep(2000);
+            moving = false;
         }
+
 
     }
 
-    public void Raise() {
-        if (!wobbleMotor.isBusy()) {
+    public void Raise() throws InterruptedException {
+        /*if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(600);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             wobbleMotor.setPower(0.15);
+        } */
+
+        if (moving == false) {
+            wobbleServoleft.setPosition(0.7);
+            moving = true;
+            Thread.sleep(2000);
+            moving = false;
         }
 
     }

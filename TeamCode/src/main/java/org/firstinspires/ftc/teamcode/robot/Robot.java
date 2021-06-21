@@ -137,11 +137,11 @@ public class Robot {
 
     public void Return() {this.ramp.Retract();}
 
-    public void Raise() {
+    public void Raise() throws InterruptedException {
         this.wobbleArm.Raise();
     }
 
-    public void Lower() {this.wobbleArm.Lower();}
+    public void Lower() throws InterruptedException {this.wobbleArm.Lower();}
 
     //public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
 
