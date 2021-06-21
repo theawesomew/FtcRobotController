@@ -52,7 +52,7 @@ public class TeleOpMode extends OpMode {
 
         ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
         gamepadWrapper = new GamepadWrapper();
 
         tts = new TextToSpeech(hardwareMap.appContext, null);
