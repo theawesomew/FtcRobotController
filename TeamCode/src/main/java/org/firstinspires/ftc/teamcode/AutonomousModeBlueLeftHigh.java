@@ -48,7 +48,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
 
         robot.ClawClose();
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");

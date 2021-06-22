@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-@Autonomous(name="UltimateGoalAutonomousModeBlueLeftHigh", group="Autonomous")
+@Autonomous(name="UltimateGoalAutonomousModeBlueRightHigh", group="Autonomous")
 public class AutonomousModeBlueRightHigh extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
@@ -48,7 +48,7 @@ public class AutonomousModeBlueRightHigh extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
 
         robot.ClawClose();
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
@@ -106,7 +106,7 @@ public class AutonomousModeBlueRightHigh extends OpMode {
             case 5:
                 if (ringsDetected == 0) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
-                        
+
                     }
 
                 } else if (ringsDetected == 1) {

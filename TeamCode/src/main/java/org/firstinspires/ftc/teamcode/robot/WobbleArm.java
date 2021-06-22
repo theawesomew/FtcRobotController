@@ -16,9 +16,10 @@ public class WobbleArm extends Mechanisms {
 
 
 
-    public WobbleArm (HardwareMap hardwareMap, String wobbleArmNameLeft, String wobbleArmNameRight) {
+    public WobbleArm (HardwareMap hardwareMap, String wobbleArmNameLeft, String wobbleArmNameRight, String wobbleArmMotor) {
         wobbleServoLeft = hardwareMap.servo.get(wobbleArmNameLeft);
         wobbleServoRight = hardwareMap.servo.get(wobbleArmNameRight);
+        wobbleMotor = hardwareMap.dcMotor.get(wobbleArmMotor);
         wobbleServoLeft.setPosition(0.5);
         wobbleServoRight.setPosition(0.5);
     }
@@ -61,6 +62,24 @@ public class WobbleArm extends Mechanisms {
             moving = false;
         }
 
+    }
+
+    public void MotorLower() {
+        if (!wobbleMotor.isBusy()) {
+            wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            wobbleMotor.setTargetPosition(-600);
+            wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            wobbleMotor.setPower(-0.1);
+        }
+    }
+
+    public void MotorRaise() {
+        if (!wobbleMotor.isBusy()) {
+            wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            wobbleMotor.setTargetPosition(600);
+            wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            wobbleMotor.setPower(0.15);
+        }
     }
 
     /*public boolean LowerPosition() {

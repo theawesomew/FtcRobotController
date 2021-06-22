@@ -25,7 +25,7 @@ public class Robot {
 
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour) {
+                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String wobbleMotor) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -43,7 +43,7 @@ public class Robot {
         this.intake = new Intake(hardwareMap, intakeName);
         this.pushy = new Pushy(hardwareMap, pushyName);
         this.shooter = new Shooter(hardwareMap, shooterName);
-        this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmNameLeft, wobbleArmNameRight);
+        this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmNameLeft, wobbleArmNameRight, wobbleMotor);
         this.ramp = new Ramp(hardwareMap, rampName);
         this.claw = new Claw(hardwareMap, clawLeftName, clawRightName);
         this.colorSensor = new ColourSensors(hardwareMap, colorSensorRightOne, colorSensorRightFour);
@@ -152,6 +152,10 @@ public class Robot {
     public boolean Down () {return this.ramp.Down();}
 
     public int GetRed() {return this.colorSensor.GetRed();}
+
+    public void motorLower() {this.wobbleArm.MotorLower();}
+
+    public void motorRaise() {this.wobbleArm.MotorRaise();}
 
     public boolean Sleep (double milliseconds, Telemetry telemetry) {
         if (prevTime == -1.0) {
