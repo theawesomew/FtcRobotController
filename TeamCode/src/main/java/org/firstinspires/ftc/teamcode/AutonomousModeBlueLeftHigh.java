@@ -12,8 +12,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
-@Autonomous(name="Testing", group="Autonomous")
-public class AutonomousColorSensorTest extends OpMode {
+@Autonomous(name="UltimateGoalAutonomousModeBlueLeftHigh", group="Autonomous")
+public class AutonomousModeBlueLeftHigh extends OpMode {
     private static final String vuforiaKey = "AV98RL7/////AAABmYXDdoEmIUn1v6Ppa4Z/oN0tDQt5nJk+KD9Gy+XiJe1DpevozXumH++UVyRGG8Al6PX2as4EddLKpGncqMsiDQeugSuOXBAKBVnpGda6+GX6veXRgYkOEwq4HDxSPi3Nfqoe8/6GVo0TH5sqyOfCgZLIk2o2rzjmrrCbcou31JRGpg25elDXgbtXQcD+qPq748IrnJLh7/vbsk9tBANafFczL8l2mesx8Rj8i00T3x9JIHqPku9j3cUReAzTxa6X7vq/5IC2AtS05lFjmjlNkJRgnxVAwBjAgFtYBH2O8eXGUtY147+ABdxJLpmIbeOZDvZ38k8NByzEV2RfQCSDYhbYBOKwlpGqn7hX9xyHesAs";
     private static final String tfodModelAsset = "UltimateGoal.tflite";
     private VuforiaLocalizer vuforiaLocalizer;
@@ -23,8 +23,8 @@ public class AutonomousColorSensorTest extends OpMode {
 
     private MotorMap driveMap;
     private Robot robot;
-    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
-    private boolean startMove[] = {false, false, false, false, false, false};
+    private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}; //27 falses
+    private boolean startMove[] = {false, false, false, false, false, false, false, false, false, false}; //10 falses
     private double currentYaw;
 
     private int ringsDetected = 0;
@@ -37,6 +37,8 @@ public class AutonomousColorSensorTest extends OpMode {
 
 
 
+
+
     @Override
     public void init() {
         driveMap = new MotorMap(hardwareMap, "forwardLeft","forwardRight","backLeft","backRight");
@@ -46,7 +48,7 @@ public class AutonomousColorSensorTest extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
 
         robot.ClawClose();
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
@@ -73,7 +75,92 @@ public class AutonomousColorSensorTest extends OpMode {
          *   break;
          *  */
 
-        telemetry.addData("Rings detected", robot.GetRed());
+        red1 = right1.red();
+        red2 = right2.red();
+
+        telemetry.addData("Red Value1: ", red1);
+        telemetry.addData("Red Value2: ", red2);
+        telemetry.addData("Rings Detected", ringsDetected);
+        telemetry.addData("Shooter Power", robot.GetShooterPower());
+
+
+
+        switch (findFirstInstanceOfFalse(startMove)) {
+            case 0:
+                startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
+                break;
+            case 1:
+                startMove[1] = robot.Sleep(500, telemetry);
+                break;
+            case 2:
+                ringsDetected = robot.GetRed();
+                startMove[2] = true;
+                break;
+            case 3:
+                startMove[3] = robot.Sleep(500, telemetry);
+                telemetry.addData("Currently", "Stopped");
+                break;
+            case 4:
+                startMove[4] = robot.RotateByAngleUsingIMU(Math.toRadians(2), false, telemetry);
+                break;
+            case 5:
+                if (ringsDetected == 0) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            hasMoved[0] = robot.StrafeByDistance(1100, Math.PI/2, telemetry);
+                            break;
+                        case 1:
+                            try {
+                                robot.Lower();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[1] = robot.Sleep(1000, telemetry);
+                            break;
+                        case 2:
+                            robot.ClawOpen();
+                            hasMoved[2] = robot.Sleep(500, telemetry);
+                            break;
+                        case 3:
+                            try {
+                                robot.Raise();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[3] = robot.Sleep(1000, telemetry);
+                            break;
+                        case 4:
+                            hasMoved[4] = robot.StrafeByDistance(500, -Math.PI/2, telemetry);
+                            break;
+                        case 5:
+                            robot.Shoot(10);
+                            hasMoved[5] = robot.StrafeByDistance(1200, 0, telemetry);
+                            break;
+                        case 6:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[6] = 
+
+
+                    }
+
+                } else if (ringsDetected == 1) {
+                   switch (findFirstInstanceOfFalse(hasMoved)) {
+                       case 0:
+
+                    }
+
+                } else if (ringsDetected == 4) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+
+                    }
+                }
+
+
 
 
         }
@@ -139,7 +226,7 @@ public class AutonomousColorSensorTest extends OpMode {
          e.printStackTrace();
          }
          break; */
-
+    }
 
     @Override
     public void stop() {
