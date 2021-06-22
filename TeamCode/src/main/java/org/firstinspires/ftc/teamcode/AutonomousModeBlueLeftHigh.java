@@ -97,11 +97,11 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                 startMove[2] = true;
                 break;
             case 3:
-                startMove[3] = robot.Sleep(500, telemetry);
+                startMove[3] = robot.Sleep(250, telemetry);
                 telemetry.addData("Currently", "Stopped");
                 break;
             case 4:
-                startMove[4] = robot.RotateByAngleUsingIMU(Math.toRadians(2), false, telemetry);
+                startMove[4] = true; // robot.RotateByAngleUsingIMU(Math.toRadians(2), false, telemetry);
                 break;
             case 5:
                 if (ringsDetected == 0) {
@@ -112,29 +112,31 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                         case 1:
                             try {
                                 robot.Lower();
+                                hasMoved[1] = robot.Sleep(10, telemetry);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            hasMoved[1] = robot.Sleep(1000, telemetry);
+
                             break;
                         case 2:
                             robot.ClawOpen();
-                            hasMoved[2] = robot.Sleep(500, telemetry);
+                            hasMoved[2] = robot.Sleep(10, telemetry);
                             break;
                         case 3:
                             try {
                                 robot.Raise();
+                                hasMoved[3] = robot.Sleep(10, telemetry);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            hasMoved[3] = robot.Sleep(1000, telemetry);
+
                             break;
                         case 4:
-                            hasMoved[4] = robot.StrafeByDistance(500, -Math.PI/2, telemetry);
+                            hasMoved[4] = robot.StrafeByDistance(1200, 0, telemetry);
                             break;
                         case 5:
                             robot.Shoot(10);
-                            hasMoved[5] = robot.StrafeByDistance(1200, 0, telemetry);
+                            hasMoved[5] = robot.StrafeByDistance(500, -Math.PI/2, telemetry);
                             break;
                         case 6:
                             try {
@@ -142,23 +144,290 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            hasMoved[6] = 
-
-
+                            hasMoved[6] = robot.Sleep(10, telemetry);
+                            break;
+                        case 7:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[7] = robot.Sleep(10, telemetry);
+                            break;
+                        case 8:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[8] = true;
+                            break;
+                        case 9:
+                            hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(90), false, telemetry);
+                            break;
+                        case 10:
+                            hasMoved[10] = robot.StrafeByDistance(1500, Math.PI, telemetry);
+                            break;
+                        case 11:
+                            robot.ClawClose();
+                            hasMoved[11] = robot.Sleep(10, telemetry);
+                            break;
+                        case 12:
+                            try {
+                                robot.Raise();
+                                hasMoved[12] = robot.Sleep(10, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 13:
+                            hasMoved[13] = robot.RotateByAngleUsingIMU(Math.toRadians(90), true, telemetry);
+                            break;
+                        case 14:
+                            hasMoved[14] = robot.StrafeByDistance(2200, Math.PI/2, telemetry);
+                            break;
+                        case 15:
+                            try {
+                                robot.Lower();
+                                hasMoved[15] = robot.Sleep(10, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 16:
+                            robot.ClawOpen();
+                            hasMoved[16] = robot.Sleep(10, telemetry);
+                            break;
+                        case 17:
+                            hasMoved[17] = true;
+                            startMove[5] = true;
+                            break;
                     }
 
                 } else if (ringsDetected == 1) {
                    switch (findFirstInstanceOfFalse(hasMoved)) {
                        case 0:
+                           hasMoved[0] = robot.StrafeByDistance(1600, Math.PI/2, telemetry);
+                           break;
+                       case 1:
+                           hasMoved[1] = robot.StrafeByDistance(500, 0, telemetry);
+                           break;
+                       case 2:
+                           try {
+                               robot.Lower();
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[2] = robot.Sleep(10, telemetry);
+                           break;
+                       case 3:
+                           robot.ClawOpen();
+                           hasMoved[3] = robot.Sleep(10, telemetry);
+                           break;
+                       case 4:
+                           try {
+                               robot.Raise();
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[4] = robot.Sleep(10, telemetry);
+                           break;
+                       case 5:
+                           robot.Shoot(10);
+                           hasMoved[5] = robot.StrafeByDistance(700, -Math.PI/2, telemetry);
+                           break;
+                       case 6:
+                           try {
+                               robot.PushThenRetract(telemetry);
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[6] = robot.Sleep(10, telemetry);
+                           break;
+                       case 7:
+                           try {
+                               robot.PushThenRetract(telemetry);
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[7] = robot.Sleep(10, telemetry);
+                           break;
+                       case 8:
+                           try {
+                               robot.PushThenRetract(telemetry);
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[8] = robot.Sleep(10, telemetry);
+                           break;
+                       case 9:
+                           hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(90), false, telemetry);
+                           break;
+                       case 10:
+                           try {
+                               robot.Lower();
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[10] = robot.Sleep(10, telemetry);
+                           break;
+                       case 11:
+                           hasMoved[11] = robot.StrafeByDistance(1500, Math.PI, telemetry);
+                           break;
+                       case 12:
+                           robot.ClawClose();
+                           hasMoved[12] = robot.Sleep(10, telemetry);
+                           break;
+                       case 13:
+                           try {
+                               robot.Raise();
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[13] = robot.Sleep(10, telemetry);
+                           break;
+                       case 14:
+                           hasMoved[14] = robot.RotateByAngleUsingIMU(Math.toRadians(90), true, telemetry);
+                           break;
+                       case 15:
+                           hasMoved[15] = robot.StrafeByDistance(2800, Math.PI/2, telemetry);
+                           break;
+                       case 16:
+                           try {
+                               robot.Lower();
+                           } catch (InterruptedException e) {
+                               e.printStackTrace();
+                           }
+                           hasMoved[16] = robot.Sleep(10, telemetry);
+                           break;
+                       case 17:
+                           robot.ClawOpen();
+                           hasMoved[17] = robot.Sleep(10, telemetry);
+                           break;
+                       case 18:
+                           hasMoved[18] = robot.StrafeByDistance(500, -Math.PI/2, telemetry);
+                           break;
+                       case 19:
+                           hasMoved[19] = true;
+                           startMove[5] = true;
+                           break;
 
-                    }
+
+                   }
 
                 } else if (ringsDetected == 4) {
                     switch (findFirstInstanceOfFalse(hasMoved)) {
                         case 0:
+                            hasMoved[0] = robot.StrafeByDistance(3500, Math.PI/2, telemetry);
+                            break;
+                        case 1:
+                            try {
+                                robot.Lower();
+                                hasMoved[1] = robot.Sleep(100, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            break;
+                        case 2:
+                            robot.ClawOpen();
+                            hasMoved[2] = robot.Sleep(100, telemetry);
+                            break;
+                        case 3:
+                            try {
+                                robot.Raise();
+                                hasMoved[3] = robot.Sleep(100, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            break;
+                        case 4:
+                            hasMoved[4] = robot.StrafeByDistance(1200, 0, telemetry);
+                            break;
+                        case 5:
+                            robot.Shoot(10);
+                            hasMoved[5] = robot.StrafeByDistance(2900, -Math.PI/2, telemetry);
+                            break;
+                        case 6:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[6] = robot.Sleep(10, telemetry);
+                            break;
+                        case 7:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[7] = robot.Sleep(10, telemetry);
+                            break;
+                        case 8:
+                            try {
+                                robot.PushThenRetract(telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[8] = true;
+                            break;
+                        case 9:
+                            hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(90), false, telemetry);
+                            break;
+                        case 10:
+                            hasMoved[10] = robot.StrafeByDistance(1500, Math.PI, telemetry);
+                            break;
+                        case 11:
+                            robot.ClawClose();
+                            hasMoved[11] = robot.Sleep(10, telemetry);
+                            break;
+                        case 12:
+                            try {
+                                robot.Raise();
+                                hasMoved[12] = robot.Sleep(10, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 13:
+                            hasMoved[13] = robot.RotateByAngleUsingIMU(Math.toRadians(90), true, telemetry);
+                            break;
+                        case 14:
+                            hasMoved[14] = robot.StrafeByDistance(5000, Math.PI/2, telemetry);
+                            break;
+                        case 15:
+                            try {
+                                robot.Lower();
+                                hasMoved[15] = robot.Sleep(100, telemetry);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case 16:
+                            robot.ClawOpen();
+                            hasMoved[16] = robot.Sleep(100, telemetry);
+                            break;
+                        case 17:
+                            try {
+                                robot.Raise();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            hasMoved[17] = robot.Sleep(100, telemetry);
+                            break;
+                        case 18:
+                            robot.StrafeByDistance(2900, -Math.PI/2, telemetry);
+                            break;
+                        case 19:
+                            hasMoved[17] = true;
+                            startMove[5] = true;
+                            break;
 
                     }
                 }
+            break;
 
 
 

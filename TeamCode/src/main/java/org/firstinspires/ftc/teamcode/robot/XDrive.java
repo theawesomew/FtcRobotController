@@ -79,8 +79,8 @@ public class XDrive extends DriveBase {
         power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
         rotationPower.put("forwardLeft", -power);
         rotationPower.put("forwardRight", -power);
-        rotationPower.put("backRight", -power);
         rotationPower.put("backLeft", -power);
+        rotationPower.put("backRight", -power);
     }
 
     public boolean RotateByAngle (double angle, boolean direction, Telemetry telemetry) {
