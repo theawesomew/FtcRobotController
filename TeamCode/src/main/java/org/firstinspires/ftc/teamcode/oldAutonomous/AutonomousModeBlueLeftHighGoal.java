@@ -36,7 +36,7 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
     }
 
     @Override
@@ -61,28 +61,15 @@ public class AutonomousModeBlueLeftHighGoal extends OpMode {
             } else if (!hasMoved[2]) {
                 hasMoved[2] = robot.RotateByAngleUsingIMU(Math.toRadians(20), true, telemetry);
             } else if (!hasMoved[3]) {
-                try {
-                    hasMoved[3] = robot.PushThenRetract(telemetry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                hasMoved[3] = robot.PushThenRetract(telemetry);
             } else if (!hasMoved[4]) {
                 hasMoved[4] = robot.StrafeByDistance(5, Math.PI / 2 - robot.GetYaw(), telemetry);
             } else if (!hasMoved[5]) {
-                try {
-                    hasMoved[5] = robot.PushThenRetract(telemetry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                hasMoved[5] = robot.PushThenRetract(telemetry);
             } else if (!hasMoved[6]) {
                 hasMoved[6] = robot.StrafeByDistance(5, Math.PI / 2 - robot.GetYaw(), telemetry);
-
             } else if (!hasMoved[7]) {
-                try {
-                    hasMoved[7] = robot.PushThenRetract(telemetry);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                hasMoved[7] = robot.PushThenRetract(telemetry);
             } else if (!hasMoved[8]) {
                 hasMoved[8] = robot.StrafeByDistance(700, Math.PI / 2 - robot.GetYaw(), telemetry);
             } else {

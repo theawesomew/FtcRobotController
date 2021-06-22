@@ -30,7 +30,7 @@ public class AutonomousModeRedLeft extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
     }
 
     @Override
@@ -59,29 +59,17 @@ public class AutonomousModeRedLeft extends OpMode {
         } else if (!hasMoved[3]) {
             hasMoved[3] = robot.RotateByAngleUsingIMU(Math.toRadians(15), true, telemetry);
         } else if (!hasMoved[4]) {
-            try {
-                hasMoved[4] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            hasMoved[4] = robot.PushThenRetract(telemetry);
         } else if (!hasMoved[5]) {
             hasMoved[5] = robot.StrafeByDistance(70, Math.PI-robot.GetYaw(), telemetry);
         } else if (!hasMoved[6]) {
-            try {
-                hasMoved[6] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            hasMoved[6] = robot.PushThenRetract(telemetry);
         } else if (!hasMoved[7]) {
             hasMoved[7] = robot.StrafeByDistance(80, Math.PI-robot.GetYaw(), telemetry);
         } else if (!hasMoved[11]) {
             hasMoved[11] = robot.RotateByAngleUsingIMU(Math.toRadians(1), true, telemetry);
         } else if (!hasMoved[8]) {
-            try {
-                hasMoved[8] = robot.PushThenRetract(telemetry);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            hasMoved[8] = robot.PushThenRetract(telemetry);
         } else if (!hasMoved[9]) {
             hasMoved[9] = robot.StrafeByDistance(1100, Math.PI/2-robot.GetYaw(), telemetry);
         } else if (!hasMoved[10]) {

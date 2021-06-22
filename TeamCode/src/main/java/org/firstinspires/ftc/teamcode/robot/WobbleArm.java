@@ -26,7 +26,7 @@ public class WobbleArm extends Mechanisms {
 
 
 
-    public void Lower() throws InterruptedException {
+    public void Lower() {
 
         /*if (!wobbleS.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -39,14 +39,18 @@ public class WobbleArm extends Mechanisms {
             wobbleServoLeft.setPosition(0);
             wobbleServoRight.setPosition(1);
             moving = true;
-            Thread.sleep(2000);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                // do nothing
+            }
             moving = false;
         }
 
 
     }
 
-    public void Raise() throws InterruptedException {
+    public void Raise() {
         /*if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             wobbleMotor.setTargetPosition(600);
@@ -58,7 +62,11 @@ public class WobbleArm extends Mechanisms {
             wobbleServoLeft.setPosition(0.7);
             wobbleServoRight.setPosition(0.3);
             moving = true;
-            Thread.sleep(2000);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                // do nothing
+            }
             moving = false;
         }
 

@@ -46,7 +46,7 @@ public class AutonomousModeBlueLeft extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobble", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight", "clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
 
         robot.ClawClose();
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
@@ -139,31 +139,19 @@ public class AutonomousModeBlueLeft extends OpMode {
                             hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(65), false, telemetry);
                             break;
                         case 10:
-                            try {
-                                hasMoved[10] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[10] = robot.PushThenRetract(telemetry);
                             break;
                         case 11:
                             hasMoved[11] = robot.StrafeByDistance(100, 0 - Math.toRadians(5), telemetry);
                             break;
                         case 12:
-                            try {
-                                hasMoved[12] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[12] = robot.PushThenRetract(telemetry);
                             break;
                         case 13:
                             hasMoved[13] = robot.StrafeByDistance(5, 0 - robot.GetYaw(), telemetry);
                             break;
                         case 14:
-                            try {
-                                hasMoved[14] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[14] = robot.PushThenRetract(telemetry);
                             startMove[5] = true;
                             break;
                     }
@@ -206,11 +194,7 @@ public class AutonomousModeBlueLeft extends OpMode {
                             hasMoved[8] = robot.RotateByAngleUsingIMU(5, true, telemetry);
                             break;
                         case 9:
-                            try {
-                                hasMoved[9] = robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            hasMoved[9] = robot.PushThenRetract(telemetry);
                             break;
                         case 10:
                             break;

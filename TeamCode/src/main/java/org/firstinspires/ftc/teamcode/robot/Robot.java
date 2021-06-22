@@ -109,7 +109,7 @@ public class Robot {
         this.pushy.Retract();
     }
 
-    public boolean PushThenRetract(Telemetry telemetry) throws InterruptedException {
+    public boolean PushThenRetract(Telemetry telemetry) {
         return this.pushy.PushThenRetract(telemetry);
     }
 
@@ -137,11 +137,11 @@ public class Robot {
 
     public void Return() {this.ramp.Retract();}
 
-    public void Raise() throws InterruptedException {
+    public void Raise() {
         this.wobbleArm.Raise();
     }
 
-    public void Lower() throws InterruptedException {this.wobbleArm.Lower();}
+    public void Lower() {this.wobbleArm.Lower();}
 
     //public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
 

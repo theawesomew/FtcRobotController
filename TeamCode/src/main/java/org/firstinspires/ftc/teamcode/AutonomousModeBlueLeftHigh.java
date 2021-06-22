@@ -110,26 +110,16 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[0] = robot.StrafeByDistance(1100, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            try {
-                                robot.Lower();
-                                hasMoved[1] = robot.Sleep(10, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
+                            robot.Lower();
+                            hasMoved[1] = robot.Sleep(10, telemetry);
                             break;
                         case 2:
                             robot.ClawOpen();
                             hasMoved[2] = robot.Sleep(10, telemetry);
                             break;
                         case 3:
-                            try {
-                                robot.Raise();
-                                hasMoved[3] = robot.Sleep(10, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
+                            robot.Raise();
+                            hasMoved[3] = robot.Sleep(10, telemetry);
                             break;
                         case 4:
                             hasMoved[4] = robot.StrafeByDistance(1200, 0, telemetry);
@@ -139,27 +129,15 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[5] = robot.StrafeByDistance(500, -Math.PI/2, telemetry);
                             break;
                         case 6:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[6] = robot.Sleep(10, telemetry);
                             break;
                         case 7:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[7] = robot.Sleep(10, telemetry);
                             break;
                         case 8:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[8] = true;
                             break;
                         case 9:
@@ -173,12 +151,8 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[11] = robot.Sleep(10, telemetry);
                             break;
                         case 12:
-                            try {
-                                robot.Raise();
-                                hasMoved[12] = robot.Sleep(10, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.Raise();
+                            hasMoved[12] = robot.Sleep(10, telemetry);
                             break;
                         case 13:
                             hasMoved[13] = robot.RotateByAngleUsingIMU(Math.toRadians(90), true, telemetry);
@@ -187,12 +161,8 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[14] = robot.StrafeByDistance(2200, Math.PI/2, telemetry);
                             break;
                         case 15:
-                            try {
-                                robot.Lower();
-                                hasMoved[15] = robot.Sleep(10, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.Lower();
+                            hasMoved[15] = robot.Sleep(10, telemetry);
                             break;
                         case 16:
                             robot.ClawOpen();
@@ -213,11 +183,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[1] = robot.StrafeByDistance(500, 0, telemetry);
                            break;
                        case 2:
-                           try {
-                               robot.Lower();
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.Lower();
                            hasMoved[2] = robot.Sleep(10, telemetry);
                            break;
                        case 3:
@@ -225,11 +191,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[3] = robot.Sleep(10, telemetry);
                            break;
                        case 4:
-                           try {
-                               robot.Raise();
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.Raise();
                            hasMoved[4] = robot.Sleep(10, telemetry);
                            break;
                        case 5:
@@ -237,38 +199,22 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[5] = robot.StrafeByDistance(700, -Math.PI/2, telemetry);
                            break;
                        case 6:
-                           try {
-                               robot.PushThenRetract(telemetry);
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.PushThenRetract(telemetry);
                            hasMoved[6] = robot.Sleep(10, telemetry);
                            break;
                        case 7:
-                           try {
-                               robot.PushThenRetract(telemetry);
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.PushThenRetract(telemetry);
                            hasMoved[7] = robot.Sleep(10, telemetry);
                            break;
                        case 8:
-                           try {
-                               robot.PushThenRetract(telemetry);
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.PushThenRetract(telemetry);
                            hasMoved[8] = robot.Sleep(10, telemetry);
                            break;
                        case 9:
                            hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(90), false, telemetry);
                            break;
                        case 10:
-                           try {
-                               robot.Lower();
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.Lower();
                            hasMoved[10] = robot.Sleep(10, telemetry);
                            break;
                        case 11:
@@ -279,11 +225,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[12] = robot.Sleep(10, telemetry);
                            break;
                        case 13:
-                           try {
-                               robot.Raise();
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.Raise();
                            hasMoved[13] = robot.Sleep(10, telemetry);
                            break;
                        case 14:
@@ -293,11 +235,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[15] = robot.StrafeByDistance(2800, Math.PI/2, telemetry);
                            break;
                        case 16:
-                           try {
-                               robot.Lower();
-                           } catch (InterruptedException e) {
-                               e.printStackTrace();
-                           }
+                           robot.Lower();
                            hasMoved[16] = robot.Sleep(10, telemetry);
                            break;
                        case 17:
@@ -321,26 +259,16 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[0] = robot.StrafeByDistance(3500, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            try {
-                                robot.Lower();
-                                hasMoved[1] = robot.Sleep(100, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
+                            robot.Lower();
+                            hasMoved[1] = robot.Sleep(100, telemetry);
                             break;
                         case 2:
                             robot.ClawOpen();
                             hasMoved[2] = robot.Sleep(100, telemetry);
                             break;
                         case 3:
-                            try {
-                                robot.Raise();
-                                hasMoved[3] = robot.Sleep(100, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
+                            robot.Raise();
+                            hasMoved[3] = robot.Sleep(100, telemetry);
                             break;
                         case 4:
                             hasMoved[4] = robot.StrafeByDistance(1200, 0, telemetry);
@@ -350,27 +278,15 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[5] = robot.StrafeByDistance(2900, -Math.PI/2, telemetry);
                             break;
                         case 6:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[6] = robot.Sleep(10, telemetry);
                             break;
                         case 7:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[7] = robot.Sleep(10, telemetry);
                             break;
                         case 8:
-                            try {
-                                robot.PushThenRetract(telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.PushThenRetract(telemetry);
                             hasMoved[8] = true;
                             break;
                         case 9:
@@ -384,12 +300,8 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[11] = robot.Sleep(10, telemetry);
                             break;
                         case 12:
-                            try {
-                                robot.Raise();
-                                hasMoved[12] = robot.Sleep(10, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.Raise();
+                            hasMoved[12] = robot.Sleep(10, telemetry);
                             break;
                         case 13:
                             hasMoved[13] = robot.RotateByAngleUsingIMU(Math.toRadians(90), true, telemetry);
@@ -398,23 +310,15 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[14] = robot.StrafeByDistance(5000, Math.PI/2, telemetry);
                             break;
                         case 15:
-                            try {
-                                robot.Lower();
-                                hasMoved[15] = robot.Sleep(100, telemetry);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.Lower();
+                            hasMoved[15] = robot.Sleep(100, telemetry);
                             break;
                         case 16:
                             robot.ClawOpen();
                             hasMoved[16] = robot.Sleep(100, telemetry);
                             break;
                         case 17:
-                            try {
-                                robot.Raise();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                            robot.Raise();
                             hasMoved[17] = robot.Sleep(100, telemetry);
                             break;
                         case 18:
