@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Conveyor extends Mechanisms {
     private DcMotor conveyor;
-    public Conveyor(HardwareMap hardwareMap, String motorName) {
-        conveyor = hardwareMap.dcMotor.get(motorName);
+    public Conveyor(HardwareMap hardwareMap, String conveyorName) {
+        conveyor = hardwareMap.dcMotor.get(conveyorName);
     }
 
     public void SetPower (double power) {
