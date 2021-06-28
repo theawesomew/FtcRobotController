@@ -10,7 +10,7 @@ public class ColourSensors extends Sensors {
     private ColorSensor colorSensorLeft1;
     private ColorSensor colorSensorLeft4;
 
-    private int red = 65; //value is anything around 110 to trigger, resting point for the bottom sensor is 90 and the top sensor is 60, probably higher for bottom because of floor
+    private int red = 80; //value is anything around 110 to trigger, resting point for the bottom sensor is 90 and the top sensor is 60, probably higher for bottom because of floor
 
     public ColourSensors (HardwareMap hardwareMap, String colorSensorRightOne, String colorSensorRightFour, String colorSensorLeftOne, String colourSensorLeftFour) {
         colorSensorRight1 = hardwareMap.colorSensor.get(colorSensorRightOne);

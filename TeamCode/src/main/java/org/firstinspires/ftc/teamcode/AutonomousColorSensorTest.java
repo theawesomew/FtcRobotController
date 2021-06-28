@@ -72,6 +72,7 @@ public class AutonomousColorSensorTest extends OpMode {
          *   hasMoved[n] = *some instruction*
          *   break;
          *  */
+        robot.StrafeByDistance(1000, Math.PI/2, telemetry);
 
 
 
