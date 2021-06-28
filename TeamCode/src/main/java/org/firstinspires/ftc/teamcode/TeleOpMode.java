@@ -4,6 +4,7 @@ import android.speech.tts.TextToSpeech;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -41,6 +42,10 @@ public class TeleOpMode extends OpMode {
     private boolean ringCounted = false;
     private boolean raised = false;
 
+    private ColorSensor left1;
+    private ColorSensor left4;
+    private ColorSensor right1;
+    private ColorSensor right4;
 
     @Override
     public void init() {
@@ -52,8 +57,13 @@ public class TeleOpMode extends OpMode {
 
         ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor");
         gamepadWrapper = new GamepadWrapper();
+
+        left1 = hardwareMap.get(ColorSensor.class, "colorSensorLeft1");
+        left4 = hardwareMap.get(ColorSensor.class, "colorSensorLeft4");
+        right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
+        right4 = hardwareMap.get(ColorSensor.class, "colorSensorRight4");
 
     }
 
@@ -165,6 +175,10 @@ public class TeleOpMode extends OpMode {
         telemetry.addData("range", String.format("%.01f mm", ringSensor.getDistance(DistanceUnit.MM)));
         telemetry.addData("Rings" , rings);
         telemetry.addData("Raised", raised);
+        telemetry.addData("red left 1", left1.red());
+        telemetry.addData("red left 4", left4.red());
+        telemetry.addData("red Right 1", right1.red());
+        telemetry.addData("red Right 4", right4.red());
 
 
     }

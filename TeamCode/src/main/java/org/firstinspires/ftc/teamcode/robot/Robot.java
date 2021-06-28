@@ -24,7 +24,7 @@ public class Robot {
 
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String wobbleMotor) {
+                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String colorSensorLeftOne, String colorSensorLeftFour, String wobbleMotor) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -45,7 +45,7 @@ public class Robot {
         this.wobbleArm = new WobbleArm(hardwareMap, wobbleArmNameLeft, wobbleArmNameRight, wobbleMotor);
         this.ramp = new Ramp(hardwareMap, rampName);
         this.claw = new Claw(hardwareMap, clawLeftName, clawRightName);
-        this.colorSensor = new ColourSensors(hardwareMap, colorSensorRightOne, colorSensorRightFour);
+        this.colorSensor = new ColourSensors(hardwareMap, colorSensorRightOne, colorSensorRightFour, colorSensorLeftOne, colorSensorLeftFour);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -150,7 +150,9 @@ public class Robot {
 
     public boolean Down () {return this.ramp.Down();}
 
-    public int GetRed() {return this.colorSensor.GetRed();}
+    public int GetRedRight() {return this.colorSensor.GetRedRight();}
+
+    public int GetRedLeft() {return this.colorSensor.GetRedLeft();}
 
     public void motorLower() {this.wobbleArm.MotorLower();}
 

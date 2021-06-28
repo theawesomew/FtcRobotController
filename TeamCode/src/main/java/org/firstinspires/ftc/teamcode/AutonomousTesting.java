@@ -48,7 +48,7 @@ public class AutonomousTesting extends OpMode {
         }
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
+        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4",  "wobbleMotor");
 
         robot.ClawClose();
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
@@ -84,7 +84,7 @@ public class AutonomousTesting extends OpMode {
         telemetry.addData("Shooter Power", robot.GetShooterPower());
 
 
-
+        // autonomous blue left
         switch (findFirstInstanceOfFalse(startMove)) {
             case 0:
                 startMove[0] = robot.StrafeByDistance(1140, Math.PI/2, telemetry);
@@ -93,7 +93,7 @@ public class AutonomousTesting extends OpMode {
                 startMove[1] = robot.Sleep(500, telemetry);
                 break;
             case 2:
-                ringsDetected = robot.GetRed();
+                ringsDetected = robot.GetRedRight();
                 startMove[2] = true;
                 break;
             case 3:
@@ -122,8 +122,8 @@ public class AutonomousTesting extends OpMode {
                             hasMoved[3] = robot.Sleep(1500, telemetry);
                             break;
                         case 4:
-                            hasMoved[4] = robot.StrafeByDistance(780, -Math.toRadians(25), telemetry);
-                            robot.Shoot(10);
+                            hasMoved[4] = robot.StrafeByDistance(780, -Math.toRadians(35.06), telemetry);
+                            robot.Shoot(11);
                             break;
                         case 5:
                             hasMoved[5] = robot.PushThenRetract(telemetry);
@@ -138,8 +138,136 @@ public class AutonomousTesting extends OpMode {
                             break;
 
                     }
+                } else if (ringsDetected == 1){
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            hasMoved[0] = robot.StrafeByDistance(1450, Math.toRadians(21.29), telemetry);
+                            break;
+                        case 1:
+                            robot.motorLower();
+                            hasMoved[1] = robot.Sleep(1500, telemetry);
+                            break;
+                        case 2:
+                            robot.ClawOpen();
+                            hasMoved[2] = true;
+                            break;
+                        case 3:
+                            robot.motorRaise();
+                            hasMoved[3] = robot.Sleep(1500, telemetry);
+                            break;
+                        case 4:
+                            hasMoved[4] = robot.StrafeByDistance(860, -Math.PI/2, telemetry);
+                            robot.Shoot(11);
+                            break;
+                        case 5:
+                            hasMoved[5] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 6:
+                            robot.PushThenRetract(telemetry);
+                            hasMoved[6] = robot.Sleep(500, telemetry);
+                            break;
+                        case 7:
+                            hasMoved[7] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 8:
+                            hasMoved[8] = robot.StrafeByDistance(300, Math.PI, telemetry);
+                            break;
+                        case 9:
+                            hasMoved[9] = robot.StrafeByDistance(900, -Math.PI/2, telemetry);
+                            robot.RunConveyor();
+                            break;
+                        case 10:
+                            hasMoved[10] = robot.StrafeByDistance(900, Math.PI/2, telemetry);
+                            break;
+                        case 11:
+                            hasMoved[11] = robot.StrafeByDistance(300, 0, telemetry);
+                            robot.Shoot(6);
+                            break;
+                        case 12:
+                            hasMoved[12] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 13:
+                            robot.PushThenRetract(telemetry);
+                            hasMoved[13] = robot.Sleep(500, telemetry);
+                            break;
+                        case 14:
+                            hasMoved[14] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 15:
+                            hasMoved[15] = robot.StrafeByDistance(200, Math.PI/2, telemetry);
+                            break;
 
 
+                    }
+                } else if (ringsDetected == 4) {
+                    switch (findFirstInstanceOfFalse(hasMoved)) {
+                        case 0:
+                            hasMoved[0] = robot.StrafeByDistance(2000, Math.PI/2, telemetry);
+                            break;
+                        case 1:
+                            robot.motorLower();
+                            hasMoved[1] = robot.Sleep(1500, telemetry);
+                            break;
+                        case 2:
+                            robot.ClawOpen();
+                            hasMoved[2] = true;
+                            break;
+                        case 3:
+                            robot.motorRaise();
+                            hasMoved[3] = robot.Sleep(1500, telemetry);
+                            break;
+                        case 4:
+                            hasMoved[4] = robot.StrafeByDistance(1641, -Math.toRadians(67.81), telemetry);
+                            robot.Shoot(11);
+                            break;
+                        case 5:
+                            hasMoved[5] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 6:
+                            robot.PushThenRetract(telemetry);
+                            hasMoved[6] = robot.Sleep(500, telemetry);
+                            break;
+                        case 7:
+                            hasMoved[7] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 8:
+                            hasMoved[8] = robot.StrafeByDistance(300, Math.PI, telemetry);
+                            break;
+                        case 9:
+                            hasMoved[9] = robot.StrafeByDistance(900, -Math.PI/2, telemetry);
+                            robot.RunConveyor();
+                            break;
+                        case 10:
+                            hasMoved[10] = robot.StrafeByDistance(900, Math.PI/2, telemetry);
+                            break;
+                        case 11:
+                            hasMoved[11] = robot.StrafeByDistance(300, 0, telemetry);
+                            robot.Shoot(11);
+                            break;
+                        case 12:
+                            hasMoved[12] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 13:
+                            hasMoved[13] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 14:
+                            hasMoved[14] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 15:
+                            robot.PushThenRetract(telemetry);
+                            hasMoved[15] = robot.Sleep(500, telemetry);
+                            break;
+                        case 16:
+                            hasMoved[16] = robot.PushThenRetract(telemetry);
+                            break;
+                        case 17:
+                            hasMoved[17] = robot.StrafeByDistance(200, Math.PI/2, telemetry);
+                            break;
+
+
+
+
+                    }
                 }
                 break;
 
@@ -194,3 +322,4 @@ public class AutonomousTesting extends OpMode {
         return -1;
     }
 }
+
