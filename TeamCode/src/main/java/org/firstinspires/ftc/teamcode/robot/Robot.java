@@ -20,8 +20,7 @@ public class Robot {
     private ColourSensors colorSensor;
     private ElapsedTime robotTime;
     private double prevTime = -1.0;
-    private ElapsedTime intakeTime;
-    private double prevTimeIntake = -1.0;
+
 
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
@@ -173,18 +172,6 @@ public class Robot {
         }
     }
 
-    public boolean IntakeSleep (double milliseconds, Telemetry telemetry) {
-        if (prevTimeIntake == -1.0) {
-            prevTimeIntake = robotTime .milliseconds();
-            return false;
-        } else if (robotTime.milliseconds() - prevTimeIntake < milliseconds) {
-            telemetry.addData("Timer", robotTime.milliseconds());
-            telemetry.addData("Previous Time", prevTimeIntake);
-            return false;
-        } else {
-            prevTime = -1.0;
-            return true;
-        }
-    }
+
 }
 

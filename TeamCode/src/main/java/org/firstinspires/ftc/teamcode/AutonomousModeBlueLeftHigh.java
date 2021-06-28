@@ -87,7 +87,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
 
         switch (findFirstInstanceOfFalse(startMove)) {
             case 0:
-                startMove[0] = robot.StrafeByDistance(1200, Math.PI/2, telemetry);
+                startMove[0] = robot.StrafeByDistance(1040, Math.PI/2, telemetry);
                 break;
             case 1:
                 startMove[1] = robot.Sleep(500, telemetry);

@@ -35,11 +35,11 @@ public class TeleOpMode extends OpMode {
     private int RampCounter = 0;
     private DistanceSensor ringSensor;
     private double distance;
-    private double minDistance = 70;
-    private boolean ringBool = true;
-    private boolean ringTimer = false;
-    private TextToSpeech tts;
-
+    private double minDistance = 50;
+    private double maxDistance = 70;
+    private int rings = 3;
+    private boolean ringCounted = false;
+    private boolean raised = false;
 
 
     @Override
@@ -54,10 +54,6 @@ public class TeleOpMode extends OpMode {
 
         robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4", "wobbleMotor");
         gamepadWrapper = new GamepadWrapper();
-
-        tts = new TextToSpeech(hardwareMap.appContext, null);
-        tts.setLanguage(Locale.US);
-
 
     }
 
@@ -91,29 +87,34 @@ public class TeleOpMode extends OpMode {
             robot.SetShooterPower(0);
         }
 
-        if (ringBool == true) {
-            if (gamepadWrapper.isPressed("g2_dpad_down")) {
-                robot.SetIntakePower(++IntakeConveyorCounter % 2);
-                robot.SetConveyorPower(IntakeConveyorCounter % 2);
-            }
+
+        if (gamepadWrapper.isPressed("g2_dpad_down")) {
+            robot.SetIntakePower(++IntakeConveyorCounter % 2);
+            robot.SetConveyorPower(IntakeConveyorCounter % 2);
         }
 
-        if (distance < minDistance) {
-            ringTimer = robot.IntakeSleep(2000, telemetry);
-            if (ringTimer == true ) {
-                tts.speak("Three rings detected", TextToSpeech.QUEUE_FLUSH, null);
-                ringBool = false;
-            } else {
-                ringBool = true;
+
+        if (distance > minDistance || distance < maxDistance) {
+            if (ringCounted == false) {
+                rings += 1;
+                ringCounted = true;
             }
-
-
+        } else {
+            ringCounted = false;
         }
+
+        if (rings >= 3) {
+            robot.SetIntakePower(0);
+            robot.SetConveyorPower(0);
+        }
+
+
 
 
 
         if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
+            rings -= 1;
         } else {
             robot.Retract();
         }
@@ -122,8 +123,10 @@ public class TeleOpMode extends OpMode {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
                 robot.motorRaise();
+                raised = true;
             } else {
                 robot.motorLower();
+                raised = false;
             }
         }
 
@@ -159,8 +162,10 @@ public class TeleOpMode extends OpMode {
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());
         telemetry.addData("Pitch", robot.GetPitch());
-
         telemetry.addData("range", String.format("%.01f mm", ringSensor.getDistance(DistanceUnit.MM)));
+        telemetry.addData("Rings" , rings);
+        telemetry.addData("Raised", raised);
+
 
     }
 
