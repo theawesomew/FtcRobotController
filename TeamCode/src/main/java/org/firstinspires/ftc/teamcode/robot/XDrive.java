@@ -201,7 +201,7 @@ public class XDrive extends DriveBase {
             return true;
         }
 
-        initialSpeed += 0.001;
+        initialSpeed = Math.min(initialSpeed+0.001, 1);
         SetStrafe(initialSpeed, angle);
         Drive(telemetry);
 
