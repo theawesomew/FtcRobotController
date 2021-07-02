@@ -203,6 +203,7 @@ public class XDrive extends DriveBase {
 
         initialSpeed += 0.001;
         SetStrafe(initialSpeed, angle);
+        Drive(telemetry);
 
         return false;
     }
