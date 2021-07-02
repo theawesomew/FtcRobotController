@@ -35,17 +35,13 @@ public class TeleOpMode extends OpMode {
     private int ClawCounter = 0;
     private int RampCounter = 0;
     private DistanceSensor ringSensor;
+    private DistanceSensor wobbleGoalSensor;
     private double distance;
     private double minDistance = 50;
     private double maxDistance = 70;
     private int rings = 3;
     private boolean ringCounted = false;
-    private boolean raised = false;
-
-    private ColorSensor left1;
-    private ColorSensor left4;
-    private ColorSensor right1;
-    private ColorSensor right4;
+    private boolean wobbleGoalCurrentlyActive = false;
 
     @Override
     public void init() {
@@ -56,14 +52,10 @@ public class TeleOpMode extends OpMode {
         }
 
         ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
+        wobbleGoalSensor = hardwareMap.get(DistanceSensor.class, "wobbleGoalSensor");
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor");
+        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
         gamepadWrapper = new GamepadWrapper();
-
-        left1 = hardwareMap.get(ColorSensor.class, "colorSensorLeft1");
-        left4 = hardwareMap.get(ColorSensor.class, "colorSensorLeft4");
-        right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
-        right4 = hardwareMap.get(ColorSensor.class, "colorSensorRight4");
 
     }
 
@@ -98,13 +90,13 @@ public class TeleOpMode extends OpMode {
         }
 
 
-        if (gamepadWrapper.isPressed("g2_dpad_down")) {
+        if (gamepadWrapper.isPressed("g2_dpad_down") && rings < 3) {
             robot.SetIntakePower(++IntakeConveyorCounter % 2);
             robot.SetConveyorPower(IntakeConveyorCounter % 2);
         }
 
 
-        if (distance > minDistance || distance < maxDistance) {
+        if (distance > minDistance && distance < maxDistance) {
             if (ringCounted == false) {
                 rings += 1;
                 ringCounted = true;
@@ -119,12 +111,9 @@ public class TeleOpMode extends OpMode {
         }
 
 
-
-
-
-        if (gamepadWrapper.isDown("g1_a")) {
+        if (gamepadWrapper.isPressed("g1_a")) {
             robot.Push();
-            rings -= 1;
+            rings = rings - 1 >= 0 ? rings - 1 : 0;
         } else {
             robot.Retract();
         }
@@ -133,11 +122,19 @@ public class TeleOpMode extends OpMode {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
                 robot.motorRaise();
-                raised = true;
+                wobbleGoalCurrentlyActive = true;
             } else {
                 robot.motorLower();
-                raised = false;
+                wobbleGoalCurrentlyActive = true;
             }
+        }
+
+        if (wobbleGoalCurrentlyActive) {
+            if (wobbleGoalSensor.getDistance(DistanceUnit.MM) <= 3) {
+                robot.WobbleGoalServoActivate();
+            }
+        } else {
+            robot.WobbleGoalServoDeactive();
         }
 
         if (gamepadWrapper.isDown("g1_y")) {
@@ -163,24 +160,11 @@ public class TeleOpMode extends OpMode {
             }
         }
 
-
-
-
-
-
-
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());
         telemetry.addData("Pitch", robot.GetPitch());
         telemetry.addData("range", String.format("%.01f mm", ringSensor.getDistance(DistanceUnit.MM)));
         telemetry.addData("Rings" , rings);
-        telemetry.addData("Raised", raised);
-        telemetry.addData("red left 1", left1.red());
-        telemetry.addData("red left 4", left4.red());
-        telemetry.addData("red Right 1", right1.red());
-        telemetry.addData("red Right 4", right4.red());
-
-
     }
 
     @Override

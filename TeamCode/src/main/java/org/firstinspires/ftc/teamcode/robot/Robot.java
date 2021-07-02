@@ -14,6 +14,7 @@ public class Robot {
     private Pushy pushy;
     private Shooter shooter;
     private WobbleArm wobbleArm;
+    private WobbleGoalServo wobbleGoalServo;
     private BNO055IMU imu;
     private Claw claw;
     private Ramp ramp;
@@ -24,7 +25,7 @@ public class Robot {
 
 
     public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
-                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String colorSensorLeftOne, String colorSensorLeftFour, String wobbleMotor) {
+                  String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String colorSensorLeftOne, String colorSensorLeftFour, String wobbleMotor, String wobbleGoalServoName) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -46,6 +47,7 @@ public class Robot {
         this.ramp = new Ramp(hardwareMap, rampName);
         this.claw = new Claw(hardwareMap, clawLeftName, clawRightName);
         this.colorSensor = new ColourSensors(hardwareMap, colorSensorRightOne, colorSensorRightFour, colorSensorLeftOne, colorSensorLeftFour);
+        this.wobbleGoalServo = new WobbleGoalServo(hardwareMap, wobbleGoalServoName);
     }
 
     public void Drive (Telemetry telemetry) {
@@ -71,6 +73,10 @@ public class Robot {
     public boolean RotateByAngleUsingIMU (double angle, boolean direction, Telemetry telemetry) {
         return this.xDrive.RotateByAngleUsingIMU(angle, direction, telemetry);
     }
+
+    public void WobbleGoalServoActivate () { this.wobbleGoalServo.active(); }
+
+    public void WobbleGoalServoDeactive () { this.wobbleGoalServo.inactive(); }
 
     public void SetConveyorPower (double power) {
         this.conveyor.SetPower(-power);
