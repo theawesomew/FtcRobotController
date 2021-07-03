@@ -90,7 +90,7 @@ public class WillAutonomousRendition extends OpMode {
                             hasMove[0] = robot.StrafeByDistance(22.5*25.4, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            hasMove[1] = robot.StrafeByDistance(22.5*25.4, Math.PI/2, telemetry);
+                            hasMove[1] = robot.StrafeByDistance(22.5*25.4, Math.PI, telemetry);
                             break;
                         default:
                             startMove[2] = true;
@@ -120,7 +120,7 @@ public class WillAutonomousRendition extends OpMode {
                 startMove[8] = true;
                 break;
             case 9:
-                robot.StrafeByDistance(1000, -7/36 * Math.PI/2, telemetry);
+                robot.StrafeByDistance(1000, 2*Math.PI - 7/36 * Math.PI, telemetry);
             default:
                 robot.SetStrafe(0,0);
                 robot.SetRotation(0);

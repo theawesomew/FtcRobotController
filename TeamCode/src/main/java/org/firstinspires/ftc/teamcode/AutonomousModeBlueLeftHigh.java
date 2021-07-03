@@ -110,7 +110,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[0] = robot.StrafeByDistance(1100, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            robot.Lower();
+                            robot.motorLower();
                             hasMoved[1] = robot.Sleep(10, telemetry);
                             break;
                         case 2:
@@ -118,7 +118,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[2] = robot.Sleep(10, telemetry);
                             break;
                         case 3:
-                            robot.Raise();
+                            robot.motorRaise();
                             hasMoved[3] = robot.Sleep(10, telemetry);
                             break;
                         case 4:
@@ -151,7 +151,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[11] = robot.Sleep(10, telemetry);
                             break;
                         case 12:
-                            robot.Raise();
+                            robot.motorRaise();
                             hasMoved[12] = robot.Sleep(10, telemetry);
                             break;
                         case 13:
@@ -161,7 +161,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[14] = robot.StrafeByDistance(2200, Math.PI/2, telemetry);
                             break;
                         case 15:
-                            robot.Lower();
+                            robot.motorLower();
                             hasMoved[15] = robot.Sleep(10, telemetry);
                             break;
                         case 16:
@@ -183,7 +183,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[1] = robot.StrafeByDistance(500, 0, telemetry);
                            break;
                        case 2:
-                           robot.Lower();
+                           robot.motorLower();
                            hasMoved[2] = robot.Sleep(10, telemetry);
                            break;
                        case 3:
@@ -191,7 +191,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[3] = robot.Sleep(10, telemetry);
                            break;
                        case 4:
-                           robot.Raise();
+                           robot.motorRaise();
                            hasMoved[4] = robot.Sleep(10, telemetry);
                            break;
                        case 5:
@@ -214,7 +214,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[9] = robot.RotateByAngleUsingIMU(Math.toRadians(90), false, telemetry);
                            break;
                        case 10:
-                           robot.Lower();
+                           robot.motorLower();
                            hasMoved[10] = robot.Sleep(10, telemetry);
                            break;
                        case 11:
@@ -225,7 +225,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[12] = robot.Sleep(10, telemetry);
                            break;
                        case 13:
-                           robot.Raise();
+                           robot.motorRaise();
                            hasMoved[13] = robot.Sleep(10, telemetry);
                            break;
                        case 14:
@@ -235,7 +235,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                            hasMoved[15] = robot.StrafeByDistance(2800, Math.PI/2, telemetry);
                            break;
                        case 16:
-                           robot.Lower();
+                           robot.motorLower();
                            hasMoved[16] = robot.Sleep(10, telemetry);
                            break;
                        case 17:
@@ -259,7 +259,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[0] = robot.StrafeByDistance(3500, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            robot.Lower();
+                            robot.motorLower();
                             hasMoved[1] = robot.Sleep(100, telemetry);
                             break;
                         case 2:
@@ -267,7 +267,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[2] = robot.Sleep(100, telemetry);
                             break;
                         case 3:
-                            robot.Raise();
+                            robot.motorRaise();
                             hasMoved[3] = robot.Sleep(100, telemetry);
                             break;
                         case 4:
@@ -300,7 +300,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[11] = robot.Sleep(10, telemetry);
                             break;
                         case 12:
-                            robot.Raise();
+                            robot.motorRaise();
                             hasMoved[12] = robot.Sleep(10, telemetry);
                             break;
                         case 13:
@@ -310,7 +310,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[14] = robot.StrafeByDistance(5000, Math.PI/2, telemetry);
                             break;
                         case 15:
-                            robot.Lower();
+                            robot.motorLower();
                             hasMoved[15] = robot.Sleep(100, telemetry);
                             break;
                         case 16:
@@ -318,7 +318,7 @@ public class AutonomousModeBlueLeftHigh extends OpMode {
                             hasMoved[16] = robot.Sleep(100, telemetry);
                             break;
                         case 17:
-                            robot.Raise();
+                            robot.motorRaise();
                             hasMoved[17] = robot.Sleep(100, telemetry);
                             break;
                         case 18:
