@@ -176,6 +176,6 @@ public class TeleOpMode extends OpMode {
 
     @Override
     public void stop() {
-
+        robot.setWobbleGoalToZero();
     }
 }

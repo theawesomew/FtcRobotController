@@ -109,7 +109,7 @@ public class WillAutonomousRendition extends OpMode {
                 robot.ClawOpen();
                 startMove[5] = true;
             case 6:
-                startMove[6] = robot.Sleep(100, telemetry);
+                startMove[6] = robot.Sleep(1000, telemetry);
                 break;
             case 7:
                 robot.ClawClose();
@@ -130,7 +130,7 @@ public class WillAutonomousRendition extends OpMode {
 
     @Override
     public void stop () {
-
+        robot.setWobbleGoalToZero();
     }
 
     private int findFirstInstanceOfFalse (boolean[] array) {

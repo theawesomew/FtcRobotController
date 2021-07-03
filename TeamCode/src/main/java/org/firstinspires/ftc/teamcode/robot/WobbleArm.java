@@ -41,6 +41,19 @@ public class WobbleArm extends Mechanisms {
         }
     }
 
+    public void toZero () {
+        if (!wobbleMotor.isBusy()) {
+            wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            wobbleMotor.setTargetPosition(0);
+            wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if (this.GetCurrentWobblePosition() < 0) {
+                wobbleMotor.setPower(0.7);
+            } else {
+                wobbleMotor.setPower(-0.7);
+            }
+        }
+    }
+
     public int GetCurrentWobblePosition () {
         return wobbleMotor.getCurrentPosition();
     }

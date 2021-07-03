@@ -156,6 +156,8 @@ public class Robot {
 
     public void setWobbleGoalPower (double power) { this.wobbleArm.SetPower(power); }
 
+    public void setWobbleGoalToZero () { this.wobbleArm.toZero(); }
+
     public int getWobbleArmPosition () { return this.wobbleArm.GetCurrentWobblePosition(); }
 
     public boolean Sleep (double milliseconds, Telemetry telemetry) {
