@@ -142,16 +142,6 @@ public class Robot {
 
     public void Return() {this.ramp.Retract();}
 
-    public void Raise() {
-        this.wobbleArm.Raise();
-    }
-
-    public void Lower() {this.wobbleArm.Lower();}
-
-    //public boolean LoweredPosition() {return this.wobbleArm.LowerPosition();}
-
-   // public boolean RaisedPosition() {return this.wobbleArm.RaisedPosition();}
-
     public boolean Up () {return this.ramp.Up();}
 
     public boolean Down () {return this.ramp.Down();}
@@ -163,6 +153,10 @@ public class Robot {
     public void motorLower() {this.wobbleArm.MotorLower();}
 
     public void motorRaise() {this.wobbleArm.MotorRaise();}
+
+    public void setWobbleGoalPower (double power) { this.wobbleArm.SetPower(power); }
+
+    public int getWobbleArmPosition () { return this.wobbleArm.GetCurrentWobblePosition(); }
 
     public boolean Sleep (double milliseconds, Telemetry telemetry) {
         if (prevTime == -1.0) {

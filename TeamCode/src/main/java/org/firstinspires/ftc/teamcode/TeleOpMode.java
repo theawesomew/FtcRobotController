@@ -81,6 +81,13 @@ public class TeleOpMode extends OpMode {
 
         distance = ringSensor.getDistance(DistanceUnit.MM);
 
+        if (robot.getWobbleArmPosition() >= 3800 && gamepad2.left_stick_y < 0) {
+            robot.setWobbleGoalPower(0);
+        } else if (robot.getWobbleArmPosition() <= -3800 && gamepad2.left_stick_y > 0) {
+            robot.setWobbleGoalPower(0);
+        } else {
+            robot.setWobbleGoalPower(-gamepad2.left_stick_y);
+        }
 
         if (gamepadWrapper.isDown("g1_right_trigger")) {
             robot.AdjustedShootPower();
@@ -118,7 +125,7 @@ public class TeleOpMode extends OpMode {
             robot.Retract();
         }
 
-        if (gamepadWrapper.isPressed("g2_a")) {
+        /*if (gamepadWrapper.isPressed("g2_a")) {
             ++WobbleArmCounter;
             if (WobbleArmCounter % 2 == 0) {
                 robot.motorRaise();
@@ -127,15 +134,15 @@ public class TeleOpMode extends OpMode {
                 robot.motorLower();
                 wobbleGoalCurrentlyActive = true;
             }
-        }
+        }*/
 
-        if (wobbleGoalCurrentlyActive) {
+        /*if (wobbleGoalCurrentlyActive) {
             if (wobbleGoalSensor.getDistance(DistanceUnit.MM) <= 3) {
                 robot.WobbleGoalServoActivate();
             }
         } else {
             robot.WobbleGoalServoDeactive();
-        }
+        }*/
 
         if (gamepadWrapper.isDown("g1_y")) {
             robot.PushThenRetract(telemetry);
