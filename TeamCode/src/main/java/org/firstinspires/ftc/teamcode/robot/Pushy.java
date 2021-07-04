@@ -16,7 +16,6 @@ public class Pushy extends Mechanisms {
 
     public void Push () {
         pushy.setPosition(0);
-
     }
 
     public void Retract () {

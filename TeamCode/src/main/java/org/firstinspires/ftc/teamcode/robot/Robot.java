@@ -160,6 +160,8 @@ public class Robot {
 
     public int getWobbleArmPosition () { return this.wobbleArm.GetCurrentWobblePosition(); }
 
+    public int getWobbleTargetPosition () {return this.wobbleArm.GetCurrentWobbleTargetPosition();}
+
     public boolean Sleep (double milliseconds, Telemetry telemetry) {
         if (prevTime == -1.0) {
             prevTime = robotTime.milliseconds();

@@ -80,6 +80,7 @@ public class TeleOpMode extends OpMode {
         robot.Drive(telemetry);
 
         distance = ringSensor.getDistance(DistanceUnit.MM);
+        telemetry.addData("arm position", robot.getWobbleArmPosition());
 
         if (robot.getWobbleArmPosition() >= 3800 && gamepad2.left_stick_y < 0) {
             robot.setWobbleGoalPower(0);
@@ -118,7 +119,7 @@ public class TeleOpMode extends OpMode {
         }
 
 
-        if (gamepadWrapper.isPressed("g1_a")) {
+        if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
             rings = rings - 1 >= 0 ? rings - 1 : 0;
         } else {

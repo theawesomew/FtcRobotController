@@ -27,7 +27,7 @@ public class XDrive extends DriveBase {
     private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
     private BNO055IMU imu;
     private double targetAngle;
-    private double initialSpeed = 0.1;
+    private double initialSpeed = 0.3;
 
     public boolean within (int value, int setValue, int error) {
         if (Math.abs(value-setValue) < error) {
@@ -66,8 +66,8 @@ public class XDrive extends DriveBase {
 
     public void SetStrafe (double power, double angle) {
         power = Math.min(1, power);
-        strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
         strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
+        strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
         strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4));
         strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
     }
@@ -197,7 +197,9 @@ public class XDrive extends DriveBase {
                     within(driveMotors.get("backRight").getCurrentPosition(), driveMotors.get("backRight").getTargetPosition(), 10)
            ) {
             motorsMoving = false;
-            initialSpeed = 0.1;
+            initialSpeed = 0.3;
+            SetStrafe(0,0);
+            Drive(telemetry);
             return true;
         }
 

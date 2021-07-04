@@ -25,9 +25,9 @@ public class WobbleArm extends Mechanisms {
     public void MotorLower() {
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            wobbleMotor.setTargetPosition(-3800);
+            wobbleMotor.setTargetPosition(-3500);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(-0.8);
+            wobbleMotor.setPower(-0.9);
         }
 
     }
@@ -35,9 +35,9 @@ public class WobbleArm extends Mechanisms {
     public void MotorRaise() {
         if (!wobbleMotor.isBusy()) {
             wobbleMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            wobbleMotor.setTargetPosition(3800);
+            wobbleMotor.setTargetPosition(3500);
             wobbleMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            wobbleMotor.setPower(0.7);
+            wobbleMotor.setPower(0.9);
         }
     }
 
@@ -57,4 +57,6 @@ public class WobbleArm extends Mechanisms {
     public int GetCurrentWobblePosition () {
         return wobbleMotor.getCurrentPosition();
     }
+
+    public int GetCurrentWobbleTargetPosition () {return wobbleMotor.getTargetPosition();}
 }
