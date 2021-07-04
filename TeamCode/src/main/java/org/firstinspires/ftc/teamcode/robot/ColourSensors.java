@@ -29,7 +29,6 @@ public class ColourSensors extends Sensors {
         } else {
             ringsSensed = 0;
         }
-
         return ringsSensed;
     }
 
