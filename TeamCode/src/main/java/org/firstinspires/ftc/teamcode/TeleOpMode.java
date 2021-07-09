@@ -39,7 +39,7 @@ public class TeleOpMode extends OpMode {
     private double distance;
     private double minDistance = 50;
     private double maxDistance = 70;
-    private int rings = 3;
+    private int rings = 0;
     private boolean ringCounted = false;
     private boolean wobbleGoalCurrentlyActive = false;
 
@@ -121,7 +121,7 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isDown("g1_a")) {
             robot.Push();
-            rings = rings - 1 >= 0 ? rings - 1 : 0;
+            //rings = rings - 1 >= 0 ? rings - 1 : 0;
         } else {
             robot.Retract();
         }

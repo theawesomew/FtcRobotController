@@ -31,13 +31,13 @@ public class Shooter extends Mechanisms {
     }
 
     public boolean Shoot (double rotations) {
-        if (rotations * 1440 != Math.round(rotations * 1440)) {
-            rotations = Math.round(rotations * 1440) / 1440;
+        if (rotations * 28 != Math.round(rotations * 28)) {
+            rotations = Math.round(rotations * 28) / 28;
         }
 
         if (!shooter.isBusy()) {
             shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            shooter.setTargetPosition((int) rotations * 1440);
+            shooter.setTargetPosition((int) rotations * 28 );
             shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             this.AdjustedShootPower();
         }
