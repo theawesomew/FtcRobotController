@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.android.AndroidTextToSpeech;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lib.GamepadWrapper;
@@ -45,6 +46,10 @@ public class TeleOpMode extends OpMode {
     private boolean  shooting = false;
     private boolean hasShoot[] = {false, false, false, false};
 
+    private ElapsedTime robotTime;
+    private double prevTime = -1.0;
+
+
     @Override
     public void init() {
         motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
@@ -58,6 +63,10 @@ public class TeleOpMode extends OpMode {
 
         robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
         gamepadWrapper = new GamepadWrapper();
+
+        robotTime = new ElapsedTime();
+        robotTime.reset();
+
 
     }
 
@@ -170,18 +179,23 @@ public class TeleOpMode extends OpMode {
             }
         }
 
-        if (gamepadWrapper.isPressed("g1_right_bumper") && shooting == false) {
+        if (gamepadWrapper.isPressed("g1_right_bumper")) {
             shooting = true;
-            if (!hasShoot[0]){
-                robot.Shoot(5);
-                hasShoot[0] = true;
-            } else if(!hasShoot[1]){
-                hasShoot[1] = robot.PushThenRetract(telemetry);
-            } else if(!hasShoot[2]){
-                hasShoot[2] = robot.PushThenRetract(telemetry);
-            }else if(!hasShoot[3]){
-                hasShoot[3] = robot.PushThenRetract(telemetry);
-                shooting = false;
+            if (shooting = true) {
+                if (!hasShoot[0]) {
+                    robot.Shoot(5);
+                    hasShoot[0] = true;
+                } else if (!hasShoot[1]) {
+                    robot.PushThenRetract(telemetry);
+                    hasShoot[1] = ShootSleep(1000, telemetry);
+                } else if (!hasShoot[2]) {
+                    robot.PushThenRetract(telemetry);
+                    hasShoot[2] = ShootSleep(1000, telemetry);
+                } else if (!hasShoot[3]) {
+                    robot.PushThenRetract(telemetry);
+                    hasShoot[3] = ShootSleep(1000, telemetry);
+                    shooting = false;
+                }
             }
 
         }
@@ -199,5 +213,21 @@ public class TeleOpMode extends OpMode {
     public void stop() {
         telemetry.addData("bleh", "asdkasjdklasj");
         robot.setWobbleGoalToZero();
+    }
+
+
+
+    public boolean ShootSleep (double milliseconds, Telemetry telemetry) {
+        if (prevTime == -1.0) {
+            prevTime = robotTime.milliseconds();
+            return false;
+        } else if (robotTime.milliseconds() - prevTime < milliseconds) {
+            telemetry.addData("Timer", robotTime.milliseconds());
+            telemetry.addData("Previous Time", prevTime);
+            return false;
+        } else {
+            prevTime = -1.0;
+            return true;
+        }
     }
 }
