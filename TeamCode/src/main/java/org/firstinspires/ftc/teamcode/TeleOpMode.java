@@ -182,23 +182,23 @@ public class TeleOpMode extends OpMode {
 
         if (gamepadWrapper.isPressed("g1_x")) {
             shooting = true;
-            if (shooting = true) {
-                if (!hasShoot[0]) {
-                    robot.Shoot(5);
-                    hasShoot[0] = true;
-                } else if (!hasShoot[1]) {
-                    robot.PushThenRetract(telemetry);
-                    hasShoot[1] = ShootSleep(1000, telemetry);
-                } else if (!hasShoot[2]) {
-                    robot.PushThenRetract(telemetry);
-                    hasShoot[2] = ShootSleep(1000, telemetry);
-                } else if (!hasShoot[3]) {
-                    robot.PushThenRetract(telemetry);
-                    hasShoot[3] = ShootSleep(1000, telemetry);
-                    shooting = false;
-                }
-            }
+        }
 
+        if (shooting = true) {
+            if (!hasShoot[0]) {
+                robot.Shoot(5);
+                hasShoot[0] = true;
+            } else if (!hasShoot[1]) {
+                robot.PushThenRetract(telemetry);
+                hasShoot[1] = ShootSleep(1000, telemetry);
+            } else if (!hasShoot[2]) {
+                robot.PushThenRetract(telemetry);
+                hasShoot[2] = ShootSleep(1000, telemetry);
+            } else if (!hasShoot[3]) {
+                robot.PushThenRetract(telemetry);
+                hasShoot[3] = ShootSleep(1000, telemetry);
+                shooting = false;
+            }
         }
 
 
