@@ -42,6 +42,8 @@ public class TeleOpMode extends OpMode {
     private int rings = 0;
     private boolean ringCounted = false;
     private boolean wobbleGoalCurrentlyActive = false;
+    private boolean  shooting = false;
+    private boolean hasShoot[] = {false, false, false, false};
 
     @Override
     public void init() {
@@ -167,6 +169,24 @@ public class TeleOpMode extends OpMode {
                 robot.Extend();
             }
         }
+
+        if (gamepadWrapper.isPressed("g1_right_bumper") && shooting == false) {
+            shooting = true;
+            if (!hasShoot[0]){
+                robot.Shoot(5);
+                hasShoot[0] = true;
+            } else if(!hasShoot[1]){
+                hasShoot[1] = robot.PushThenRetract(telemetry);
+            } else if(!hasShoot[2]){
+                hasShoot[2] = robot.PushThenRetract(telemetry);
+            }else if(!hasShoot[3]){
+                hasShoot[3] = robot.PushThenRetract(telemetry);
+                shooting = false;
+            }
+
+        }
+
+
 
         telemetry.addData("Yaw", robot.GetYaw());
         telemetry.addData("Roll", robot.GetRoll());
