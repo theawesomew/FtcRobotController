@@ -12,6 +12,11 @@ public class MotorMap {
         for (String value : mapValues) {
             motorMap.put(value, hardwareMap.dcMotor.get(value));
         }
+
+        for (DcMotor motor : motorMap.values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 
     public HashMap<String, DcMotor> GetMotorMap () {

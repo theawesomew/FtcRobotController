@@ -28,9 +28,9 @@ import java.util.Locale;
 
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
 public class TeleOpMode extends OpMode {
-    private MotorMap motorMap;
+    private MotorMap motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
     private GamepadWrapper gamepadWrapper;
-    private Robot robot;
+    private Robot robot =  new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
     private int IntakeConveyorCounter = 0;
     private int WobbleArmCounter = 0;
     private int ClawCounter = 0;
@@ -52,16 +52,17 @@ public class TeleOpMode extends OpMode {
 
     @Override
     public void init() {
-        motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
+        /**motorMap = new MotorMap(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");  //front left = white tape, back left = red tape, front right = blue, back right = black
         for (DcMotor motor : motorMap.GetMotorMap().values()) {
             motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
+         **/
 
         ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
         wobbleGoalSensor = hardwareMap.get(DistanceSensor.class, "wobbleGoalSensor");
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
+        //robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
         gamepadWrapper = new GamepadWrapper();
 
         robotTime = new ElapsedTime();
@@ -179,7 +180,7 @@ public class TeleOpMode extends OpMode {
             }
         }
 
-        if (gamepadWrapper.isPressed("g1_right_bumper")) {
+        if (gamepadWrapper.isPressed("g1_x")) {
             shooting = true;
             if (shooting = true) {
                 if (!hasShoot[0]) {
