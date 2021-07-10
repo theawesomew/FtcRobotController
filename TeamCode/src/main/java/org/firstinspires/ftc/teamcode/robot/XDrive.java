@@ -27,7 +27,8 @@ public class XDrive extends DriveBase {
     private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
     private BNO055IMU imu;
     private double targetAngle;
-    private double initialSpeed = 0.3;
+    //private double initialSpeed = 0.3;
+    private double initialSpeed = 1;
 
     public boolean within (int value, int setValue, int error) {
         if (Math.abs(value-setValue) < error) {
@@ -68,8 +69,8 @@ public class XDrive extends DriveBase {
         power = Math.min(1, power);
         strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
         strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
-        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4));
         strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
+        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4)*0.6);
     }
 
     public void SetStrafe (Vector movementVector) {
@@ -118,9 +119,9 @@ public class XDrive extends DriveBase {
             SetRotation(power);
             Drive(telemetry);
             motorsMoving = true;
-        } else if (within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) &&
-                within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) &&
-                within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10)             &&
+        } else if (within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) ||
+                within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) ||
+                within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10) ||
                 within(driveMotors.get("backRight").getCurrentPosition(), driveMotors.get("backRight").getTargetPosition(), 10)) {
             motorsMoving = false;
             return true;
@@ -191,13 +192,22 @@ public class XDrive extends DriveBase {
             SetStrafe(initialSpeed, angle);
             Drive(telemetry);
             motorsMoving = true;
-        } else if ( within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) &&
-                    within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) &&
-                    within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10)             &&
+        } else if ( within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) ||
+                    within(driveMotors.get("forwardRight").getCurrentPosition(), driveMotors.get("forwardRight").getTargetPosition(), 10) ||
+                    within(driveMotors.get("backLeft").getCurrentPosition(), driveMotors.get("backLeft").getTargetPosition(), 10) ||
                     within(driveMotors.get("backRight").getCurrentPosition(), driveMotors.get("backRight").getTargetPosition(), 10)
            ) {
             motorsMoving = false;
-            initialSpeed = 0.3;
+            driveMotors.get("forwardLeft").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+            driveMotors.get("forwardRight").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+            driveMotors.get("backLeft").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+            driveMotors.get("backRight").setMode((DcMotor.RunMode.STOP_AND_RESET_ENCODER));
+            driveMotors.get("forwardLeft").setPower(0);
+            driveMotors.get("forwardRight").setPower(0);
+            driveMotors.get("backLeft").setPower(0);
+            driveMotors.get("backRight").setPower(0);
+            //initialSpeed = 0.3;
+            initialSpeed = 1;
             SetStrafe(0,0);
             Drive(telemetry);
             return true;

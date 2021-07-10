@@ -56,133 +56,137 @@ public class WillAutonomousRendition extends OpMode {
         telemetry.addData("target position", robot.getWobbleTargetPosition());
         switch(findFirstInstanceOfFalse(startMove)) {
             case 0:
-                startMove[0] = robot.StrafeByDistance(1082.27 , Math.toRadians(93.7084), telemetry);
+                //for leter
+                // startMove[0] = robot.StrafeByDistance(1084.62 , Math.toRadians(84.7099), telemetry);
+                //startMove[0] = robot.StrafeByDistance(1080 , Math.toRadians(90), telemetry);
+                startMove[0] = robot.StrafeByDistance(1480 , Math.toRadians(90), telemetry);
                 break;
             case 1:
-                ringQuantity = robot.GetRedRight();
-                startMove[1] = true;
+                startMove[1] = robot.StrafeByDistance(545, Math.toRadians(200), telemetry);
                 break;
             case 2:
-                startMove[2] = robot.StrafeByDistance(260, Math.PI/2, telemetry);
+                startMove[2] = robot.RotateByAngleUsingIMU(Math.toRadians(5),false,telemetry);
                 break;
             case 3:
+                ringQuantity = robot.GetRedLeft();
+                //ringQuantity = 4;
+                startMove[3] = true;
+                break;
+            case 4:
+                startMove[4] = robot.Shoot(1000);
+                break;
+            case 5:
+                startMove[5] = robot.StrafeByDistance(800, Math.toRadians(100), telemetry);
+                break;
+            case 6:
+                startMove[6] = robot.StrafeByDistance(200,Math.PI*2,telemetry);
+                break;
+            case 7:
+                startMove[7] = robot.RotateByAngleUsingIMU(Math.toRadians(15),true,telemetry);
+                break;
+            case 8:
+                robot.PushThenRetract(telemetry);
+                startMove[8] = robot.Sleep(1000, telemetry);
+                break;
+            case 9:
+                robot.PushThenRetract(telemetry);
+                startMove[9] = robot.Sleep(1000, telemetry);
+                break;
+            case 10:
+                robot.PushThenRetract(telemetry);
+                startMove[10] = robot.Sleep(1000, telemetry);
+                break;
+            case 11:
                 if (ringQuantity == 4) {
                     switch (findFirstInstanceOfFalse(hasMove)) {
                         case 0:
-                            hasMove[0] = robot.StrafeByDistance(1685.42, Math.toRadians(69.1455), telemetry);
+                            hasMove[0] = robot.RotateByAngleUsingIMU(Math.toRadians(2),false,telemetry);
                             break;
                         case 1:
-                            hasMove[1] = robot.RotateByAngleUsingIMU(Math.toRadians(87),true,telemetry);
+                            hasMove[1] = robot.StrafeByDistance(1800,Math.PI/2, telemetry);
+                            break;
+                        case 2:
+                            hasMove[2] = robot.RotateByAngleUsingIMU(Math.toRadians(180),false,telemetry);
                             break;
                         default:
-                            startMove[3] = true;
+                            startMove[11] = true;
                             break;
                     }
                 } else if (ringQuantity == 1) {
                     switch (findFirstInstanceOfFalse(hasMove)) {
                         case 0:
-                            hasMove[0] = robot.StrafeByDistance(1378.77, Math.toRadians(71.8279), telemetry);
+                            hasMove[0] = robot.StrafeByDistance(1200,Math.PI/2, telemetry);
                             break;
                         default:
-                            startMove[3] = true;
+                            startMove[11] = true;
                             break;
                     }
                 } else {
                     switch(findFirstInstanceOfFalse(hasMove)) {
                         case 0:
-                            hasMove[0] = robot.StrafeByDistance(1040.4, Math.toRadians(32.2389), telemetry);
+                            hasMove[0] = robot.StrafeByDistance(400, Math.PI/2, telemetry);
                             break;
                         case 1:
-                            hasMove[1] = robot.RotateByAngleUsingIMU(Math.toRadians(90),true,telemetry);
+                            hasMove[1] = robot.RotateByAngleUsingIMU(Math.toRadians(180),false,telemetry);
+                            break;
+                        case 2:
+                            hasMove[2]= robot.Sleep(500, telemetry);
                             break;
                         default:
-                            startMove[3] = true;
+                            startMove[11] = true;
                             break;
                     }
                 }
                 break;
-            case 4:
+            case 12:
                 robot.motorLower();
-                startMove[4] = true;
+                startMove[12] = true;
                 break;
-            case 5:
-                startMove[5] = robot.Sleep(2000, telemetry);
+            case 13:
+                startMove[13] = robot.Sleep(1000, telemetry);
                 break;
-            case 6:
+            case 14:
                 robot.ClawOpen();
-                startMove[6] = true;
-            case 7:
-                startMove[7] = robot.Shoot(1000);
+                startMove[14] = true;
+            case 15:
+                startMove[15] = robot.Sleep(1000, telemetry);//robot.Shoot(1000);
                 break;
-            case 8:// 3 sets of if else statements to reset robot to shooting position
+            case 16:// 3 sets of if else statements to reset robot to shooting position
                 if (ringQuantity == 4) {
                     switch (findFirstInstanceOfFalse(willMove)) {
                         case 0:
-                            willMove[0] = robot.StrafeByDistance(1161.03, Math.toRadians(344.077), telemetry);
-                            break;
-                        case 1://change distance here
-                            willMove[1] = robot.RotateByAngleUsingIMU(Math.toRadians(85),false,telemetry);
-                            break;
-                        case 2:
-                            willMove[2] = robot.StrafeByDistance(40, 3*Math.PI/2, telemetry);
-                            break;
-                        case 3:
-                            willMove[3] = robot.StrafeByDistance(40,2*Math.PI,telemetry);
+                            willMove[0] = robot.StrafeByDistance(1400, Math.PI/2, telemetry);
                             break;
                         default:
-                            startMove[8] = true;
+                            startMove[16] = true;
                             break;
                     }
                 } else if (ringQuantity == 1) {
                     switch (findFirstInstanceOfFalse(willMove)) {
                         case 0://change distance here
-                            willMove[0] = robot.StrafeByDistance(900.888, Math.toRadians(262.455), telemetry);
-                            break;
-                        case 1:
-                            willMove[1]  = robot.RotateByAngleUsingIMU(Math.toRadians(2),false,telemetry);
-                        default:
-                            startMove[8] = true;
-                            break;
-                    }
-                } else {
-                    switch(findFirstInstanceOfFalse(willMove)) {
-                        case 0:
-                            willMove[0] = robot.StrafeByDistance(501.049, Math.toRadians(301.069), telemetry);
-                            break;
-                        case 1://change distance here
-                            willMove[1] = robot.RotateByAngleUsingIMU(Math.toRadians(88),false,telemetry);
+                            willMove[0] = robot.StrafeByDistance(900, 3 * Math.PI / 2, telemetry);
                             break;
                         default:
-                            startMove[8] = true;
+                            startMove[16] = true;
                             break;
+                        }
+                    }else {
+                        switch(findFirstInstanceOfFalse(hasMove)) {
+                            case 0:
+                                hasMove[0] = true;
+                                break;
+                            default:
+                                startMove[11] = true;
+                                break;
                     }
                 }
                 break;
-            case 9://remove later if needed
+            case 17://remove later if needed
                 robot.motorRaise();
-                startMove[9] = true;
+                startMove[17] = true;
                 break;
-
-            case 10:
-                startMove[10] = true;
-                break;
-            case 11:
-                robot.PushThenRetract(telemetry);
-                startMove[11] = robot.Sleep(1000, telemetry);
-                break;
-            case 12:
-                robot.PushThenRetract(telemetry);
-                startMove[12] = robot.Sleep(1000, telemetry);
-                break;
-            case 13:
-                robot.PushThenRetract(telemetry);
-                startMove[13] = robot.Sleep(1000, telemetry);
-                break;
-            case 14://to start line
-                startMove[14] = robot.StrafeByDistance(300, Math.PI/2, telemetry);
-                break;
-            case 15:
-                startMove[15] = robot.RotateByAngleUsingIMU(Math.toRadians(720),true,telemetry);
+            case 18:
+                startMove[18] = robot.RotateByAngleUsingIMU(Math.toRadians(180),true,telemetry);
                 break;
             default:
                 robot.SetStrafe(0,0);
