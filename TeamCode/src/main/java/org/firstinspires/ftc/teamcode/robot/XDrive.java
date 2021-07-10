@@ -82,7 +82,7 @@ public class XDrive extends DriveBase {
         strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
         strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
         strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
-        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4)*0.6);
+        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4));
     }
 
     public void SetStrafe (Vector movementVector) {
