@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.oldAutonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.MotorMapEx;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 @Autonomous(name="AutonomousModeRedLeft", group="Autonomous")
@@ -16,6 +18,7 @@ public class AutonomousModeRedLeft extends OpMode {
     private VoltageSensor voltageSensor;
 
     private MotorMap driveMap;
+    private MotorMapEx motorMapEx;
     private Robot robot;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false, false, false, false, false};
     private double currentYaw;
@@ -29,8 +32,14 @@ public class AutonomousModeRedLeft extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+        motorMapEx = new MotorMapEx(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");
+        for (DcMotorEx motor : motorMapEx.GetMotorMap().values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake",
+        robot = new Robot(hardwareMap, driveMap, motorMapEx, "conveyor", "pushy", "intake",
                 "shooter", "wobbleLeft", "wobbleRight",
                 "clawLeft", "clawRight", "ramp",
                 "colorSensorRight1", "colorSensorRight4",

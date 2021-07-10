@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.oldAutonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -11,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.MotorMapEx;
 import org.firstinspires.ftc.teamcode.robot.Pushy;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
@@ -25,6 +28,7 @@ public class AutonomousModeBlueRightHighGoal extends OpMode {
     private TFObjectDetector tfod;
 
     private MotorMap driveMap;
+    private MotorMapEx motorMapEx;
     private XDrive xDrive;
     private boolean hasMoved[] = {false, false, false, false, false, false, false, false, false};
 
@@ -41,7 +45,14 @@ public class AutonomousModeBlueRightHighGoal extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake",
+        motorMapEx = new MotorMapEx(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");
+        for (DcMotorEx motor : motorMapEx.GetMotorMap().values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
+        VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
+        robot = new Robot(hardwareMap, driveMap, motorMapEx, "conveyor", "pushy", "intake",
                 "shooter", "wobbleLeft", "wobbleRight",
                 "clawLeft", "clawRight", "ramp",
                 "colorSensorRight1", "colorSensorRight4",
