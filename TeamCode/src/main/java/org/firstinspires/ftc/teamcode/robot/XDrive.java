@@ -31,8 +31,8 @@ public class XDrive extends DriveBase {
     private HashMap<String, DcMotorEx> driveMotorsEx = new HashMap<String, DcMotorEx>();
     private BNO055IMU imu;
     private double targetAngle;
-    //private double initialSpeed = 0.3;
-    private double initialSpeed = 1;
+    private double initialSpeed = 0.3;
+
 
     public boolean within (int value, int setValue, int error) {
         if (Math.abs(value-setValue) < error) {
@@ -73,7 +73,7 @@ public class XDrive extends DriveBase {
         }*/
 
         for (String motorName : strafePower.keySet()) {
-            driveMotorsEx.get(motorName).setVelocity(((strafePower.get(motorName)+rotationPower.get(motorName))/Math.max(1, scale)) * 4 * Math.PI, AngleUnit.RADIANS);
+            driveMotorsEx.get(motorName).setVelocity(((strafePower.get(motorName)+rotationPower.get(motorName))/Math.max(1, scale)) * 200 * Math.PI, AngleUnit.RADIANS);
         }
     }
 
@@ -218,8 +218,7 @@ public class XDrive extends DriveBase {
             driveMotors.get("forwardRight").setPower(0);
             driveMotors.get("backLeft").setPower(0);
             driveMotors.get("backRight").setPower(0);
-            //initialSpeed = 0.3;
-            initialSpeed = 1;
+            initialSpeed = 0.3;
             SetStrafe(0,0);
             Drive(telemetry);
             return true;
