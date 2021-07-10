@@ -73,7 +73,7 @@ public class XDrive extends DriveBase {
         }*/
 
         for (String motorName : strafePower.keySet()) {
-            driveMotorsEx.get(motorName).setVelocity((strafePower.get(motorName)+rotationPower.get(motorName)/(Math.max(1, scale)) * 4 * Math.PI), AngleUnit.RADIANS);
+            driveMotorsEx.get(motorName).setVelocity(((strafePower.get(motorName)+rotationPower.get(motorName))/Math.max(1, scale)) * 4 * Math.PI, AngleUnit.RADIANS);
         }
     }
 
