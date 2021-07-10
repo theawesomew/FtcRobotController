@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.MotorMapEx;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import java.util.Arrays;
 @Autonomous(name="UltimateGoalWillRendition", group="Autonomous")
 public class WillAutonomousRendition extends OpMode {
     private MotorMap driveMap;
+    private MotorMapEx motorMapEx;
     private Robot robot;
     private int ringQuantity = -999;
     private int delta = 0;
@@ -27,8 +30,13 @@ public class WillAutonomousRendition extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+        motorMapEx = new MotorMapEx(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");
+        for (DcMotorEx motor : motorMapEx.GetMotorMap().values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
-        robot = new Robot(hardwareMap, driveMap, "conveyor", "pushy", "intake",
+        robot = new Robot(hardwareMap, driveMap, motorMapEx, "conveyor", "pushy", "intake",
                 "shooter", "wobbleLeft", "wobbleRight",
                 "clawLeft", "clawRight", "ramp",
                 "colorSensorRight1", "colorSensorRight4",

@@ -2,12 +2,15 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.lib.Vector;
 
 import java.util.HashMap;
@@ -25,6 +28,7 @@ public class XDrive extends DriveBase {
     private HashMap<String, Double> strafePower = new HashMap<String, Double>();
     private HashMap<String, Double> rotationPower = new HashMap<String, Double>();
     private HashMap<String, DcMotor> driveMotors = new HashMap<String, DcMotor>();
+    private HashMap<String, DcMotorEx> driveMotorsEx = new HashMap<String, DcMotorEx>();
     private BNO055IMU imu;
     private double targetAngle;
     //private double initialSpeed = 0.3;
@@ -45,12 +49,16 @@ public class XDrive extends DriveBase {
     }
 
 
-    public XDrive(MotorMap motorMap, BNO055IMU imu) {
+    public XDrive(MotorMap motorMap, MotorMapEx motorMapEx, BNO055IMU imu) {
         this.imu = imu;
         for (String motorName : motorMap.GetMotorMap().keySet()) {
             strafePower.put(motorName, 0.0);
             rotationPower.put(motorName, 0.0);
             driveMotors.put(motorName, motorMap.GetMotorMap().get(motorName));
+        }
+
+        for (String motorName : motorMapEx.GetMotorMap().keySet()) {
+            driveMotorsEx.put(motorName, motorMapEx.GetMotorMap().get(motorName));
         }
     }
 
@@ -60,8 +68,12 @@ public class XDrive extends DriveBase {
             scale = Math.max(scale, strafePower.get(motorName)+rotationPower.get(motorName));
         }
 
-        for (String motorName : strafePower.keySet()) {
+        /*for (String motorName : strafePower.keySet()) {
             driveMotors.get(motorName).setPower((strafePower.get(motorName)+rotationPower.get(motorName))/(Math.max(1, scale)));
+        }*/
+
+        for (String motorName : strafePower.keySet()) {
+            driveMotorsEx.get(motorName).setVelocity((strafePower.get(motorName)+rotationPower.get(motorName)/(Math.max(1, scale)) * 60 * Math.PI), AngleUnit.RADIANS);
         }
     }
 

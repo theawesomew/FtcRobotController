@@ -1,11 +1,19 @@
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorControllerEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class Robot {
     private XDrive xDrive;
@@ -24,7 +32,7 @@ public class Robot {
 
 
 
-    public Robot (HardwareMap hardwareMap, MotorMap driveMap, String conveyorName, String pushyName,
+    public Robot (HardwareMap hardwareMap, MotorMap driveMap, MotorMapEx driveMapEx, String conveyorName, String pushyName,
                   String intakeName, String shooterName, String wobbleArmNameLeft, String wobbleArmNameRight, String clawLeftName, String clawRightName, String rampName, String colorSensorRightOne, String colorSensorRightFour, String colorSensorLeftOne, String colorSensorLeftFour, String wobbleMotor, String wobbleGoalServoName) {
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -38,7 +46,7 @@ public class Robot {
         robotTime = new ElapsedTime();
         robotTime.reset();
 
-        this.xDrive = new XDrive(driveMap, imu);
+        this.xDrive = new XDrive(driveMap, driveMapEx, imu);
         this.conveyor = new Conveyor(hardwareMap, conveyorName);
         this.intake = new Intake(hardwareMap, intakeName);
         this.pushy = new Pushy(hardwareMap, pushyName);

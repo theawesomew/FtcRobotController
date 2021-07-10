@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.lib.GamepadWrapper;
 import org.firstinspires.ftc.teamcode.robot.Conveyor;
 import org.firstinspires.ftc.teamcode.robot.Intake;
 import org.firstinspires.ftc.teamcode.robot.MotorMap;
+import org.firstinspires.ftc.teamcode.robot.MotorMapEx;
 import org.firstinspires.ftc.teamcode.robot.Pushy;
 import org.firstinspires.ftc.teamcode.robot.Robot;
 import org.firstinspires.ftc.teamcode.robot.ServoMap;
@@ -29,6 +31,7 @@ import java.util.Locale;
 @TeleOp(name="UltimateGoalTeleOpMode", group="LinearOpMode")
 public class TeleOpMode extends OpMode {
     private MotorMap motorMap;
+    private MotorMapEx motorMapEx;
     private GamepadWrapper gamepadWrapper;
     private Robot robot;
     private int IntakeConveyorCounter = 0;
@@ -58,11 +61,16 @@ public class TeleOpMode extends OpMode {
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
+        motorMapEx = new MotorMapEx(hardwareMap, "forwardLeft", "forwardRight", "backLeft", "backRight");
+        for (DcMotorEx motor : motorMapEx.GetMotorMap().values()) {
+            motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
 
         ringSensor = hardwareMap.get(DistanceSensor.class, "ringSensor");
         wobbleGoalSensor = hardwareMap.get(DistanceSensor.class, "wobbleGoalSensor");
 
-        robot = new Robot(hardwareMap, motorMap, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
+        robot = new Robot(hardwareMap, motorMap, motorMapEx, "conveyor", "pushy", "intake", "shooter", "wobbleLeft", "wobbleRight","clawLeft", "clawRight", "ramp", "colorSensorRight1", "colorSensorRight4","colorSensorLeft1", "colorSensorLeft4", "wobbleMotor", "wobbleGoalServo");
         gamepadWrapper = new GamepadWrapper();
 
         robotTime = new ElapsedTime();
