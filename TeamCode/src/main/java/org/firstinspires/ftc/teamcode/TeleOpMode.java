@@ -75,8 +75,6 @@ public class TeleOpMode extends OpMode {
 
         robotTime = new ElapsedTime();
         robotTime.reset();
-
-
     }
 
 

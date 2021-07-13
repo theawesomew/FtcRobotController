@@ -31,7 +31,7 @@ public class XDrive extends DriveBase {
     private HashMap<String, DcMotorEx> driveMotorsEx = new HashMap<String, DcMotorEx>();
     private BNO055IMU imu;
     private double targetAngle;
-    private double initialSpeed = 0.3;
+    private double initialSpeed = 0.01;
 
 
     public boolean within (int value, int setValue, int error) {
@@ -73,16 +73,24 @@ public class XDrive extends DriveBase {
         }*/
 
         for (String motorName : strafePower.keySet()) {
-            driveMotorsEx.get(motorName).setVelocity(((strafePower.get(motorName)+rotationPower.get(motorName))/Math.max(1, scale)) * 200 * Math.PI, AngleUnit.RADIANS);
+            driveMotorsEx.get(motorName).setVelocity(((strafePower.get(motorName)+rotationPower.get(motorName))/Math.max(1, scale)) * 1 00 * Math.PI, AngleUnit.RADIANS);
         }
     }
 
     public void SetStrafe (double power, double angle) {
         power = Math.min(1, power);
+        strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
+        strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
+        strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
+        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4)*0.0223);
+    }
+
+    public void SetStrafeSlow (double power, double angle) {
+        power = Math.min(0.5, power * 0.25);
         strafePower.put("forwardLeft", -power * Math.cos(angle - Math.PI/4));
         strafePower.put("forwardRight", power * Math.sin(angle - Math.PI/4));
         strafePower.put("backRight", power * Math.cos(angle - Math.PI/4));
-        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4));
+        strafePower.put("backLeft", -power*Math.sin(angle - Math.PI/4)*0.15);
     }
 
     public void SetStrafe (Vector movementVector) {
@@ -91,10 +99,10 @@ public class XDrive extends DriveBase {
 
     public void SetRotation (double power) {
         power = Math.abs(power) > 0 ? power/Math.abs(power) * Math.min(1, Math.abs(power)) : 0;
-        rotationPower.put("forwardRight", -power);
-        rotationPower.put("backRight", -power);
-        rotationPower.put("backLeft", -power);
-        rotationPower.put("forwardLeft", -power);
+        rotationPower.put("forwardRight", -power ) ;
+        rotationPower.put("backRight", -power );
+        rotationPower.put("backLeft", -power ) ;
+        rotationPower.put("forwardLeft", -power );
     }
 
     public boolean RotateByAngle (double angle, boolean direction, Telemetry telemetry) {
@@ -201,7 +209,7 @@ public class XDrive extends DriveBase {
             driveMotors.get("backLeft").setMode(DcMotor.RunMode.RUN_TO_POSITION);
             driveMotors.get("backRight").setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            SetStrafe(initialSpeed, angle);
+            SetStrafeSlow(initialSpeed, angle);
             Drive(telemetry);
             motorsMoving = true;
         } else if ( within(driveMotors.get("forwardLeft").getCurrentPosition(), driveMotors.get("forwardLeft").getTargetPosition(), 10) ||
@@ -218,16 +226,18 @@ public class XDrive extends DriveBase {
             driveMotors.get("forwardRight").setPower(0);
             driveMotors.get("backLeft").setPower(0);
             driveMotors.get("backRight").setPower(0);
-            initialSpeed = 0.3;
-            SetStrafe(0,0);
+            initialSpeed = 0.01;
+            SetStrafeSlow(0,0);
             Drive(telemetry);
             return true;
         }
 
         initialSpeed = Math.min(initialSpeed+0.01, 1);
-        SetStrafe(initialSpeed, angle);
+        SetStrafeSlow(initialSpeed, angle);
         Drive(telemetry);
 
         return false;
     }
+
+
 }

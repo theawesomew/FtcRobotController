@@ -38,6 +38,10 @@ public class AutonomousTesting extends OpMode {
     private int red1;
     private int red2;
 
+    public DcMotor forwardRight = hardwareMap.dcMotor.get("forwardRight");
+    public DcMotor forwardLeft = hardwareMap.dcMotor.get("forwardLeft");
+    public DcMotor backRight = hardwareMap.dcMotor.get("backRight");
+    public DcMotor backLeft = hardwareMap.dcMotor.get("backLeft");
 
 
 
@@ -63,6 +67,17 @@ public class AutonomousTesting extends OpMode {
         right1 = hardwareMap.get(ColorSensor.class, "colorSensorRight1");
         right2 = hardwareMap.get(ColorSensor.class, "colorSensorRight4");
 
+        forwardLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        forwardLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        forwardRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        forwardRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override
@@ -95,63 +110,10 @@ public class AutonomousTesting extends OpMode {
         telemetry.addData("Shooter Power", robot.GetShooterPower());
 
 
-        // autonomous blue left
-        switch (findFirstInstanceOfFalse(startMove)) {
-            case 0:
-                startMove[0] = robot.StrafeByDistance(1140, Math.PI/2, telemetry);
-                break;
-            case 1:
-                startMove[1] = robot.Sleep(500, telemetry);
-                break;
-            case 2:
-                ringsDetected = robot.GetRedRight();
-                startMove[2] = true;
-                break;
-            case 3:
-                startMove[3] = robot.Sleep(250, telemetry);
-                telemetry.addData("Currently", "Stopped");
-                break;
-            case 4:
-                startMove[4] = true; // robot.RotateByAngleUsingIMU(Math.toRadians(2), false, telemetry);
-                break;
-            case 5:
-                if (ringsDetected == 0) {
-                    switch (findFirstInstanceOfFalse(hasMoved)) {
-                        case 0:
-                            hasMoved[0] = robot.StrafeByDistance(900, Math.PI/2, telemetry);
-                            break;
-                        case 1:
-                            robot.motorLower();
-                            hasMoved[1] = robot.Sleep(1500, telemetry);
-                            break;
-                        case 2:
-                            robot.ClawOpen();
-                            hasMoved[2] = true;
-                            break;
-                        case 3:
-                            robot.motorRaise();
-                            hasMoved[3] = robot.Sleep(1500, telemetry);
-                            break;
-                        case 4:
-                            hasMoved[4] = robot.StrafeByDistance(780, -Math.toRadians(35.06), telemetry);
-                            robot.Shoot(11);
-                            break;
-                        case 5:
-                            hasMoved[5] = robot.PushThenRetract(telemetry);
-                            break;
-                        case 6:
-                            robot.PushThenRetract(telemetry);
-                            hasMoved[6] = robot.Sleep(500, telemetry);
+        forwardDrive(1000);
 
-                            break;
-                        case 7:
-                            hasMoved[7] = robot.PushThenRetract(telemetry);
-                            break;
 
-                    }
 
-                }
-                break;
 
 
 
@@ -160,7 +122,7 @@ public class AutonomousTesting extends OpMode {
 
 
 
-    }
+
 
     @Override
     public void stop() {
@@ -202,6 +164,22 @@ public class AutonomousTesting extends OpMode {
             }
         }
         return -1;
+    }
+
+    private final void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private void forwardDrive(int bedtime) {
+        backRight.setPower(-0.5);
+        forwardRight.setPower(0.5);
+        forwardLeft.setPower(0.5);
+        backLeft.setPower(-0.5);
+        sleep(bedtime);
     }
 }
 
